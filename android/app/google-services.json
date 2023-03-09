@@ -1,0 +1,82 @@
+{
+  "project_info": {
+    "project_number": "130620278383",
+    "project_id": "coba-77507",
+    "storage_bucket": "coba-77507.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130620278383:android:1afe6e80e0b99ad9822f9a",
+        "android_client_info": {
+          "package_name": "com.e_surat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130620278383-8c1t2j8oh902ps7ekqntamhes88dkqtl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApXsa3Srohx24QFeGA2Q8ojmJ8lpo4VX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130620278383-8c1t2j8oh902ps7ekqntamhes88dkqtl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "130620278383-sae4a0bsc9amatftilin7ofdm824cl4i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.eSurat"
+              }
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:130620278383:android:15b33be6e2980d1c822f9a",
+        "android_client_info": {
+          "package_name": "com.example.e_surat"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "130620278383-8c1t2j8oh902ps7ekqntamhes88dkqtl.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyApXsa3Srohx24QFeGA2Q8ojmJ8lpo4VX0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "130620278383-8c1t2j8oh902ps7ekqntamhes88dkqtl.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "130620278383-sae4a0bsc9amatftilin7ofdm824cl4i.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.eSurat"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

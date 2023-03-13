@@ -1,14 +1,16 @@
 import 'dart:convert';
 
 import 'package:e_surat/dashboard.dart';
+import 'package:e_surat/firebase_options.dart';
+import 'package:firebase_analytics/firebase_analytics.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-// Done
 
+// Done
 
 Future<void> _firebaseMessagingBackgroundHandler(message) async {
   // If you're going to use other Firebase services in the background, such as Firestore,
@@ -20,7 +22,10 @@ Future<void> _firebaseMessagingBackgroundHandler(message) async {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  final fcmToken = await FirebaseMessaging.instance.getToken();
+  print(fcmToken);
+  FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(const MyApp());
 }

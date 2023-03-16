@@ -24,7 +24,7 @@ class _DashboardState extends State<Dashboard> {
   final _pageOption = [
     Home(),
     Inbox(),
-    // Outbox(),
+    Outbox(),
     Profile(),
   ];
 
@@ -36,8 +36,8 @@ class _DashboardState extends State<Dashboard> {
         backgroundColor: color1,
         items: [
           TabItem(icon: Icons.home, title: 'Home'),
-          TabItem(icon: Icons.inbox_outlined, title: 'Surat Masuk'),
-          // TabItem(icon: Icons.outbox_outlined, title: 'Surat Keluar'),
+          TabItem(icon: Icons.inbox_outlined, title: 'Inbox'),
+          TabItem(icon: Icons.outbox_outlined, title: 'Outbox'),
           TabItem(icon: Icons.people, title: 'Profile'),
         ],
         initialActiveIndex: selectedPage,

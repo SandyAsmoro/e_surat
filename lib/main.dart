@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'forgroundLocalNotification.dart';
+
 
 // Done
 
@@ -27,7 +29,7 @@ Future<void> main() async {
   print(fcmToken);
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
-  runApp(const MyApp());
+  runApp(MyApp());
 }
 
 class MyApp extends StatelessWidget {

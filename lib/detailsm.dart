@@ -42,6 +42,7 @@ class _DetailsmState extends State<Detailsm> {
 
   @override
   void dispose() {
+    // ignore: todo
     // TODO: implement dispose
     super.dispose();
   }

@@ -1,6 +1,6 @@
+import 'package:e_surat/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:e_surat/main.dart';
 
 const color1 = Color(0xFF533E85);
 const color2 = Color(0xFF488FB1);

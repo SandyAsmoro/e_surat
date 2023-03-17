@@ -35,6 +35,7 @@ class _DetailskState extends State<Detailsk> {
 
   @override
   void dispose() {
+    // ignore: todo
     // TODO: implement dispose
     super.dispose();
   }

@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:animated_splash_screen/animated_splash_screen.dart';
 import 'package:e_surat/firebase_options.dart';
 import 'package:e_surat/loginPage.dart';

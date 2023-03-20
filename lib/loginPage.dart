@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
-
 class LoginPage extends StatefulWidget {
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -243,19 +242,19 @@ class _LoginPageState extends State<LoginPage> {
     if (passwordController.text.isNotEmpty &&
         usernameController.text.isNotEmpty) {
       var response = await http.post(
-          Uri.parse(
-              "https://sigap.kedirikota.go.id/apiesuratpkl/public/api/login"),
+          Uri.parse("https://simponik.kedirikota.go.id/api/login"),
           body: ({
             "usernm": usernameController.text,
             "passwd": passwordController.text
           }));
-      if (response.statusCode == 201) {
+      if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
         var request = await http.put(
-            Uri.parse(
-                "https://sigap.kedirikota.go.id/apiesuratpkl/public/em_user/${body['id']}"),
+            Uri.parse("https://simponik.kedirikota.go.id/api/login"),
+            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/em_user/${body['id']}"),
             body: ({
               "token": FBToken,
+              "id": body['id'],
             }));
         if (request.statusCode == 200) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
@@ -269,9 +268,19 @@ class _LoginPageState extends State<LoginPage> {
 
           SharedPreferences pref = await SharedPreferences.getInstance();
           await pref.setString("token", body['token']);
-          await pref.setString("jabatan", body['role']);
-          await pref.setString("nama", body['nama']);
-          await pref.setString("opd", body['opd']);
+          await pref.setString("jabatan", body['jabatan']);
+          await pref.setString("nama", body['name']);
+          await pref.setString("nip", body['nip']);
+          await pref.setString("golongan", body['golongan']);
+          await pref.setString("pangkat", body['pangkat']);
+          await pref.setString("skpd", body['skpd']);
+          await pref.setString("satker", body['satker']);
+          await pref.setString("nama_jabatan", body['nama_jabatan']);
+          await pref.setString("jenis_jabatan", body['jenis_jabatan']);
+          await pref.setString("eselon", body['eselon']);
+          await pref.setString("nama_eselon", body['nama_eselon']);
+          await pref.setString("jenis_kepegawaian", body['jenis_kepegawaian']);
+          await pref.setString("status", body['status']);
 
           pageRoute();
         } else {

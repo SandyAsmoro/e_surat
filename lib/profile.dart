@@ -18,6 +18,17 @@ class _ProfileState extends State<Profile> {
   String token = "";
   String jabatan = "";
   String nama = "";
+  String nip = "0000";
+  String golongan = "";
+  String pangkat = "";
+  String skpd = "OPD UJI COBA 1";
+  String satker = "OPD UJI COBA 1";
+  String nama_jabatan = "";
+  String jenis_jabatan = "";
+  String eselon = "";
+  String nama_eselon = "";
+  String jenis_kepegawaian = "Non ASN";
+  String  status = "Aktif";
   String opd = "";
 
   @override
@@ -44,57 +55,107 @@ class _ProfileState extends State<Profile> {
         child: SafeArea(
             child: Center(
                 child: Column(
+          children: [
+            Card(
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              shadowColor: Colors.black,
+              elevation: 10,
+              child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [color2, color3],
+                        stops: [0.1, 1],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomRight)),
+                padding: EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Card(
-                      clipBehavior: Clip.antiAlias,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      shadowColor: Colors.black,
-                      elevation: 10,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [color2, color3],
-                                stops: [0.1, 1],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomRight)),
-                        padding: EdgeInsets.all(12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Nama     : ${nama}",
-                              style: TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                            Divider(),
-                            Text(
-                              "Jabatan : ${jabatan}",
-                              style: TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                            Divider(),
-                            Text(
-                              "OPD       : ${opd}",
-                              style: TextStyle(color: Colors.white, fontSize: 16),
-                            ),
-                          ],
-                        ),
-                      ),
+                    Text(
+                      "Nama     : ${nama}",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
-                    SizedBox(
-                      height: 15,
+                    Divider(),
+                    Text(
+                      "Jabatan : ${jabatan}",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                     ),
-                    OutlinedButton.icon(
-                        onPressed: () {
-                          logout();
-                        },
-                        icon: Icon(
-                          Icons.logout,
-                          size: 18,
-                        ),
-                        label: Text("Logout"))
+                    Divider(),
+                    Text(
+                      "NIP : ${nip}",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    Divider(),
+                    Text(
+                      "Golongan : ${golongan}",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    Divider(),
+                    Text(
+                      "Pangkat : ${pangkat}",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    Divider(),
+                    Text(
+                      "SKPD : ${skpd}",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    Divider(),
+                    Text(
+                      "Satker : ${satker}",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    Divider(),
+                    Text(
+                      "Nama Jabatan : ${nama_jabatan}",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    Divider(),
+                    Text(
+                      "Jenis Jabatan : ${jenis_jabatan}",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    Divider(),
+                    Text(
+                      "Eselon : ${eselon}",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    Divider(),
+                    Text(
+                      "Nama Eselon : ${nama_eselon}",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    Divider(),
+                    Text(
+                      "Jenis Kepegawaian : ${jenis_kepegawaian}",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                    Divider(),
+                    Text(
+                      "Status : ${status}",
+                      style: TextStyle(color: Colors.white, fontSize: 16),
+                    ),
                   ],
-                ))),
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 15,
+            ),
+            OutlinedButton.icon(
+                onPressed: () {
+                  logout();
+                },
+                icon: Icon(
+                  Icons.logout,
+                  size: 18,
+                ),
+                label: Text("Logout"))
+          ],
+        ))),
       ),
     );
   }

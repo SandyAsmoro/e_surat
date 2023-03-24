@@ -37,7 +37,7 @@ class _DetailsmState extends State<Detailsm> {
   void initState() {
     super.initState();
     setBaca();
-    konf = widget.sm.konf;
+    konf = widget.sm.state;
   }
 
   @override
@@ -75,7 +75,7 @@ class _DetailsmState extends State<Detailsm> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${widget.sm.noSurat}",
+                    "${widget.sm.no_surat}",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                   Text(
@@ -102,7 +102,7 @@ class _DetailsmState extends State<Detailsm> {
                   ),
                   Divider(),
                   Text(
-                    "${widget.sm.tglSurat}",
+                    "${widget.sm.tgl_surat}",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                   Text(
@@ -111,7 +111,7 @@ class _DetailsmState extends State<Detailsm> {
                   ),
                   Divider(),
                   Text(
-                    "${widget.sm.ttd}",
+                    "${widget.sm.terima}",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                   Text(
@@ -131,7 +131,7 @@ class _DetailsmState extends State<Detailsm> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Pdfview(
-                            linkPdf: widget.sm.fileSurat,
+                            linkPdf: widget.sm.kirim,
                           )));
                     },
                     icon: Icon(Icons.attach_file),
@@ -166,7 +166,7 @@ class _DetailsmState extends State<Detailsm> {
                           Uri.parse(
                               "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/konfirmasi"),
                           body: ({
-                            "id_smwf": widget.sm.idSmwf,
+                            "id_smwf": widget.sm.skpd_id,
                           }));
                       if (response.statusCode == 200) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -225,7 +225,7 @@ class _DetailsmState extends State<Detailsm> {
                                           "catatan": "Dilaksanakan",
                                           // "penerima": jsonEncode(seletedBawahan),
                                           "token": token,
-                                          "id_srt": widget.sm.idSrt
+                                          "id_srt": widget.sm.no_surat
                                         }));
                                     // print(response.body);
                                     if (response.statusCode == 200) {
@@ -433,7 +433,7 @@ class _DetailsmState extends State<Detailsm> {
         Uri.parse(
             "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/baca"),
         body: ({
-          "id_smwf": widget.sm.idSmwf,
+          "id_smwf": widget.sm.id,
         }));
     if (response.statusCode == 200) {
     } else {
@@ -466,7 +466,7 @@ class _DetailsmState extends State<Detailsm> {
         };
         var response = await http.get(
             Uri.parse(
-                "https://sigap.kedirikota.go.id/apiesuratpkl/public/listdisposm?idsrt=${widget.sm.idSrt}&page=${currentPage}"),
+                "https://sigap.kedirikota.go.id/apiesuratpkl/public/listdisposm?idsrt=${widget.sm.no_surat}&page=${currentPage}"),
             headers: requestHeaders);
 
         // print(response.body);

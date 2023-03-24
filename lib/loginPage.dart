@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:e_surat/dashboard.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
@@ -20,8 +21,9 @@ class _LoginPageState extends State<LoginPage> {
   void initState() {
     super.initState();
     FirebaseMessaging.instance.getToken().then((value) {
-      // print(value);
       FBToken = value.toString();
+      print('FBT : ');
+      print(FBToken);
     });
     checkSession();
   }
@@ -169,18 +171,6 @@ class _LoginPageState extends State<LoginPage> {
                             suffixIcon: Icon(Icons.password)),
                       ),
                     ),
-                    // SizedBox(
-                    //   height: 45,
-                    // ),
-                    // OutlinedButton.icon(
-                    //     onPressed: () {
-                    //       login();
-                    //     },
-                    //     icon: Icon(
-                    //       Icons.login,
-                    //       size: 18,
-                    //     ),
-                    //     label: Text("Login")),
                   ],
                 ),
               ),
@@ -234,10 +224,6 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  // Future<void> login() async {
-  //    await http.post(Uri.parse(uri))
-  // }
-
   void login() async {
     if (passwordController.text.isNotEmpty &&
         usernameController.text.isNotEmpty) {
@@ -249,13 +235,19 @@ class _LoginPageState extends State<LoginPage> {
           }));
       if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
+        var token = body['user']['token'];
         var request = await http.put(
             Uri.parse("https://simponik.kedirikota.go.id/api/login"),
             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/em_user/${body['id']}"),
-            body: ({
+            body: jsonEncode({
               "token": FBToken,
               "id": body['id'],
-            }));
+            }),
+            headers: {
+              HttpHeaders.contentTypeHeader: "application/json",
+              HttpHeaders.authorizationHeader: "Bearer $token",
+            });
+
         if (request.statusCode == 200) {
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("Login Berhasil"),
@@ -267,21 +259,21 @@ class _LoginPageState extends State<LoginPage> {
           ));
 
           SharedPreferences pref = await SharedPreferences.getInstance();
-          await pref.setString("token", body['token']);
-          await pref.setString("jabatan", body['jabatan']);
-          await pref.setString("nama", body['name']);
-          await pref.setString("nip", body['nip']);
-          await pref.setString("golongan", body['golongan']);
-          await pref.setString("pangkat", body['pangkat']);
-          await pref.setString("skpd", body['skpd']);
-          await pref.setString("satker", body['satker']);
-          await pref.setString("nama_jabatan", body['nama_jabatan']);
-          await pref.setString("jenis_jabatan", body['jenis_jabatan']);
-          await pref.setString("eselon", body['eselon']);
-          await pref.setString("nama_eselon", body['nama_eselon']);
-          await pref.setString("jenis_kepegawaian", body['jenis_kepegawaian']);
-          await pref.setString("status", body['status']);
-
+          pref.setString("token", body['user']['token']);
+          pref.setString("jabatan", body['user']['jabatan']);
+          pref.setString("nama", body['user']['name']);
+          // pref.setString("nip", body['user']['nip']);
+          // pref.setString("golongan", body['user']['golongan']);
+          // pref.setString("pangkat", body['user']['pangkat']);
+          // pref.setString("skpd", body['user']['skpd']);
+          pref.setString("satker", body['user']['satker']);
+          // pref.setString("nama_jabatan", body['user']['nama_jabatan']);
+          // pref.setString("jenis_jabatan", body['user']['jenis_jabatan']);
+          pref.setString("eselon", body['user']['eselon']);
+          // pref.setString("nama_eselon", body['user']['nama_eselon']);
+          pref.setString(
+              "jenis_kepegawaian", body['user']['jenis_kepegawaian']);
+          pref.setString("status", body['user']['status']);
           pageRoute();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(

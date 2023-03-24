@@ -128,12 +128,13 @@ class _DisposmState extends State<Disposm> {
                   if (catatanController.text.isNotEmpty) {
                     var response = await http.post(
                         Uri.parse(
-                            "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/disposisi"),
+                            "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
+                            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/disposisi"),
                         body: ({
                           "catatan": catatanController.text,
                           "penerima": jsonEncode(seletedBawahan),
                           "token": token,
-                          "id_srt": widget.dispo.idSrt
+                          "no_surat": widget.dispo.no_surat
                         }));
                     // print(response.body);
                     if (response.statusCode == 200) {

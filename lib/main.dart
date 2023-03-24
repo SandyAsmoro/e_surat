@@ -16,8 +16,7 @@ Future<void> _firebaseMessagingBackgroundHandler(message) async {
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
-  final fcmToken = await FirebaseMessaging.instance.getToken();
-  print(fcmToken);
+  // final fcmToken = await FirebaseMessaging.instance.getToken();
   FirebaseAnalytics analytics = FirebaseAnalytics.instance;
   FirebaseMessaging.onBackgroundMessage(_firebaseMessagingBackgroundHandler);
   runApp(MyApp());

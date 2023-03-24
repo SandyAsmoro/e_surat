@@ -24,7 +24,7 @@ class _InboxState extends State<Inbox> {
   int currentPage = 0;
   late int totalPages;
   final RefreshController _refreshController =
-  RefreshController(initialRefresh: true);
+      RefreshController(initialRefresh: true);
   List<SuratMasuk> suratMasuk = [];
 
   @override
@@ -53,6 +53,7 @@ class _InboxState extends State<Inbox> {
           final result = await getSurat(isRefreshed: true);
           if (result == true) {
             _refreshController.refreshCompleted();
+            print("object");
           } else {
             _refreshController.refreshFailed();
           }
@@ -90,23 +91,23 @@ class _InboxState extends State<Inbox> {
             itemBuilder: (context, index) {
               // print("status surat ${index}: ${suratMasuk[index].baca}");
               return ListTile(
-                leading: (suratMasuk[index].baca == "1")
+                leading: (suratMasuk[index].isbaca == "1")
                     ? Icon(
-                  Icons.mark_email_read_outlined,
-                  color: Colors.green,
-                )
+                        Icons.mark_email_read_outlined,
+                        color: Colors.green,
+                      )
                     : Icon(
-                  Icons.mark_email_unread_outlined,
-                  color: Colors.red,
-                ),
+                        Icons.mark_email_unread_outlined,
+                        color: Colors.red,
+                      ),
                 title: Text("${suratMasuk[index].perihal}"),
                 subtitle: Text("${suratMasuk[index].dari}"),
-                trailing: Text("${suratMasuk[index].tglSurat}"),
+                trailing: Text("${suratMasuk[index].tgl_surat}"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => Detailsm(
-                        sm: suratMasuk[index],
-                      )));
+                            sm: suratMasuk[index],
+                          )));
                   //     .then((value) {
                   //   setState(() {
                   //     suratMasuk.clear();
@@ -132,23 +133,28 @@ class _InboxState extends State<Inbox> {
         if (isRefreshed) {
           currentPage = 0;
         }
+        ;
         Map<String, String> requestHeaders = {
           'Authorization': token,
         };
         var response = await http.get(
             Uri.parse(
-                "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk?page=${currentPage}"),
+                "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
+            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk?page=${currentPage}"),
             headers: requestHeaders);
         if (response.statusCode == 200) {
+          print(response.statusCode);
+          print(jsonDecode(response.body));
           List data =
-          (jsonDecode(response.body) as Map<String, dynamic>)["data"];
+              (jsonDecode(response.body) as Map<String, dynamic>)["data"];
           data.forEach((element) {
             suratMasuk.add(SuratMasuk.fromJson(element));
           });
+          // print(data);
           currentPage++;
-          // print(data[0]);
+          print(data[0]);
           totalPages =
-          (jsonDecode(response.body) as Map<String, dynamic>)["totalPage"];
+              (jsonDecode(response.body) as Map<String, dynamic>)["totalPage"];
           setState(() {});
           return true;
         } else {

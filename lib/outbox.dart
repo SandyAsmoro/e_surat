@@ -7,6 +7,11 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+const color1 = Color(0xFF533E85);
+const color2 = Color(0xFF488FB1);
+const color3 = Color(0xFF4FD3C4);
+const color4 = Color(0xFFC1F8CF);
+
 class Outbox extends StatefulWidget {
   const Outbox({Key? key}) : super(key: key);
 
@@ -32,6 +37,7 @@ class _OutboxState extends State<Outbox> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Outbox"),
+        backgroundColor: color1,
       ),
       body: SmartRefresher(
         controller: _refreshController,
@@ -108,7 +114,7 @@ class _OutboxState extends State<Outbox> {
       setState(() {
         token = pref.getString("token")!;
       });
-      if (token != '') {
+      if (token != null) {
         if (isRefreshed) {
           currentPage = 0;
         }
@@ -117,7 +123,8 @@ class _OutboxState extends State<Outbox> {
         };
         var response = await http.get(
             Uri.parse(
-                "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar?page=${currentPage}"),
+                "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
+                // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar?page=${currentPage}"),
             headers: requestHeaders);
         if (response.statusCode == 200) {
           List data =

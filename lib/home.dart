@@ -49,59 +49,59 @@ class _HomeState extends State<Home> {
         child: SafeArea(
             child: Center(
                 child: Column(
+          children: [
+            Text("Selamat Datang di Aplikasi E-Surat Kota Kediri",
+                style: TextStyle(
+                    color: color1, fontSize: 20, fontWeight: FontWeight.bold)),
+            Divider(),
+            Card(
+              clipBehavior: Clip.antiAlias,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
+              shadowColor: Colors.black,
+              elevation: 10,
+              child: Container(
+                decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                        colors: [color2, color3],
+                        stops: [0.1, 1],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomRight)),
+                padding: EdgeInsets.all(12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text("Selamat Datang di Aplikasi E-Surat Kota Kediri",
-                        style: TextStyle(
-                            color: color1, fontSize: 20, fontWeight: FontWeight.bold)),
+                    Text(
+                      "Total Surat Masuk      : ${totalSurat}",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
                     Divider(),
-                    Card(
-                      clipBehavior: Clip.antiAlias,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      shadowColor: Colors.black,
-                      elevation: 10,
-                      child: Container(
-                        decoration: BoxDecoration(
-                            gradient: LinearGradient(
-                                colors: [color2, color3],
-                                stops: [0.1, 1],
-                                begin: Alignment.topCenter,
-                                end: Alignment.bottomRight)),
-                        padding: EdgeInsets.all(12),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "Total Surat Masuk      : ${totalSurat}",
-                              style: TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                            Divider(),
-                            Text(
-                              "Total Dalam Proses    : ${totalProses}",
-                              style: TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                            Divider(),
-                            Text(
-                              "Total Surat Selesai     : ${totalSelesai}",
-                              style: TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                            Divider(),
-                            Text(
-                              "Total Belum Dibaca    : ${totalUnread}",
-                              style: TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                            Divider(),
-                            Text(
-                              "Total Belum Disetujui : ${totalUnkonf}",
-                              style: TextStyle(color: Colors.white, fontSize: 20),
-                            ),
-                          ],
-                        ),
-                      ),
+                    Text(
+                      "Total Dalam Proses    : ${totalProses}",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    Divider(),
+                    Text(
+                      "Total Surat Selesai     : ${totalSelesai}",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    Divider(),
+                    Text(
+                      "Total Belum Dibaca    : ${totalUnread}",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
+                    ),
+                    Divider(),
+                    Text(
+                      "Total Belum Disetujui : ${totalUnkonf}",
+                      style: TextStyle(color: Colors.white, fontSize: 20),
                     ),
                   ],
-                ))),
+                ),
+              ),
+            ),
+          ],
+        ))),
       ),
     );
   }
@@ -118,20 +118,21 @@ class _HomeState extends State<Home> {
         };
         var response = await http.get(
             Uri.parse(
-                "https://sigap.kedirikota.go.id/apiesuratpkl/public/dashboard"),
+                "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
+            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/dashboard"),
             headers: requestHeaders);
 
         if (response.statusCode == 200) {
           totalSurat =
-          (jsonDecode(response.body) as Map<String, dynamic>)["totalSurat"];
+              (jsonDecode(response.body) as Map<String, dynamic>)["totalSurat"];
           totalProses = (jsonDecode(response.body)
-          as Map<String, dynamic>)["totalProses"];
+              as Map<String, dynamic>)["totalProses"];
           totalSelesai = (jsonDecode(response.body)
-          as Map<String, dynamic>)["totalSelesai"];
+              as Map<String, dynamic>)["totalSelesai"];
           totalUnread = (jsonDecode(response.body)
-          as Map<String, dynamic>)["totalUnread"];
+              as Map<String, dynamic>)["totalUnread"];
           totalUnkonf = (jsonDecode(response.body)
-          as Map<String, dynamic>)["totalUnkonf"];
+              as Map<String, dynamic>)["totalUnkonf"];
 
           setState(() {});
           return true;

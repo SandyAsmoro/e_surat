@@ -164,7 +164,8 @@ class _DetailsmState extends State<Detailsm> {
                     onPressed: () async {
                       var response = await http.post(
                           Uri.parse(
-                              "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/konfirmasi"),
+                              "https://simponik.kedirikota.go.id/api/inboxdetail?id=sm23020667"),
+                              // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/konfirmasi"),
                           body: ({
                             "id_smwf": widget.sm.skpd_id,
                           }));
@@ -220,7 +221,8 @@ class _DetailsmState extends State<Detailsm> {
                                   onPressed: () async {
                                     var response = await http.post(
                                         Uri.parse(
-                                            "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/finish"),
+                                            "https://simponik.kedirikota.go.id/api/inboxdetail?id=sm23020667"),
+                                            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/finish"),
                                         body: ({
                                           "catatan": "Dilaksanakan",
                                           // "penerima": jsonEncode(seletedBawahan),
@@ -431,7 +433,8 @@ class _DetailsmState extends State<Detailsm> {
   Future setBaca() async {
     var response = await http.post(
         Uri.parse(
-            "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/baca"),
+            "https://simponik.kedirikota.go.id/api/inboxdetail?id=sm23020667"),
+            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/baca"),
         body: ({
           "id_smwf": widget.sm.id,
         }));
@@ -466,7 +469,8 @@ class _DetailsmState extends State<Detailsm> {
         };
         var response = await http.get(
             Uri.parse(
-                "https://sigap.kedirikota.go.id/apiesuratpkl/public/listdisposm?idsrt=${widget.sm.no_surat}&page=${currentPage}"),
+                "https://simponik.kedirikota.go.id/api/inboxdetail?id=${widget.sm.no_surat}&page=${currentPage}"),
+                // "https://sigap.kedirikota.go.id/apiesuratpkl/public/listdisposm?idsrt=${widget.sm.no_surat}&page=${currentPage}"),
             headers: requestHeaders);
 
         // print(response.body);

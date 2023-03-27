@@ -260,20 +260,22 @@ class _LoginPageState extends State<LoginPage> {
 
           SharedPreferences pref = await SharedPreferences.getInstance();
           pref.setString("token", body['user']['token']);
-          pref.setString("jabatan", body['user']['jabatan']);
           pref.setString("nama", body['user']['name']);
-          // pref.setString("nip", body['user']['nip']);
-          // pref.setString("golongan", body['user']['golongan']);
-          // pref.setString("pangkat", body['user']['pangkat']);
-          // pref.setString("skpd", body['user']['skpd']);
+          pref.setString("jabatan", body['user']['jabatan']);
+          pref.setString("nip", body['user']['nip']);
+          pref.setString("golongan", body['user']['golongan']);
+          pref.setString("pangkat", body['user']['pangkat']);
+          pref.setString("skpd", body['user']['skpd']);
           pref.setString("satker", body['user']['satker']);
-          // pref.setString("nama_jabatan", body['user']['nama_jabatan']);
-          // pref.setString("jenis_jabatan", body['user']['jenis_jabatan']);
+          pref.setString("nama_jabatan", body['user']['nama_jabatan']);
+          pref.setString("jenis_jabatan", body['user']['jenis_jabatan']);
           pref.setString("eselon", body['user']['eselon']);
-          // pref.setString("nama_eselon", body['user']['nama_eselon']);
+          pref.setString("nama_eselon", body['user']['nama_eselon']);
           pref.setString(
               "jenis_kepegawaian", body['user']['jenis_kepegawaian']);
           pref.setString("status", body['user']['status']);
+          // pref.setString("foto", body['user']['foto']);
+
           pageRoute();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(

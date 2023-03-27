@@ -31,11 +31,11 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    LocalNotification.initialize();
-    // For Forground State
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      LocalNotification.showNotification(message);
-    });
+    // LocalNotification.initialize();
+    // // For Forground State
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   LocalNotification.showNotification(message);
+    // });
     return Scaffold(
       body: _pageOption[selectedPage],
       bottomNavigationBar: ConvexAppBar(

@@ -53,7 +53,6 @@ class _InboxState extends State<Inbox> {
           final result = await getSurat(isRefreshed: true);
           if (result == true) {
             _refreshController.refreshCompleted();
-            print("object");
           } else {
             _refreshController.refreshFailed();
           }

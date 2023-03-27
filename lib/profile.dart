@@ -33,8 +33,8 @@ class HeaderCurvedContainer extends CustomPainter {
 
 class _ProfileState extends State<Profile> {
   String token = "";
-  String jabatan = "";
   String nama = "";
+  String jabatan = "";
   String nip = "";
   String golongan = "";
   String pangkat = "";
@@ -46,7 +46,7 @@ class _ProfileState extends State<Profile> {
   String nama_eselon = "";
   String jenis_kepegawaian = "";
   String status = "";
-  String opd = "";
+  // String foto = "";
 
   @override
   void initState() {
@@ -92,20 +92,44 @@ class _ProfileState extends State<Profile> {
                         ),
                       ),
                     ),
-                    // Text(
-                    //   "OPD   : ${opd}",
-                    //   style: TextStyle(color: Colors.black, fontSize: 16),
-                    // ),
-                    Text(
-                      "Satker     : ${satker}",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                    ),
                     Text(
                       "Jabatan    : ${jabatan}",
                       style: TextStyle(color: Colors.black, fontSize: 16),
                     ),
                     Text(
+                      "NIP    : ${nip}",
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    Text(
+                      "Golongan    : ${golongan}",
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    Text(
+                      "Pangkat    : ${pangkat}",
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    Text(
+                      "SKPD    : ${skpd}",
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    Text(
+                      "Satker     : ${satker}",
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    Text(
+                      "Nama Jabatan     : ${nama_jabatan}",
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    Text(
+                      "Jenis Jabatan     : ${jenis_jabatan}",
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    Text(
                       "Eselon     : ${eselon}",
+                      style: TextStyle(color: Colors.black, fontSize: 16),
+                    ),
+                    Text(
+                      "Nama Eselon     : ${nama_eselon}",
                       style: TextStyle(color: Colors.black, fontSize: 16),
                     ),
                     Text(
@@ -299,17 +323,20 @@ class _ProfileState extends State<Profile> {
       SharedPreferences pref = await SharedPreferences.getInstance();
       setState(() {
         token = pref.getString("token")!;
-        jabatan = pref.getString("jabatan")!;
         nama = pref.getString("nama")!;
-        // opd = pref.getString("opd")!;
+        jabatan = pref.getString("jabatan")!;
+        nip = pref.getString("nip")!;
+        golongan = pref.getString("golongan")!;
+        pangkat = pref.getString("pangkat")!;
+        skpd = pref.getString("skpd")!;
         satker = pref.getString("satker")!;
+        nama_jabatan = pref.getString("nama_jabatan")!;
+        jenis_jabatan = pref.getString("jenis_jabatan")!;
         eselon = pref.getString("eselon")!;
+        nama_eselon = pref.getString("nama_eselon")!;
         jenis_kepegawaian = pref.getString("jenis_kepegawaian")!;
         status = pref.getString("status")!;
-        // opd = pref.getString("opd")!;
-        // opd = pref.getString("opd")!;
-        // opd = pref.getString("opd")!;
-
+        // foto = pref.getString("foto")!;
       });
       return true;
     } catch (e) {

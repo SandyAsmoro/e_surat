@@ -46,7 +46,7 @@ class _ProfileState extends State<Profile> {
   String nama_eselon = "";
   String jenis_kepegawaian = "";
   String status = "";
-  // String foto = "";
+  // late String foto;
 
   @override
   void initState() {
@@ -336,7 +336,7 @@ class _ProfileState extends State<Profile> {
         nama_eselon = pref.getString("nama_eselon")!;
         jenis_kepegawaian = pref.getString("jenis_kepegawaian")!;
         status = pref.getString("status")!;
-        // foto = pref.getString("foto")!;
+        // foto = (pref.getString("foto") != null? null : "N/A")!;
       });
       return true;
     } catch (e) {

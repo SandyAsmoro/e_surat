@@ -40,68 +40,97 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("E-Surat Kota Kediri"),
-        backgroundColor: color1,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(15.0),
-        child: SafeArea(
-            child: Center(
-                child: Column(
-          children: [
-            Text("Selamat Datang di Aplikasi E-Surat Kota Kediri",
-                style: TextStyle(
-                    color: color1, fontSize: 20, fontWeight: FontWeight.bold)),
-            Divider(),
-            Card(
-              clipBehavior: Clip.antiAlias,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16),
-              ),
-              shadowColor: Colors.black,
-              elevation: 10,
-              child: Container(
-                decoration: BoxDecoration(
-                    gradient: LinearGradient(
-                        colors: [color2, color3],
-                        stops: [0.1, 1],
-                        begin: Alignment.topCenter,
-                        end: Alignment.bottomRight)),
-                padding: EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      "Total Surat Masuk      : ${totalSurat}",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
+      backgroundColor: Colors.green,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 80,
+          ),
+          SizedBox(
+            child: Image.asset("assets/icon/icon.png"),
+            height: 80,
+          ),
+          Container(
+            height: 65,
+            padding: const EdgeInsets.all(0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('E-Surat'.toUpperCase(),
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30),
+                      topLeft: Radius.circular(30))),
+              child: ListView(
+                padding: const EdgeInsets.all(20),
+                children: [
+                  Container(
+                    child: DataTable(
+                      columns: <DataColumn>[
+                        DataColumn(label: Text("Data Surat")),
+                        DataColumn(label: Text("Jumlah")),
+                      ],
+                      rows: <DataRow>[
+                        DataRow(
+                          cells: <DataCell>[
+                            DataCell(Text("Total Surat Masuk")),
+                            DataCell(Text("${totalSurat}")),
+                          ],
+                        ),
+                        DataRow(
+                          cells: <DataCell>[
+                            DataCell(Text("Total Dalam Proses")),
+                            DataCell(Text("${totalProses}")),
+                          ],
+                        ),
+                        DataRow(
+                          cells: <DataCell>[
+                            DataCell(Text("Total Surat Selesai")),
+                            DataCell(Text("${totalSelesai}")),
+                          ],
+                        ),
+                        DataRow(
+                          cells: <DataCell>[
+                            DataCell(Text("Total Belum Dibaca")),
+                            DataCell(Text("${totalUnread}")),
+                          ],
+                        ),
+                        DataRow(
+                          cells: <DataCell>[
+                            DataCell(Text("Total Belum Disetujui")),
+                            DataCell(Text("${totalUnkonf}")),
+                          ],
+                        ),
+                      ],
+                      decoration: BoxDecoration(
+                        color: Color.fromARGB(255, 255, 255, 255),
+                        borderRadius: BorderRadius.circular(20),
+                        boxShadow: [
+                          BoxShadow(
+                              offset: const Offset(0, 5),
+                              color: Color.fromARGB(255, 255, 255, 255)
+                                  .withOpacity(.2),
+                              spreadRadius: 5,
+                              blurRadius: 10)
+                        ],
+                      ),
                     ),
-                    Divider(),
-                    Text(
-                      "Total Dalam Proses    : ${totalProses}",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    Divider(),
-                    Text(
-                      "Total Surat Selesai     : ${totalSelesai}",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    Divider(),
-                    Text(
-                      "Total Belum Dibaca    : ${totalUnread}",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                    Divider(),
-                    Text(
-                      "Total Belum Disetujui : ${totalUnkonf}",
-                      style: TextStyle(color: Colors.white, fontSize: 20),
-                    ),
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
-          ],
-        ))),
+          )
+        ],
       ),
     );
   }

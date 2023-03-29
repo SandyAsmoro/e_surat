@@ -101,7 +101,7 @@ class _InboxState extends State<Inbox> {
                       ),
                 title: Text("${suratMasuk[index].perihal}"),
                 subtitle: Text("${suratMasuk[index].dari}"),
-                trailing: Text("${suratMasuk[index].tgl_surat}"),
+                trailing: Text("${suratMasuk[index].tglSurat}"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => Detailsm(
@@ -127,6 +127,8 @@ class _InboxState extends State<Inbox> {
       SharedPreferences pref = await SharedPreferences.getInstance();
       setState(() {
         token = pref.getString("token")!;
+        print("token inbox");
+        print(token);
       });
       if (token != '') {
         if (isRefreshed) {
@@ -136,16 +138,21 @@ class _InboxState extends State<Inbox> {
         Map<String, String> requestHeaders = {
           'Authorization': token,
         };
-        var response = await http.get(
+        final response = await http.get(
             Uri.parse(
                 "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk?page=${currentPage}"),
             headers: requestHeaders);
+        print("response :");
+        print(response);
         if (response.statusCode == 200) {
-          print(response.statusCode);
+          // print("response.statusCode");
+          // print(response.statusCode);
           print(jsonDecode(response.body));
+          // print(response.body);
           List data =
               (jsonDecode(response.body) as Map<String, dynamic>)["data"];
+          print(data);
           data.forEach((element) {
             suratMasuk.add(SuratMasuk.fromJson(element));
           });

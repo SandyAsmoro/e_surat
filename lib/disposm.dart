@@ -39,7 +39,8 @@ class _DisposmState extends State<Disposm> {
         };
         var response = await http.get(
             Uri.parse(
-                "https://sigap.kedirikota.go.id/apiesuratpkl/public/userdisposm"),
+                "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
+                // "https://sigap.kedirikota.go.id/apiesuratpkl/public/userdisposm"),
             headers: requestHeaders);
         if (response.statusCode == 200) {
           List data =
@@ -134,7 +135,7 @@ class _DisposmState extends State<Disposm> {
                           "catatan": catatanController.text,
                           "penerima": jsonEncode(seletedBawahan),
                           "token": token,
-                          "no_surat": widget.dispo.no_surat
+                          "no_surat": widget.dispo.noSurat
                         }));
                     // print(response.body);
                     if (response.statusCode == 200) {

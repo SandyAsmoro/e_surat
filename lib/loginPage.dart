@@ -41,185 +41,119 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Center(
-          child: Stack(children: [
-            Positioned(
-              top: 0,
-              right: 0,
-              left: 0,
-              child: Container(
-                height: 300,
-                decoration: BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage("assets/images/kediri.jpg"),
-                        fit: BoxFit.fill)),
-                child: Container(
-                  padding: EdgeInsets.only(top: 90, left: 20),
-                  color: Color.fromARGB(255, 143, 103, 197).withOpacity(.85),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      RichText(
-                        text: TextSpan(
-                            text: "Selamat Datang di ",
-                            style: TextStyle(
-                              fontSize: 25,
-                              // letterSpacing: 2,
-                              color: Colors.yellow[700],
-                            ),
-                            children: [
-                              TextSpan(
-                                text: " E-surat",
-                                style: TextStyle(
-                                  fontSize: 38,
-                                  fontWeight: FontWeight.bold,
-                                  color: Colors.yellow[700],
-                                ),
-                              )
-                            ]),
-                      ),
-                      SizedBox(
-                        height: 5,
-                      ),
-                      Text(
-                        "Login untuk melanjutkan",
-                        style: TextStyle(
-                          // letterSpacing: 1,
-                          color: Colors.white,
-                        ),
-                      )
-                    ],
+      backgroundColor: Colors.green,
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            height: 150,
+          ),
+          SizedBox(
+            child: Image.asset("assets/icon/icon.png"),
+            height: 70,
+          ),
+          Container(
+            height: 100,
+            padding: const EdgeInsets.all(0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text('E-Surat'.toUpperCase(),
+                    style: Theme.of(context).textTheme.headlineMedium?.copyWith(
+                        color: Colors.white, fontWeight: FontWeight.bold)),
+                Text('Login to continue',
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyLarge
+                        ?.copyWith(color: Colors.white54))
+              ],
+            ),
+          ),
+          Expanded(
+            child: Container(
+              decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.only(
+                      topRight: Radius.circular(30),
+                      topLeft: Radius.circular(30))),
+              child: ListView(
+                padding: const EdgeInsets.all(20),
+                children: [
+                  const SizedBox(height: 20),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                              offset: const Offset(0, 5),
+                              color: Colors.green.withOpacity(.2),
+                              spreadRadius: 5,
+                              blurRadius: 10)
+                        ]),
+                    child: TextField(
+                      controller: usernameController,
+                      decoration: InputDecoration(
+                          hintText: 'Username', border: InputBorder.none),
+                    ),
                   ),
-                ),
-              ),
-            ),
-            Positioned(
-              // duration: Duration(milliseconds: 700),
-              // curve: Curves.bounceInOut,
-              top: 535,
-              right: 0,
-              left: 0,
-              child: Center(
-                child: Container(
-                  height: 90,
-                  width: 90,
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(50),
-                      boxShadow: [
-                        BoxShadow(
-                          color: Colors.black.withOpacity(.3),
-                          spreadRadius: 1.5,
-                          blurRadius: 10,
-                        )
-                      ]),
-                ),
-              ),
-            ),
-            Positioned(
-              // duration: Duration(milliseconds: 700),
-              // curve: Curves.bounceInOut,
-              top: 230,
-              child: AnimatedContainer(
-                duration: Duration(milliseconds: 700),
-                curve: Curves.bounceInOut,
-                height: 350,
-                padding: EdgeInsets.all(20),
-                width: MediaQuery.of(context).size.width - 40,
-                margin: EdgeInsets.symmetric(horizontal: 20),
-                decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(15),
-                    boxShadow: [
-                      BoxShadow(
-                          color: Colors.black.withOpacity(0.3),
-                          blurRadius: 15,
-                          spreadRadius: 5),
-                    ]),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      child: Image.asset("assets/icon/icon.png"),
-                      height: 80,
+                  const SizedBox(height: 25),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 15),
+                    decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                              offset: const Offset(0, 5),
+                              color: Colors.green.withOpacity(.2),
+                              spreadRadius: 5,
+                              blurRadius: 10)
+                        ]),
+                    child: TextField(
+                      obscureText: true,
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                          hintText: 'Password', border: InputBorder.none),
                     ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: TextFormField(
-                        controller: usernameController,
-                        decoration: InputDecoration(
-                            labelText: "Username",
-                            border: OutlineInputBorder(),
-                            suffixIcon: Icon(Icons.person)),
-                      ),
-                    ),
-                    SizedBox(
-                      height: 15,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(10.0),
-                      child: TextFormField(
-                        controller: passwordController,
-                        obscureText: true,
-                        decoration: InputDecoration(
-                            labelText: "Password",
-                            border: OutlineInputBorder(),
-                            suffixIcon: Icon(Icons.password)),
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            AnimatedPositioned(
-              duration: Duration(milliseconds: 700),
-              curve: Curves.bounceInOut,
-              top: 535,
-              right: 0,
-              left: 0,
-              child: Center(
-                child: Container(
-                  height: 90,
-                  width: 90,
-                  padding: EdgeInsets.all(15),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(50),
                   ),
-                  child: GestureDetector(
+                  const SizedBox(height: 25),
+                  GestureDetector(
                     onTap: () {
                       login();
                     },
                     child: Container(
+                      child: Text(
+                        'Login',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                            height: 1.7,
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontFamily: "Brand Bold",
+                            fontWeight: FontWeight.w500),
+                      ),
+                      height: 40,
                       decoration: BoxDecoration(
-                        gradient: LinearGradient(
-                            colors: [Colors.orange, Colors.red],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
-                        borderRadius: BorderRadius.circular(30),
+                        color: Colors.green,
+                        borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(
-                              color: Colors.black.withOpacity(.3),
-                              spreadRadius: 1,
-                              blurRadius: 2,
-                              offset: Offset(0, 1))
+                              offset: const Offset(0, 5),
+                              color: Colors.green.withOpacity(.2),
+                              spreadRadius: 5,
+                              blurRadius: 10)
                         ],
-                      ),
-                      child: Icon(
-                        Icons.arrow_forward,
-                        color: Colors.white,
                       ),
                     ),
                   ),
-                ),
+                ],
               ),
-            )
-          ]),
-        ),
+            ),
+          )
+        ],
       ),
     );
   }

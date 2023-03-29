@@ -75,7 +75,7 @@ class _DetailsmState extends State<Detailsm> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${widget.sm.no_surat}",
+                    "${widget.sm.noSurat}",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                   Text(
@@ -102,7 +102,7 @@ class _DetailsmState extends State<Detailsm> {
                   ),
                   Divider(),
                   Text(
-                    "${widget.sm.tgl_surat}",
+                    "${widget.sm.tglSurat}",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                   Text(
@@ -110,14 +110,14 @@ class _DetailsmState extends State<Detailsm> {
                     style: TextStyle(color: Colors.white, fontSize: 9),
                   ),
                   Divider(),
-                  Text(
-                    "${widget.sm.terima}",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                  Text(
-                    "Tanda Tangan",
-                    style: TextStyle(color: Colors.white, fontSize: 9),
-                  ),
+                  // Text(
+                  //   "${widget.sm.ttd}",
+                  //   style: TextStyle(color: Colors.white, fontSize: 16),
+                  // ),
+                  // Text(
+                  //   "Tanda Tangan",
+                  //   style: TextStyle(color: Colors.white, fontSize: 9),
+                  // ),
                 ],
               ),
             ),
@@ -131,14 +131,14 @@ class _DetailsmState extends State<Detailsm> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Pdfview(
-                            linkPdf: widget.sm.kirim,
+                            linkPdf: widget.sm.id,
                           )));
                     },
                     icon: Icon(Icons.attach_file),
                     label: Text("File Surat"),
                     style: ElevatedButton.styleFrom(primary: color1)),
               ),
-              (konf == "1")
+              (konf == "SELESAI")
                   ? Center(
                   child: ElevatedButton.icon(
                     onPressed: () {
@@ -164,10 +164,10 @@ class _DetailsmState extends State<Detailsm> {
                     onPressed: () async {
                       var response = await http.post(
                           Uri.parse(
-                              "https://simponik.kedirikota.go.id/api/inboxdetail?id=sm23020667"),
+                              "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
                               // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/konfirmasi"),
                           body: ({
-                            "id_smwf": widget.sm.skpd_id,
+                            "id_smwf": widget.sm.id,
                           }));
                       if (response.statusCode == 200) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -181,7 +181,7 @@ class _DetailsmState extends State<Detailsm> {
                           ),
                         );
                         setState(() {
-                          konf = "1";
+                          konf = "SELESAI";
                         });
                       } else {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -200,7 +200,7 @@ class _DetailsmState extends State<Detailsm> {
                     label: Text("Konfirmasi"),
                     style: ElevatedButton.styleFrom(primary: color1),
                   )),
-              (konf == "1")
+              (konf == "SELESAI")
                   ? Center(
                   child: ElevatedButton.icon(
                     onPressed: () {
@@ -221,13 +221,13 @@ class _DetailsmState extends State<Detailsm> {
                                   onPressed: () async {
                                     var response = await http.post(
                                         Uri.parse(
-                                            "https://simponik.kedirikota.go.id/api/inboxdetail?id=sm23020667"),
+                                            "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
                                             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/finish"),
                                         body: ({
                                           "catatan": "Dilaksanakan",
                                           // "penerima": jsonEncode(seletedBawahan),
                                           "token": token,
-                                          "id_srt": widget.sm.no_surat
+                                          "id_srt": widget.sm.id
                                         }));
                                     // print(response.body);
                                     if (response.statusCode == 200) {
@@ -433,7 +433,7 @@ class _DetailsmState extends State<Detailsm> {
   Future setBaca() async {
     var response = await http.post(
         Uri.parse(
-            "https://simponik.kedirikota.go.id/api/inboxdetail?id=sm23020667"),
+            "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/baca"),
         body: ({
           "id_smwf": widget.sm.id,
@@ -469,7 +469,7 @@ class _DetailsmState extends State<Detailsm> {
         };
         var response = await http.get(
             Uri.parse(
-                "https://simponik.kedirikota.go.id/api/inboxdetail?id=${widget.sm.no_surat}&page=${currentPage}"),
+                "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
                 // "https://sigap.kedirikota.go.id/apiesuratpkl/public/listdisposm?idsrt=${widget.sm.no_surat}&page=${currentPage}"),
             headers: requestHeaders);
 

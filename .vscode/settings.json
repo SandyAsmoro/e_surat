@@ -1,3 +1,13 @@
 {
-    "java.configuration.updateBuildConfiguration": "interactive"
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "prettier.bracketSameLine": true,
+    "liveshare.allowGuestDebugControl": true,
+    "liveshare.allowGuestTaskControl": true,
+    "liveshare.anonymousGuestApproval": "accept",
+    "liveshare.guestApprovalRequired": true,
+    "liveshare.languages.allowGuestCommandControl": true,
+    "liveshare.diagnosticLogging": true,
+    "liveshare.launcherClient": "visualStudioCode",
+    "liveshare.notebooks.allowGuestExecuteCells": true,
+    "liveshare.publishWorkspaceInfo": true
 }

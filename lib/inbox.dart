@@ -26,6 +26,7 @@ class _InboxState extends State<Inbox> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
   List<SuratMasuk> suratMasuk = [];
+  // SuratMasuk suratMasuk = SuratMasuk();
 
   @override
   void initState() {
@@ -49,7 +50,7 @@ class _InboxState extends State<Inbox> {
         controller: _refreshController,
         enablePullUp: true,
         onRefresh: () async {
-          suratMasuk.clear();
+          // suratMasuk.clear();
           final result = await getSurat(isRefreshed: true);
           if (result == true) {
             _refreshController.refreshCompleted();
@@ -122,6 +123,73 @@ class _InboxState extends State<Inbox> {
     );
   }
 
+  // Future<bool> getSurat({bool isRefreshed = false}) async {
+  //   try {
+  //     SharedPreferences pref = await SharedPreferences.getInstance();
+  //     setState(() {
+  //       token = pref.getString("token")!;
+  //       print("token inbox");
+  //       print(token);
+  //     });
+  //     if (token != '') {
+  //       if (isRefreshed) {
+  //         currentPage = 0;
+  //       }
+  //       ;
+  //       Map<String, String> requestHeaders = {
+  //         'Authorization': token,
+  //       };
+
+  //       print("requestHeaders");
+  //       print(requestHeaders);
+  //       final response = await http.get(
+  //           Uri.parse(
+  //               "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
+  //           // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk?page=${currentPage}"),
+  //           headers: requestHeaders);
+  //       print("response :");
+  //       print(response);
+  //       if (response.statusCode == 200) {
+  //         SuratMasuk surat = SuratMasuk.fromJson(json.decode(response.body));
+  //         print(surat);
+  //         // var resbody = json.decode(response.body);
+  //         // var per = resbody;
+  //         // print("per :");
+  //         // print(per);
+  //         // Map map = per;
+  //         // print(map);
+  //         // List currencies = map.keys.toList();
+  //         // currencies.forEach((element) {
+  //         //   suratMasuk.add(SuratMasuk.fromJson(element));
+  //         // });
+  //         // currentPage++;
+  //         // print(currencies[0]);
+
+  //         // List data =
+  //         //     (jsonDecode(response.body) as Map<String, dynamic>);
+  //         // print(data);
+  //         // data.forEach((element) {
+  //         //   suratMasuk.add(SuratMasuk.fromJson(element));
+  //         // });
+  //         // // print(data);
+  //         // currentPage++;
+  //         // print(data[0]);
+  //         totalPages =
+  //             (jsonDecode(response.body) as Map<String, dynamic>)["totalPage"];
+  //         setState(() {});
+  //         return true;
+  //       } else {
+  //         return false;
+  //       }
+  //     } else {
+  //       return false;
+  //     }
+  //   } catch (e) {
+  //     print(e);
+  //     return false;
+  //   }
+  // }
+
   Future<bool> getSurat({bool isRefreshed = false}) async {
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
@@ -138,6 +206,9 @@ class _InboxState extends State<Inbox> {
         Map<String, String> requestHeaders = {
           'Authorization': token,
         };
+
+        print("requestHeaders");
+        print(requestHeaders);
         final response = await http.get(
             Uri.parse(
                 "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
@@ -146,21 +217,16 @@ class _InboxState extends State<Inbox> {
         print("response :");
         print(response);
         if (response.statusCode == 200) {
-          // print("response.statusCode");
-          // print(response.statusCode);
-          print(jsonDecode(response.body));
-          // print(response.body);
-          List data =
-              (jsonDecode(response.body) as Map<String, dynamic>)["data"];
+          final bd = jsonDecode(response.body);
+          List data = bd['inbox'];
           print(data);
           data.forEach((element) {
             suratMasuk.add(SuratMasuk.fromJson(element));
           });
-          // print(data);
           currentPage++;
+          print("data[0]");
           print(data[0]);
-          totalPages =
-              (jsonDecode(response.body) as Map<String, dynamic>)["totalPage"];
+          totalPages = data.length;
           setState(() {});
           return true;
         } else {

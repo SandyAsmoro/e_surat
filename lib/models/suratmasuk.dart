@@ -10,27 +10,27 @@ SuratMasuk suratMasukFromJson(String str) =>
 String suratMasukToJson(SuratMasuk data) => json.encode(data.toJson());
 
 class SuratMasuk {
-  final String id;
-  final String? tahun;
-  final String? skpdId;
-  final String? tglSurat;
-  final String? noSurat;
-  final String? perihal;
-  final String state;
-  final String? kategori;
-  final String? sifat;
-  final String? dari;
-  final String? sUserName;
-  final String? rUserName;
-  final String? rUserId;
-  final String rState;
-  final String? catatan;
-  final String isbaca;
-  final String tglBaca;
-  final String createdAt;
-  final String? terima;
-  final String? kirim;
-  final String? namaSkpd;
+  String id;
+  String? tahun;
+  String? skpdId;
+  String? tglSurat;
+  String? noSurat;
+  String? perihal;
+  String state;
+  String? kategori;
+  String? sifat;
+  String? dari;
+  String? sUserName;
+  String? rUserName;
+  String? rUserId;
+  String? rState;
+  String? catatan;
+  String? isbaca;
+  String? tglBaca;
+  String? createdAt;
+  String? terima;
+  String? kirim;
+  String? namaSkpd;
 
   SuratMasuk(
       {required this.id,
@@ -46,38 +46,38 @@ class SuratMasuk {
       this.sUserName,
       this.rUserName,
       this.rUserId,
-      required this.rState,
+      this.rState,
       this.catatan,
-      required this.isbaca,
-      required this.tglBaca,
-      required this.createdAt,
+      this.isbaca,
+      this.tglBaca,
+      this.createdAt,
       this.terima,
       this.kirim,
       this.namaSkpd});
 
   factory SuratMasuk.fromJson(Map<String, dynamic> json) {
     return SuratMasuk(
-      id: json['id'],
-      tahun: json['tahun']?.join('') ?? "NA",
-      skpdId: json['skpd_id']?.join('') ?? "NA",
-      tglSurat: json['tgl_surat']?.join('') ?? "NA",
-      noSurat: json['no_surat']?.join('') ?? "NA",
-      perihal: json['perihal']?.join('') ?? "NA",
-      state: json['state'],
-      kategori: json['kategori']?.join('') ?? "NA",
-      sifat: json['sifat']?.join('') ?? "NA",
-      dari: json['dari']?.join('') ?? "NA",
-      sUserName: json['s_user_name']?.join('') ?? "NA",
-      rUserName: json['r_user_name']?.join('') ?? "NA",
-      rUserId: json['r_user_id']?.join('') ?? "NA",
-      rState: json['r_state'],
-      catatan: json['catatan']?.join('') ?? "NA",
-      isbaca: json['isbaca'],
-      tglBaca: json['tgl_baca'],
-      createdAt: json['created_at'],
-      terima: json['terima']?.join('') ?? "NA",
-      kirim: json['kirim']?.join('') ?? "NA",
-      namaSkpd: json['nama_skpd']?.join('') ?? "NA",
+      id: json["id"],
+      tahun: json["tahun"],
+      skpdId: json["skpd_id"],
+      tglSurat: json["tgl_surat"],
+      noSurat: json["no_surat"],
+      perihal: json["perihal"],
+      state: json["state"],
+      kategori: json["kategori"],
+      sifat: json["sifat"],
+      dari: json["dari"],
+      sUserName: json["s_user_name"],
+      rUserName: json["r_user_name"],
+      rUserId: json["r_user_id"],
+      rState: json["r_state"],
+      catatan: json["catatan"],
+      isbaca: json["isbaca"],
+      tglBaca: json["tgl_baca"],
+      createdAt: json["created_at"],
+      terima: json["terima"],
+      kirim: json["kirim"],
+      namaSkpd: json["nama_skpd"],
     );
   }
 
@@ -107,3 +107,25 @@ class SuratMasuk {
     return data;
   }
 }
+
+// id
+// tahun
+// skpdId
+// tglSurat
+// noSurat
+// perihal
+// state
+// kategori
+// sifat
+// dari
+// sUserName
+// rUserName
+// rUserId
+// rState
+// catatan
+// isbaca
+// tglBaca
+// createdAt
+// terima
+// kirim
+// namaSkpd

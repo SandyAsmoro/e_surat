@@ -34,12 +34,15 @@ class _DisposkState extends State<Disposk> {
         };
         var response = await http.get(
             Uri.parse(
-                "https://sigap.kedirikota.go.id/apiesuratpkl/public/userdisposk"),
+                "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
+                // "https://sigap.kedirikota.go.id/apiesuratpkl/public/userdisposk"),
             headers: requestHeaders);
         print(response.body);
         if (response.statusCode == 200) {
-          List data =
-          (jsonDecode(response.body) as Map<String, dynamic>)["data"];
+          final bd = jsonDecode(response.body);
+          List data = bd['outbox']; //masih salah
+          // List data =
+          // (jsonDecode(response.body) as Map<String, dynamic>)["data"];
           data.forEach((element) {
             bawahan.add(Userdisposm.fromJson(element));
           });
@@ -122,7 +125,8 @@ class _DisposkState extends State<Disposk> {
                   if (catatanController.text.isNotEmpty) {
                     var response = await http.post(
                         Uri.parse(
-                            "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/disposisi"),
+                            "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
+                            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/disposisi"),
                         body: ({
                           "catatan": catatanController.text,
                           "penerima": jsonEncode(seletedBawahan),

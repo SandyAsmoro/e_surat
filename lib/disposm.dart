@@ -22,6 +22,7 @@ class Disposm extends StatefulWidget {
 
 class _DisposmState extends State<Disposm> {
   String token = "";
+  String id = "";
   List<Userdisposm> bawahan = [];
   List<Userdisposm?> seletedBawahan = [];
   var catatanController = TextEditingController();
@@ -31,6 +32,7 @@ class _DisposmState extends State<Disposm> {
       SharedPreferences pref = await SharedPreferences.getInstance();
       setState(() {
         token = pref.getString("token")!;
+        id = pref.getString("id")!;
       });
 
       if (token != '') {
@@ -39,7 +41,7 @@ class _DisposmState extends State<Disposm> {
         };
         var response = await http.get(
             Uri.parse(
-                "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
+                "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
                 // "https://sigap.kedirikota.go.id/apiesuratpkl/public/userdisposm"),
             headers: requestHeaders);
         if (response.statusCode == 200) {
@@ -129,7 +131,7 @@ class _DisposmState extends State<Disposm> {
                   if (catatanController.text.isNotEmpty) {
                     var response = await http.post(
                         Uri.parse(
-                            "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
+                            "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
                             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/disposisi"),
                         body: ({
                           "catatan": catatanController.text,

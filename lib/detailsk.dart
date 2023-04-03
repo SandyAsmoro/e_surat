@@ -22,7 +22,7 @@ class _DetailskState extends State<Detailsk> {
   late int totalPages;
   String konf = "";
   final RefreshController _refreshController =
-  RefreshController(initialRefresh: true);
+      RefreshController(initialRefresh: true);
 
   List<Disposisisk> disposisisk = [];
 
@@ -56,64 +56,64 @@ class _DetailskState extends State<Detailsk> {
           Divider(),
           (konf == "DISETUJUI")
               ? Center(
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  print("Disposisi pressed ${widget.sk.id}");
-                  Navigator.of(context)
-                      .push(MaterialPageRoute(
-                      builder: (context) => Disposk(
-                        dispo: widget.sk,
-                      )))
-                      .then((value) {
-                    setState(() {
-                      disposisisk.clear();
-                      getDispo(isRefreshed: true);
+                  child: ElevatedButton.icon(
+                  onPressed: () {
+                    print("Disposisi pressed ${widget.sk.id}");
+                    Navigator.of(context)
+                        .push(MaterialPageRoute(
+                            builder: (context) => Disposk(
+                                  dispo: widget.sk,
+                                )))
+                        .then((value) {
+                      setState(() {
+                        disposisisk.clear();
+                        getDispo(isRefreshed: true);
+                      });
                     });
-                  });
-                },
-                icon: Icon(Icons.send_to_mobile_outlined),
-                label: Text("Disposisi"),
-              ))
+                  },
+                  icon: Icon(Icons.send_to_mobile_outlined),
+                  label: Text("Disposisi"),
+                ))
               : Center(
-              child: ElevatedButton.icon(
-                onPressed: () async {
-                  var response = await http.post(
-                      Uri.parse(
-                          "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
-                          // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/konfirmasi"),
-                      body: ({
-                        "id_skwf": widget.sk.id,
-                      }));
-                  if (response.statusCode == 200) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Konfirmasi Berhasil"),
-                        margin: EdgeInsets.all(30),
-                        behavior: SnackBarBehavior.floating,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
+                  child: ElevatedButton.icon(
+                  onPressed: () async {
+                    var response = await http.post(
+                        Uri.parse(
+                            "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
+                        // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/konfirmasi"),
+                        body: ({
+                          "id_skwf": widget.sk.id,
+                        }));
+                    if (response.statusCode == 200) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Konfirmasi Berhasil"),
+                          margin: EdgeInsets.all(30),
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
                         ),
-                      ),
-                    );
-                    setState(() {
-                      konf = "1";
-                    });
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Server Error"),
-                        margin: EdgeInsets.all(30),
-                        behavior: SnackBarBehavior.floating,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
+                      );
+                      setState(() {
+                        konf = "1";
+                      });
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text("Server Error"),
+                          margin: EdgeInsets.all(30),
+                          behavior: SnackBarBehavior.floating,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(50),
+                          ),
                         ),
-                      ),
-                    );
-                  }
-                },
-                icon: Icon(Icons.check),
-                label: Text("Konfirmasi"),
-              )),
+                      );
+                    }
+                  },
+                  icon: Icon(Icons.check),
+                  label: Text("Konfirmasi"),
+                )),
           Divider(),
           Text("Riwayat Disposisi Surat"),
           Divider(),
@@ -180,11 +180,14 @@ class _DetailskState extends State<Detailsk> {
   Future setBaca() async {
     var response = await http.post(
         Uri.parse(
-            "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/baca"),
+            "https://simponik.kedirikota.go.id/api/outboxdetail?id=${widget.sk.id}"),
+        // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/baca"),
         body: ({
           "id_skwf": widget.sk.id,
         }));
     if (response.statusCode == 200) {
+      print("response.statusCode");
+      print(response.statusCode);
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -216,7 +219,7 @@ class _DetailskState extends State<Detailsk> {
         var response = await http.get(
             Uri.parse(
                 "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
-                // "https://sigap.kedirikota.go.id/apiesuratpkl/public/listdisposk?idsrt=${widget.sk.idSrt}&page=${currentPage}"),
+            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/listdisposk?idsrt=${widget.sk.idSrt}&page=${currentPage}"),
             headers: requestHeaders);
 
         // print(response.body);

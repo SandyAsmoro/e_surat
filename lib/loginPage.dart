@@ -177,7 +177,7 @@ class _LoginPageState extends State<LoginPage> {
             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/em_user/${body['id']}"),
             body: jsonEncode({
               "token": FBToken,
-              "id": body['id'],
+              "id": body['user']['id'],
             }),
             headers: {
               HttpHeaders.contentTypeHeader: "application/json",
@@ -196,6 +196,7 @@ class _LoginPageState extends State<LoginPage> {
 
           SharedPreferences pref = await SharedPreferences.getInstance();
           pref.setString("token", body['user']['token']);
+          pref.setString("id", body['user']['id']);
           pref.setString("nama", body['user']['name']);
           pref.setString("jabatan", body['user']['jabatan']);
           pref.setString("nip", body['user']['nip']);

@@ -11,21 +11,21 @@ String userdisposkToJson(Disposisisk data) => json.encode(data.toJson());
 
 class Disposisisk {
   Disposisisk({
-    required this.pengirim,
-    required this.jabatanPengirim,
-    required this.penerima,
-    required this.jabatanPenerima,
-    required this.catatan,
-    required this.nmstatus,
+    this.pengirim,
+    this.jabatanPengirim,
+    this.penerima,
+    this.jabatanPenerima,
+    this.catatan,
+    this.nmstatus,
     required this.tglProses,
   });
 
-  String pengirim;
-  String jabatanPengirim;
-  String penerima;
-  String jabatanPenerima;
-  String catatan;
-  String nmstatus;
+  String? pengirim;
+  String? jabatanPengirim;
+  String? penerima;
+  String? jabatanPenerima;
+  String? catatan;
+  String? nmstatus;
   DateTime tglProses;
 
   factory Disposisisk.fromJson(Map<String, dynamic> json) => Disposisisk(

@@ -17,6 +17,7 @@ const color4 = Color(0xFFC1F8CF);
 
 class Detailsm extends StatefulWidget {
   final SuratMasuk sm;
+  // final SuratMasuk sm;
   const Detailsm({Key? key, required this.sm}) : super(key: key);
 
   @override
@@ -25,11 +26,12 @@ class Detailsm extends StatefulWidget {
 
 class _DetailsmState extends State<Detailsm> {
   String token = "";
+  String id = "";
   int currentPage = 0;
   late int totalPages;
   String konf = "";
   final RefreshController _refreshController =
-  RefreshController(initialRefresh: true);
+      RefreshController(initialRefresh: true);
 
   List<Disposisism> disposisism = [];
 
@@ -131,8 +133,8 @@ class _DetailsmState extends State<Detailsm> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Pdfview(
-                            linkPdf: widget.sm.id,
-                          )));
+                                linkPdf: widget.sm.id,
+                              )));
                     },
                     icon: Icon(Icons.attach_file),
                     label: Text("File Surat"),
@@ -140,150 +142,150 @@ class _DetailsmState extends State<Detailsm> {
               ),
               (konf == "SELESAI")
                   ? Center(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      // print("Disposisi pressed");
-                      Navigator.of(context)
-                          .push(MaterialPageRoute(
-                          builder: (context) => Disposm(
-                            dispo: widget.sm,
-                          )))
-                          .then((value) {
-                        setState(() {
-                          disposisism.clear();
-                          getDispo(isRefreshed: true);
+                      child: ElevatedButton.icon(
+                      onPressed: () {
+                        // print("Disposisi pressed");
+                        Navigator.of(context)
+                            .push(MaterialPageRoute(
+                                builder: (context) => Disposm(
+                                      dispo: widget.sm,
+                                    )))
+                            .then((value) {
+                          setState(() {
+                            disposisism.clear();
+                            getDispo(isRefreshed: true);
+                          });
                         });
-                      });
-                    },
-                    icon: Icon(Icons.send_to_mobile_outlined),
-                    label: Text("Disposisi"),
-                    style: ElevatedButton.styleFrom(primary: color1),
-                  ))
+                      },
+                      icon: Icon(Icons.send_to_mobile_outlined),
+                      label: Text("Disposisi"),
+                      style: ElevatedButton.styleFrom(primary: color1),
+                    ))
                   : Center(
-                  child: ElevatedButton.icon(
-                    onPressed: () async {
-                      var response = await http.post(
-                          Uri.parse(
-                              "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
-                              // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/konfirmasi"),
-                          body: ({
-                            "id_smwf": widget.sm.id,
-                          }));
-                      if (response.statusCode == 200) {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Konfirmasi Berhasil"),
-                            margin: EdgeInsets.all(30),
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
+                      child: ElevatedButton.icon(
+                      onPressed: () async {
+                        var response = await http.post(
+                            Uri.parse(
+                                "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
+                            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/konfirmasi"),
+                            body: ({
+                              "id_smwf": widget.sm.id,
+                            }));
+                        if (response.statusCode == 200) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Konfirmasi Berhasil"),
+                              margin: EdgeInsets.all(30),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
                             ),
-                          ),
-                        );
-                        setState(() {
-                          konf = "SELESAI";
-                        });
-                      } else {
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(
-                            content: Text("Server Error"),
-                            margin: EdgeInsets.all(30),
-                            behavior: SnackBarBehavior.floating,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(50),
+                          );
+                          setState(() {
+                            konf = "SELESAI";
+                          });
+                        } else {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            SnackBar(
+                              content: Text("Server Error"),
+                              margin: EdgeInsets.all(30),
+                              behavior: SnackBarBehavior.floating,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(50),
+                              ),
                             ),
-                          ),
-                        );
-                      }
-                    },
-                    icon: Icon(Icons.check),
-                    label: Text("Konfirmasi"),
-                    style: ElevatedButton.styleFrom(primary: color1),
-                  )),
+                          );
+                        }
+                      },
+                      icon: Icon(Icons.check),
+                      label: Text("Konfirmasi"),
+                      style: ElevatedButton.styleFrom(primary: color1),
+                    )),
               (konf == "SELESAI")
                   ? Center(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      showDialog(
-                        context: context,
-                        builder: (context) {
-                          return AlertDialog(
-                            title: Text("PERHATIAN!!"),
-                            content: Text(
-                                "Apakah anda yakin menyelesaikan disposisi?"),
-                            actions: [
-                              TextButton(
-                                  onPressed: () {
-                                    Navigator.of(context).pop();
-                                  },
-                                  child: Text("No")),
-                              TextButton(
-                                  onPressed: () async {
-                                    var response = await http.post(
-                                        Uri.parse(
-                                            "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
-                                            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/finish"),
-                                        body: ({
-                                          "catatan": "Dilaksanakan",
-                                          // "penerima": jsonEncode(seletedBawahan),
-                                          "token": token,
-                                          "id_srt": widget.sm.id
-                                        }));
-                                    // print(response.body);
-                                    if (response.statusCode == 200) {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text(
-                                              "Penyelesaian Surat Berhasil"),
-                                          margin: EdgeInsets.all(30),
-                                          behavior: SnackBarBehavior.floating,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(50),
+                      child: ElevatedButton.icon(
+                      onPressed: () {
+                        showDialog(
+                          context: context,
+                          builder: (context) {
+                            return AlertDialog(
+                              title: Text("PERHATIAN!!"),
+                              content: Text(
+                                  "Apakah anda yakin menyelesaikan disposisi?"),
+                              actions: [
+                                TextButton(
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                    child: Text("No")),
+                                TextButton(
+                                    onPressed: () async {
+                                      var response = await http.post(
+                                          Uri.parse(
+                                              "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
+                                          // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/finish"),
+                                          body: ({
+                                            "catatan": "Dilaksanakan",
+                                            // "penerima": jsonEncode(seletedBawahan),
+                                            "token": token,
+                                            "id_srt": widget.sm.id
+                                          }));
+                                      // print(response.body);
+                                      if (response.statusCode == 200) {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text(
+                                                "Penyelesaian Surat Berhasil"),
+                                            margin: EdgeInsets.all(30),
+                                            behavior: SnackBarBehavior.floating,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                      Navigator.pop(context);
-                                    } else {
-                                      ScaffoldMessenger.of(context)
-                                          .showSnackBar(
-                                        SnackBar(
-                                          content: Text("Server Error"),
-                                          margin: EdgeInsets.all(30),
-                                          behavior: SnackBarBehavior.floating,
-                                          shape: RoundedRectangleBorder(
-                                            borderRadius:
-                                            BorderRadius.circular(50),
+                                        );
+                                        Navigator.pop(context);
+                                      } else {
+                                        ScaffoldMessenger.of(context)
+                                            .showSnackBar(
+                                          SnackBar(
+                                            content: Text("Server Error"),
+                                            margin: EdgeInsets.all(30),
+                                            behavior: SnackBarBehavior.floating,
+                                            shape: RoundedRectangleBorder(
+                                              borderRadius:
+                                                  BorderRadius.circular(50),
+                                            ),
                                           ),
-                                        ),
-                                      );
-                                    }
-                                  },
-                                  child: Text("Yes"))
-                            ],
-                          );
-                        },
-                      ).then((value) {
-                        setState(() {
-                          disposisism.clear();
-                          getDispo(isRefreshed: true);
+                                        );
+                                      }
+                                    },
+                                    child: Text("Yes"))
+                              ],
+                            );
+                          },
+                        ).then((value) {
+                          setState(() {
+                            disposisism.clear();
+                            getDispo(isRefreshed: true);
+                          });
                         });
-                      });
-                    },
-                    icon: Icon(Icons.check_circle_outline_rounded),
-                    label: Text("Selesai"),
-                    style: ElevatedButton.styleFrom(primary: color1),
-                  ))
+                      },
+                      icon: Icon(Icons.check_circle_outline_rounded),
+                      label: Text("Selesai"),
+                      style: ElevatedButton.styleFrom(primary: color1),
+                    ))
                   : Center(
-                  child: ElevatedButton.icon(
-                    onPressed: () {
-                      // print("Disposisi pressed");
-                    },
-                    icon: Icon(Icons.check_circle_outline_rounded),
-                    label: Text("Selesai"),
-                    style: ElevatedButton.styleFrom(primary: Colors.grey),
-                  )),
+                      child: ElevatedButton.icon(
+                      onPressed: () {
+                        // print("Disposisi pressed");
+                      },
+                      icon: Icon(Icons.check_circle_outline_rounded),
+                      label: Text("Selesai"),
+                      style: ElevatedButton.styleFrom(primary: Colors.grey),
+                    )),
             ],
           ),
           Divider(),
@@ -350,11 +352,11 @@ class _DetailsmState extends State<Detailsm> {
                       child: Container(
                         decoration: BoxDecoration(
                             gradient: LinearGradient(
-                              colors: [color2, color3],
-                              begin: Alignment.topCenter,
-                              end: Alignment.bottomRight,
-                              stops: [0.1, 1],
-                            )),
+                          colors: [color2, color3],
+                          begin: Alignment.topCenter,
+                          end: Alignment.bottomRight,
+                          stops: [0.1, 1],
+                        )),
                         padding: EdgeInsets.all(12),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -363,14 +365,14 @@ class _DetailsmState extends State<Detailsm> {
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 Text(
-                                  disposisism[index].nmstatus,
+                                  disposisism[index].state,
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 16),
                                 ),
                                 Spacer(),
                                 Text(
                                   DateFormat('kk:mm / yyyy-MM-dd')
-                                      .format(disposisism[index].tglProses),
+                                      .format(disposisism[index].tglDoing),
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 16),
                                 ),
@@ -382,12 +384,12 @@ class _DetailsmState extends State<Detailsm> {
                             Text(
                               "Dari",
                               style:
-                              TextStyle(color: Colors.white, fontSize: 12),
+                                  TextStyle(color: Colors.white, fontSize: 12),
                             ),
                             Text(
-                              disposisism[index].pengirim,
+                              disposisism[index].dari,
                               style:
-                              TextStyle(color: Colors.white, fontSize: 16),
+                                  TextStyle(color: Colors.white, fontSize: 16),
                             ),
                             SizedBox(
                               height: 5,
@@ -395,12 +397,12 @@ class _DetailsmState extends State<Detailsm> {
                             Text(
                               "Catatan",
                               style:
-                              TextStyle(color: Colors.white, fontSize: 12),
+                                  TextStyle(color: Colors.white, fontSize: 12),
                             ),
                             Text(
-                              disposisism[index].catatan,
+                              disposisism[index].keterangan,
                               style:
-                              TextStyle(color: Colors.white, fontSize: 16),
+                                  TextStyle(color: Colors.white, fontSize: 16),
                             ),
                             SizedBox(
                               height: 5,
@@ -408,12 +410,12 @@ class _DetailsmState extends State<Detailsm> {
                             Text(
                               "Kepada",
                               style:
-                              TextStyle(color: Colors.white, fontSize: 12),
+                                  TextStyle(color: Colors.white, fontSize: 12),
                             ),
                             Text(
                               disposisism[index].penerima,
                               style:
-                              TextStyle(color: Colors.white, fontSize: 16),
+                                  TextStyle(color: Colors.white, fontSize: 16),
                             ),
                           ],
                         ),
@@ -433,8 +435,8 @@ class _DetailsmState extends State<Detailsm> {
   Future setBaca() async {
     var response = await http.post(
         Uri.parse(
-            "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
-            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/baca"),
+            "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
+        // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/baca"),
         body: ({
           "id_smwf": widget.sm.id,
         }));
@@ -458,6 +460,7 @@ class _DetailsmState extends State<Detailsm> {
       SharedPreferences pref = await SharedPreferences.getInstance();
       setState(() {
         token = pref.getString("token")!;
+        id = pref.getString("id")!;
       });
       // print(currentPage);
       if (token != '') {
@@ -469,8 +472,8 @@ class _DetailsmState extends State<Detailsm> {
         };
         var response = await http.get(
             Uri.parse(
-                "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
-                // "https://sigap.kedirikota.go.id/apiesuratpkl/public/listdisposm?idsrt=${widget.sm.no_surat}&page=${currentPage}"),
+                "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
+            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/listdisposm?idsrt=${widget.sm.no_surat}&page=${currentPage}"),
             headers: requestHeaders);
 
         // print(response.body);

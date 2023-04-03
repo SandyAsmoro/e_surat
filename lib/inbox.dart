@@ -21,12 +21,12 @@ class Inbox extends StatefulWidget {
 
 class _InboxState extends State<Inbox> {
   String token = "";
+  String id = "";
   int currentPage = 0;
   late int totalPages;
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
   List<SuratMasuk> suratMasuk = [];
-  // SuratMasuk suratMasuk = SuratMasuk();
 
   @override
   void initState() {
@@ -195,8 +195,9 @@ class _InboxState extends State<Inbox> {
       SharedPreferences pref = await SharedPreferences.getInstance();
       setState(() {
         token = pref.getString("token")!;
-        // print("token inbox");
-        // print(token);
+        id = pref.getString("id")!;
+        print("id :");
+        print(id);
       });
       if (token != '') {
         if (isRefreshed) {
@@ -207,27 +208,19 @@ class _InboxState extends State<Inbox> {
           'Authorization': token,
         };
 
-        // print("requestHeaders");
-        // print(requestHeaders);
         final response = await http.get(
             Uri.parse(
-                "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
+                "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk?page=${currentPage}"),
             headers: requestHeaders);
-        // print("response :");
-        // print(response);
         if (response.statusCode == 200) {
           final bd = jsonDecode(response.body);
           List data = bd['inbox'];
-          // print(data);
           data.forEach((element) {
             suratMasuk.add(SuratMasuk.fromJson(element));
           });
           currentPage++;
-          // print("data[0]");
-          // print(data[0]);
           totalPages = data.length;
-          // print(totalPages);
           setState(() {});
           return true;
         } else {

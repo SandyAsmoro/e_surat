@@ -21,6 +21,7 @@ class Outbox extends StatefulWidget {
 
 class _OutboxState extends State<Outbox> {
   String token = "";
+  String id = "";
   int currentPage = 0;
   late int totalPages;
   final RefreshController _refreshController =
@@ -92,7 +93,7 @@ class _OutboxState extends State<Outbox> {
                         color: Colors.red,
                       ),
                 title: Text("${suratKeluar[index].perihal}"),
-                subtitle: Text("${suratKeluar[index].rUserName}"),
+                subtitle: Text("${suratKeluar[index].sUserName}"),
                 trailing: Text("${suratKeluar[index].tglSurat}"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
@@ -113,6 +114,7 @@ class _OutboxState extends State<Outbox> {
       SharedPreferences pref = await SharedPreferences.getInstance();
       setState(() {
         token = pref.getString("token")!;
+        id = pref.getString("id")!;
       });
       if (token != null) {
         if (isRefreshed) {
@@ -123,7 +125,7 @@ class _OutboxState extends State<Outbox> {
         };
         var response = await http.get(
             Uri.parse(
-                "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
+                "https://simponik.kedirikota.go.id/api/outbox?id=$id&param=all"),
             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar?page=${currentPage}"),
             headers: requestHeaders);
         if (response.statusCode == 200) {

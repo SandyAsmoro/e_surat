@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 import 'models/suratmasuk.dart';
 
-const color1 = Color(0xFF533E85);
+const color1 = Color.fromARGB(255, 27, 0, 71);
 const color2 = Color(0xFF488FB1);
 const color3 = Color(0xFF4FD3C4);
 const color4 = Color(0xFFC1F8CF);
@@ -21,6 +21,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   String token = "";
+  String id = "";
   int totalSurat = 0;
   int totalProses = 0;
   int totalSelesai = 0;
@@ -43,19 +44,23 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      // appBar: AppBar(
+      //   title: Text("Home"),
+      //   backgroundColor: color1,
+      // ),
       backgroundColor: Color.fromARGB(255, 27, 0, 71),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 80,
+            height: 120,
           ),
           SizedBox(
             child: Image.asset("assets/icon/icon.png"),
-            height: 80,
+            height: 100,
           ),
           Container(
-            height: 65,
+            height: 75,
             padding: const EdgeInsets.all(0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -143,6 +148,7 @@ class _HomeState extends State<Home> {
       SharedPreferences pref = await SharedPreferences.getInstance();
       setState(() {
         token = pref.getString("token")!;
+        id = pref.getString("id")!;
       });
       if (token != '') {
         Map<String, String> requestHeaders = {
@@ -150,7 +156,7 @@ class _HomeState extends State<Home> {
         };
         var response = await http.get(
             Uri.parse(
-                "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
+                "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/dashboard"),
             headers: requestHeaders);
 

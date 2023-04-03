@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:e_surat/models/suratmasuk.dart';
 import 'package:e_surat/detailsm.dart';
 
-const color1 = Color(0xFF533E85);
+const color1 = Color.fromARGB(255, 27, 0, 71);
 const color2 = Color(0xFF488FB1);
 const color3 = Color(0xFF4FD3C4);
 const color4 = Color(0xFFC1F8CF);
@@ -195,8 +195,8 @@ class _InboxState extends State<Inbox> {
       SharedPreferences pref = await SharedPreferences.getInstance();
       setState(() {
         token = pref.getString("token")!;
-        print("token inbox");
-        print(token);
+        // print("token inbox");
+        // print(token);
       });
       if (token != '') {
         if (isRefreshed) {
@@ -207,26 +207,27 @@ class _InboxState extends State<Inbox> {
           'Authorization': token,
         };
 
-        print("requestHeaders");
-        print(requestHeaders);
+        // print("requestHeaders");
+        // print(requestHeaders);
         final response = await http.get(
             Uri.parse(
                 "https://simponik.kedirikota.go.id/api/inbox?id=496&param=all"),
             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk?page=${currentPage}"),
             headers: requestHeaders);
-        print("response :");
-        print(response);
+        // print("response :");
+        // print(response);
         if (response.statusCode == 200) {
           final bd = jsonDecode(response.body);
           List data = bd['inbox'];
-          print(data);
+          // print(data);
           data.forEach((element) {
             suratMasuk.add(SuratMasuk.fromJson(element));
           });
           currentPage++;
-          print("data[0]");
-          print(data[0]);
+          // print("data[0]");
+          // print(data[0]);
           totalPages = data.length;
+          // print(totalPages);
           setState(() {});
           return true;
         } else {

@@ -75,39 +75,39 @@ class _DetailsmState extends State<Detailsm> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    "${widget.sm.noSurat}",
-                    style: TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                  Text(
                     "Nomor Surat",
                     style: TextStyle(color: Colors.white, fontSize: 9),
                   ),
-                  Divider(),
                   Text(
-                    "${widget.sm.perihal}",
+                    "${widget.sm.noSurat}",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
+                  Divider(),
                   Text(
                     "Perihal",
                     style: TextStyle(color: Colors.white, fontSize: 9),
                   ),
-                  Divider(),
                   Text(
-                    "${widget.sm.dari}",
+                    "${widget.sm.perihal}",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
+                  Divider(),
                   Text(
                     "Dari",
                     style: TextStyle(color: Colors.white, fontSize: 9),
                   ),
-                  Divider(),
                   Text(
-                    "${widget.sm.tglSurat}",
+                    "${widget.sm.dari}",
                     style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
+                  Divider(),
                   Text(
                     "Tanggal Surat",
                     style: TextStyle(color: Colors.white, fontSize: 9),
+                  ),
+                  Text(
+                    "${widget.sm.tglSurat}",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
                   ),
                   Divider(),
                   // Text(
@@ -475,14 +475,17 @@ class _DetailsmState extends State<Detailsm> {
 
         // print(response.body);
         if (response.statusCode == 200) {
-          List data =
-          (jsonDecode(response.body) as Map<String, dynamic>)["data"];
+          final bd = jsonDecode(response.body);
+          List data = bd['inbox'];
+          // List data =
+          // (jsonDecode(response.body) as Map<String, dynamic>)["data"];
           data.forEach((element) {
             disposisism.add(Disposisism.fromJson(element));
           });
           currentPage++;
-          totalPages =
-          (jsonDecode(response.body) as Map<String, dynamic>)["totalPage"];
+          totalPages = data.length;
+          // totalPages =
+          // (jsonDecode(response.body) as Map<String, dynamic>)["totalPage"];
           setState(() {});
           return true;
         } else {

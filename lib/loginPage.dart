@@ -41,16 +41,16 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Color.fromARGB(255, 27, 0, 71),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 150,
+            height: 130,
           ),
           SizedBox(
             child: Image.asset("assets/icon/icon.png"),
-            height: 70,
+            height: 100,
           ),
           Container(
             height: 100,
@@ -89,7 +89,8 @@ class _LoginPageState extends State<LoginPage> {
                         boxShadow: [
                           BoxShadow(
                               offset: const Offset(0, 5),
-                              color: Colors.green.withOpacity(.2),
+                              color: Color.fromARGB(255, 27, 0, 71)
+                                  .withOpacity(.2),
                               spreadRadius: 5,
                               blurRadius: 10)
                         ]),
@@ -108,7 +109,8 @@ class _LoginPageState extends State<LoginPage> {
                         boxShadow: [
                           BoxShadow(
                               offset: const Offset(0, 5),
-                              color: Colors.green.withOpacity(.2),
+                              color: Color.fromARGB(255, 27, 0, 71)
+                                  .withOpacity(.2),
                               spreadRadius: 5,
                               blurRadius: 10)
                         ]),
@@ -137,7 +139,7 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       height: 40,
                       decoration: BoxDecoration(
-                        color: Colors.green,
+                        color: Color.fromARGB(255, 27, 0, 71),
                         borderRadius: BorderRadius.circular(10),
                         boxShadow: [
                           BoxShadow(

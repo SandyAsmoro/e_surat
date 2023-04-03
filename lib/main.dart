@@ -29,11 +29,11 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    LocalNotification.initialize();
-    // For Forground State
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      LocalNotification.showNotification(message);
-    });
+    // LocalNotification.initialize();
+    // // For Forground State
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   LocalNotification.showNotification(message);
+    // });
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'E-Surat Kota Kediri',

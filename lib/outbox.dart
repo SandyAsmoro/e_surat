@@ -7,7 +7,7 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
-const color1 = Color(0xFF533E85);
+const color1 = Color.fromARGB(255, 27, 0, 71);
 const color2 = Color(0xFF488FB1);
 const color3 = Color(0xFF4FD3C4);
 const color4 = Color(0xFFC1F8CF);
@@ -24,7 +24,7 @@ class _OutboxState extends State<Outbox> {
   int currentPage = 0;
   late int totalPages;
   final RefreshController _refreshController =
-  RefreshController(initialRefresh: true);
+      RefreshController(initialRefresh: true);
   List<SuratKeluar> suratKeluar = [];
 
   @override
@@ -82,23 +82,23 @@ class _OutboxState extends State<Outbox> {
         child: ListView.separated(
             itemBuilder: (context, index) {
               return ListTile(
-                leading: (suratKeluar[index].baca == "1")
+                leading: (suratKeluar[index].isbaca == "1")
                     ? Icon(
-                  Icons.mark_email_read_outlined,
-                  color: Colors.green,
-                )
+                        Icons.mark_email_read_outlined,
+                        color: Colors.green,
+                      )
                     : Icon(
-                  Icons.mark_email_unread_outlined,
-                  color: Colors.red,
-                ),
+                        Icons.mark_email_unread_outlined,
+                        color: Colors.red,
+                      ),
                 title: Text("${suratKeluar[index].perihal}"),
-                subtitle: Text("${suratKeluar[index].kepada}"),
+                subtitle: Text("${suratKeluar[index].rUserName}"),
                 trailing: Text("${suratKeluar[index].tglSurat}"),
                 onTap: () {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => Detailsk(
-                        sk: suratKeluar[index],
-                      )));
+                            sk: suratKeluar[index],
+                          )));
                 },
               );
             },
@@ -124,17 +124,20 @@ class _OutboxState extends State<Outbox> {
         var response = await http.get(
             Uri.parse(
                 "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
-                // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar?page=${currentPage}"),
+            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar?page=${currentPage}"),
             headers: requestHeaders);
         if (response.statusCode == 200) {
-          List data =
-          (jsonDecode(response.body) as Map<String, dynamic>)["data"];
+          final bd = jsonDecode(response.body);
+          List data = bd['outbox'];
+          // List data =
+          //     (jsonDecode(response.body) as Map<String, dynamic>)["data"];
           data.forEach((element) {
             suratKeluar.add(SuratKeluar.fromJson(element));
           });
           currentPage++;
-          totalPages =
-          (jsonDecode(response.body) as Map<String, dynamic>)["totalPage"];
+          totalPages = data.length;
+          // totalPages =
+          //     (jsonDecode(response.body) as Map<String, dynamic>)["totalPage"];
           setState(() {});
           return true;
         } else {

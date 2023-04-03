@@ -2,8 +2,8 @@ import 'package:e_surat/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const color1 = Color(0xFF533E85);
-const color2 = Color(0xFF533E85);
+const color1 = Color.fromARGB(255, 27, 0, 71);
+const color2 = Color.fromARGB(255, 27, 0, 71);
 const color3 = Color(0xFF4FD3C4);
 const color4 = Color(0xFFC1F8CF);
 const color5 = Color.fromARGB(255, 255, 0, 0);
@@ -63,100 +63,29 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   // title: Text("Profile"),
-      //   backgroundColor: color1,
-      // ),
-
-      body: Stack(
-        alignment: Alignment.center,
+      backgroundColor: Color.fromARGB(255, 27, 0, 71),
+      body: ListView(
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.end,
-            children: [
-              Container(
-                height: 450,
-                width: double.infinity,
-                margin: EdgeInsets.symmetric(horizontal: 10),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    SizedBox(
-                      width: 500.0,
-                      height: 50.0,
-                      child: Card(
-                        color: color3,
-                        child: Text(
-                          "Nama       : ${nama}",
-                          style: TextStyle(color: Colors.black, fontSize: 16),
-                        ),
-                      ),
-                    ),
-                    Text(
-                      "Jabatan    : ${jabatan}",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                    ),
-                    Text(
-                      "NIP    : ${nip}",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                    ),
-                    Text(
-                      "Golongan    : ${golongan}",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                    ),
-                    Text(
-                      "Pangkat    : ${pangkat}",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                    ),
-                    Text(
-                      "SKPD    : ${skpd}",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                    ),
-                    Text(
-                      "Satker     : ${satker}",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                    ),
-                    Text(
-                      "Nama Jabatan     : ${nama_jabatan}",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                    ),
-                    Text(
-                      "Jenis Jabatan     : ${jenis_jabatan}",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                    ),
-                    Text(
-                      "Eselon     : ${eselon}",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                    ),
-                    Text(
-                      "Nama Eselon     : ${nama_eselon}",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                    ),
-                    Text(
-                      "Jenis Kepegawaian : ${jenis_kepegawaian}",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                    ),
-                    Text(
-                      "Status     : ${status}",
-                      style: TextStyle(color: Colors.black, fontSize: 16),
-                    ),
-                  ],
-                ),
-              )
-            ],
-          ),
-          CustomPaint(
-            child: Container(
-              width: MediaQuery.of(context).size.width,
-              height: MediaQuery.of(context).size.height,
-            ),
-            painter: HeaderCurvedContainer(),
-          ),
           Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               Padding(
-                padding: EdgeInsets.only(top: 60, bottom: 30),
+                padding: EdgeInsets.only(bottom: 0, left: 355, top: 20),
+                child: CircleAvatar(
+                  backgroundColor: color5,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.logout,
+                      color: Colors.white,
+                    ),
+                    onPressed: () {
+                      logout();
+                    },
+                  ),
+                ),
+              ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 20),
                 child: Text(
                   "Profile",
                   style: TextStyle(
@@ -181,23 +110,168 @@ class _ProfileState extends State<Profile> {
                   ),
                 ),
               ),
+              Padding(
+                padding: EdgeInsets.only(bottom: 0, left: 0, top: 20),
+              ),
             ],
           ),
-          Padding(
-            padding: EdgeInsets.only(bottom: 200, left: 174),
-            child: CircleAvatar(
-              backgroundColor: color5,
-              child: IconButton(
-                icon: Icon(
-                  Icons.logout,
-                  color: Colors.white,
-                ),
-                onPressed: () {
-                  logout();
-                },
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                width: double.infinity,
+                margin: EdgeInsets.symmetric(horizontal: 10),
               ),
-            ),
-          )
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              SizedBox(
+                width: 500.0,
+                height: 50.0,
+                child: Card(
+                  color: color3,
+                  child: Text(
+                    "Nama       : ${nama}",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 500.0,
+                height: 50.0,
+                child: Card(
+                  color: color3,
+                  child: Text(
+                    "Jabatan    : ${jabatan}",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 500.0,
+                height: 50.0,
+                child: Card(
+                  color: color3,
+                  child: Text(
+                    "NIP    : ${nip}",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 500.0,
+                height: 50.0,
+                child: Card(
+                  color: color3,
+                  child: Text(
+                    "Golongan    : ${golongan}",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 500.0,
+                height: 50.0,
+                child: Card(
+                  color: color3,
+                  child: Text(
+                    "Pangkat    : ${pangkat}",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 500.0,
+                height: 50.0,
+                child: Card(
+                  color: color3,
+                  child: Text(
+                    "SKPD    : ${skpd}",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 500.0,
+                height: 50.0,
+                child: Card(
+                  color: color3,
+                  child: Text(
+                    "Satker     : ${satker}",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 500.0,
+                height: 50.0,
+                child: Card(
+                  color: color3,
+                  child: Text(
+                    "Nama Jabatan     : ${nama_jabatan}",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 500.0,
+                height: 50.0,
+                child: Card(
+                  color: color3,
+                  child: Text(
+                    "Jenis Jabatan     : ${jenis_jabatan}",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 500.0,
+                height: 50.0,
+                child: Card(
+                  color: color3,
+                  child: Text(
+                    "Eselon     : ${eselon}",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 500.0,
+                height: 50.0,
+                child: Card(
+                  color: color3,
+                  child: Text(
+                    "Nama Eselon     : ${nama_eselon}",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 500.0,
+                height: 50.0,
+                child: Card(
+                  color: color3,
+                  child: Text(
+                    "Jenis Kepegawaian : ${jenis_kepegawaian}",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
+              ),
+              SizedBox(
+                width: 500.0,
+                height: 50.0,
+                child: Card(
+                  color: color3,
+                  child: Text(
+                    "Status     : ${status}",
+                    style: TextStyle(color: Colors.black, fontSize: 16),
+                  ),
+                ),
+              ),
+            ],
+          ),
         ],
       ),
 

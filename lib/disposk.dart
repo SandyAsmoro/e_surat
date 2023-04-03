@@ -127,7 +127,7 @@ class _DisposkState extends State<Disposk> {
                           "catatan": catatanController.text,
                           "penerima": jsonEncode(seletedBawahan),
                           "token": token,
-                          "id_srt": widget.dispo.idSrt
+                          "id_srt": widget.dispo.id
                         }));
                     // print(response.body);
                     if (response.statusCode == 200) {

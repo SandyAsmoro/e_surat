@@ -48,7 +48,7 @@ class SuratMasuk {
       this.rUserId,
       this.rState,
       this.catatan,
-      this.isbaca,
+      required this.isbaca,
       this.tglBaca,
       this.createdAt,
       this.terima,

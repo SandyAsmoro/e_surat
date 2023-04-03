@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
+import 'models/suratmasuk.dart';
+
 const color1 = Color(0xFF533E85);
 const color2 = Color(0xFF488FB1);
 const color3 = Color(0xFF4FD3C4);
@@ -24,6 +26,7 @@ class _HomeState extends State<Home> {
   int totalSelesai = 0;
   int totalUnread = 0;
   int totalUnkonf = 0;
+  List<SuratMasuk> suratMasuk = [];
   List<Dbsuratmasuk> dataSuratMasuk = [];
   @override
   void initState() {
@@ -40,7 +43,7 @@ class _HomeState extends State<Home> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.green,
+      backgroundColor: Color.fromARGB(255, 27, 0, 71),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -152,16 +155,27 @@ class _HomeState extends State<Home> {
             headers: requestHeaders);
 
         if (response.statusCode == 200) {
-          totalSurat =
-              (jsonDecode(response.body) as Map<String, dynamic>)["totalSurat"];
-          totalProses = (jsonDecode(response.body)
-              as Map<String, dynamic>)["totalProses"];
-          totalSelesai = (jsonDecode(response.body)
-              as Map<String, dynamic>)["totalSelesai"];
-          totalUnread = (jsonDecode(response.body)
-              as Map<String, dynamic>)["totalUnread"];
-          totalUnkonf = (jsonDecode(response.body)
-              as Map<String, dynamic>)["totalUnkonf"];
+          final bd = jsonDecode(response.body);
+          List data = bd['inbox'];
+          // print(data);
+          data.forEach((element) {
+            suratMasuk.add(SuratMasuk.fromJson(element));
+          });
+          // totalSurat =
+          //     (jsonDecode(response.body) as Map<String, dynamic>)["totalSurat"];
+          totalSurat = data.length;
+          // totalProses = (jsonDecode(response.body)
+          //     as Map<String, dynamic>)["totalProses"];
+          // totalSelesai = (jsonDecode(response.body)
+          //     as Map<String, dynamic>)["totalSelesai"];
+          // totalUnread = (jsonDecode(response.body)
+          //     as Map<String, dynamic>)["totalUnread"];
+          // totalUnkonf = (jsonDecode(response.body)
+          //     as Map<String, dynamic>)["totalUnkonf"];
+          totalProses = data.length;
+          totalSelesai = data.length;
+          totalUnread = data.length;
+          totalUnkonf = data.length;
 
           setState(() {});
           return true;

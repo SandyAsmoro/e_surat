@@ -30,7 +30,7 @@ class _DetailskState extends State<Detailsk> {
   void initState() {
     super.initState();
     setBaca();
-    konf = widget.sk.konf;
+    konf = widget.sk.state;
   }
 
   @override
@@ -50,15 +50,15 @@ class _DetailskState extends State<Detailsk> {
         children: [
           Text("Nomor Surat ${widget.sk.noSurat}"),
           Text("Perihal ${widget.sk.perihal}"),
-          Text("Kepada ${widget.sk.kepada}"),
+          Text("Kepada ${widget.sk.rUserName}"),
           Text("Tanggal Surat ${widget.sk.tglSurat}"),
-          Text("TTD ${widget.sk.ttd}"),
+          // Text("TTD ${widget.sk.ttd}"),
           Divider(),
-          (konf == "1")
+          (konf == "DISETUJUI")
               ? Center(
               child: ElevatedButton.icon(
                 onPressed: () {
-                  print("Disposisi pressed ${widget.sk.idSrt}");
+                  print("Disposisi pressed ${widget.sk.id}");
                   Navigator.of(context)
                       .push(MaterialPageRoute(
                       builder: (context) => Disposk(
@@ -79,9 +79,10 @@ class _DetailskState extends State<Detailsk> {
                 onPressed: () async {
                   var response = await http.post(
                       Uri.parse(
-                          "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/konfirmasi"),
+                          "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
+                          // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/konfirmasi"),
                       body: ({
-                        "id_skwf": widget.sk.idSkwf,
+                        "id_skwf": widget.sk.id,
                       }));
                   if (response.statusCode == 200) {
                     ScaffoldMessenger.of(context).showSnackBar(
@@ -181,7 +182,7 @@ class _DetailskState extends State<Detailsk> {
         Uri.parse(
             "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/baca"),
         body: ({
-          "id_skwf": widget.sk.idSkwf,
+          "id_skwf": widget.sk.id,
         }));
     if (response.statusCode == 200) {
     } else {
@@ -214,19 +215,23 @@ class _DetailskState extends State<Detailsk> {
         };
         var response = await http.get(
             Uri.parse(
-                "https://sigap.kedirikota.go.id/apiesuratpkl/public/listdisposk?idsrt=${widget.sk.idSrt}&page=${currentPage}"),
+                "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
+                // "https://sigap.kedirikota.go.id/apiesuratpkl/public/listdisposk?idsrt=${widget.sk.idSrt}&page=${currentPage}"),
             headers: requestHeaders);
 
         // print(response.body);
         if (response.statusCode == 200) {
-          List data =
-          (jsonDecode(response.body) as Map<String, dynamic>)["data"];
+          final bd = jsonDecode(response.body);
+          List data = bd['outbox'];
+          // List data =
+          // (jsonDecode(response.body) as Map<String, dynamic>)["data"];
           data.forEach((element) {
             disposisisk.add(Disposisisk.fromJson(element));
           });
           currentPage++;
-          totalPages =
-          (jsonDecode(response.body) as Map<String, dynamic>)["totalPage"];
+          totalPages = data.length;
+          // totalPages =
+          // (jsonDecode(response.body) as Map<String, dynamic>)["totalPage"];
           setState(() {});
           return true;
         } else {

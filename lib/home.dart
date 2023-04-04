@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:e_surat/models/dbsuratmasuk.dart';
+import 'package:e_surat/models/suratkeluar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -28,6 +29,7 @@ class _HomeState extends State<Home> {
   int totalUnread = 0;
   int totalUnkonf = 0;
   List<SuratMasuk> suratMasuk = [];
+  List<SuratKeluar> suratKeluar = [];
   List<Dbsuratmasuk> dataSuratMasuk = [];
   @override
   void initState() {
@@ -163,13 +165,30 @@ class _HomeState extends State<Home> {
         if (response.statusCode == 200) {
           final bd = jsonDecode(response.body);
           List data = bd['inbox'];
-          // print(data);
           data.forEach((element) {
             suratMasuk.add(SuratMasuk.fromJson(element));
           });
+
+        var response2 = await http.get(
+            Uri.parse(
+                "https://simponik.kedirikota.go.id/api/outbox?id=$id&param=all"),
+            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/dashboard"),
+            headers: requestHeaders);
+
+        if (response2.statusCode == 200) {
+          final bd2 = jsonDecode(response2.body);
+          List data2 = bd2['outbox'];
+          data2.forEach((element) {
+            suratKeluar.add(SuratKeluar.fromJson(element));
+          });
+
+          totalSurat = data.length;
+          totalProses = data.where((item) => item['state'] != "SELESAI").length;
+          totalSelesai = data.where((item) => item['state'] == "SELESAI").length;
+          totalUnread = data.where((item) => item['isbaca'] != "1").length;
+          totalUnkonf = data2.where((item) => item['state'] != "DISETUJUI").length;;
           // totalSurat =
           //     (jsonDecode(response.body) as Map<String, dynamic>)["totalSurat"];
-          totalSurat = data.length;
           // totalProses = (jsonDecode(response.body)
           //     as Map<String, dynamic>)["totalProses"];
           // totalSelesai = (jsonDecode(response.body)
@@ -178,13 +197,12 @@ class _HomeState extends State<Home> {
           //     as Map<String, dynamic>)["totalUnread"];
           // totalUnkonf = (jsonDecode(response.body)
           //     as Map<String, dynamic>)["totalUnkonf"];
-          totalProses = data.length;
-          totalSelesai = data.length;
-          totalUnread = data.length;
-          totalUnkonf = data.length;
 
           setState(() {});
           return true;
+        } else {
+          return false;
+        }
         } else {
           return false;
         }

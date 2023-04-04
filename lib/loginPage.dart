@@ -19,13 +19,13 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   void initState() {
+    checkSession();
     super.initState();
     FirebaseMessaging.instance.getToken().then((value) {
       FBToken = value.toString();
       print('FBT : ');
       print(FBToken);
     });
-    checkSession();
   }
 
   void checkSession() async {
@@ -185,6 +185,7 @@ class _LoginPageState extends State<LoginPage> {
             });
 
         if (request.statusCode == 200) {
+          
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("Login Berhasil"),
             margin: EdgeInsets.all(30),

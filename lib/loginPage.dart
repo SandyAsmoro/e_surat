@@ -23,19 +23,21 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     FirebaseMessaging.instance.getToken().then((value) {
       FBToken = value.toString();
-      print('FBT : ');
-      print(FBToken);
+      // print('FBT : ');
+      // print(FBToken);
     });
   }
 
   void checkSession() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
+    final SharedPreferences pref = await SharedPreferences.getInstance();
     String? val = pref.getString("token");
     if (val != null) {
+      // pref.setBool('isLogged', false);
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => Dashboard()),
           (route) => false);
     }
+    // pref.setBool('isLogged', true);
   }
 
   @override
@@ -213,6 +215,7 @@ class _LoginPageState extends State<LoginPage> {
               "jenis_kepegawaian", body['user']['jenis_kepegawaian']);
           pref.setString("status", body['user']['status']);
           // pref.setString("foto", body['user']['foto']);
+          pref.setBool('isLogged', true);
 
           pageRoute();
         } else {

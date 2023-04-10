@@ -1,12 +1,12 @@
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
+// import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:e_surat/home.dart';
 import 'package:e_surat/inbox.dart';
 import 'package:e_surat/outbox.dart';
 import 'package:e_surat/profile.dart';
 
-import 'forgroundLocalNotification.dart';
+// import 'forgroundLocalNotification.dart';
 
 const color1 = Color.fromARGB(255, 27, 0, 71);
 const color2 = Color(0xFF488FB1);
@@ -32,11 +32,11 @@ class _DashboardState extends State<Dashboard> {
 
   @override
   Widget build(BuildContext context) {
-    LocalNotification.initialize();
-    // For Forground State
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) {
-      LocalNotification.showNotification(message);
-    });
+    // LocalNotification.initialize();
+    // // For Forground State
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) {
+    //   LocalNotification.showNotification(message);
+    // });
     return Scaffold(
       body: _pageOption[selectedPage],
       bottomNavigationBar: ConvexAppBar(

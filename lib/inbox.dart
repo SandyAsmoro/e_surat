@@ -23,7 +23,7 @@ class _InboxState extends State<Inbox> {
   String token = "";
   String id = "";
   int currentPage = 0;
-  late int totalPages;
+  int totalPages = 0;
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
   List<SuratMasuk> suratMasuk = [];
@@ -51,25 +51,25 @@ class _InboxState extends State<Inbox> {
         enablePullUp: true,
         onRefresh: () async {
           // suratMasuk.clear();
-          final result = await getSurat(isRefreshed: true);
-          if (result == true) {
-            _refreshController.refreshCompleted();
-          } else {
-            _refreshController.refreshFailed();
-          }
-        },
-        onLoading: () async {
           final result = await getSurat();
           if (result == true) {
-            _refreshController.loadComplete();
+            _refreshController.refreshFailed();
           } else {
-            _refreshController.loadFailed();
+            _refreshController.refreshCompleted();
           }
         },
+        // onLoading: () async {
+        //   final result = await getSurat();
+        //   if (result == true) {
+        //     _refreshController.loadComplete();
+        //   } else {
+        //     _refreshController.loadFailed();
+        //   }
+        // },
         footer: CustomFooter(
           builder: (context, mode) {
             Widget body;
-            if (mode == LoadStatus.loading) {
+            if (mode == LoadStatus) {
               body = CircularProgressIndicator();
             } else if (mode == LoadStatus.failed) {
               body = Text("Load Failed!Click retry!");
@@ -190,7 +190,7 @@ class _InboxState extends State<Inbox> {
   //   }
   // }
 
-  Future<bool> getSurat({bool isRefreshed = false}) async {
+  Future<bool> getSurat({bool isRefreshed = true}) async {
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
       setState(() {
@@ -219,8 +219,11 @@ class _InboxState extends State<Inbox> {
           data.forEach((element) {
             suratMasuk.add(SuratMasuk.fromJson(element));
           });
-          currentPage++;
+          // currentPage++;
+          // currentPage= 1;
+          print(currentPage);
           totalPages = data.length;
+          print(totalPages);
           setState(() {});
           return true;
         } else {

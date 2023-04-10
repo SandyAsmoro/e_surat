@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:e_surat/models/dbsuratmasuk.dart';
+// import 'package:e_surat/models/dbsuratmasuk.dart';
 import 'package:e_surat/models/suratkeluar.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -30,7 +30,7 @@ class _HomeState extends State<Home> {
   int totalUnkonf = 0;
   List<SuratMasuk> suratMasuk = [];
   List<SuratKeluar> suratKeluar = [];
-  List<Dbsuratmasuk> dataSuratMasuk = [];
+  // List<Dbsuratmasuk> dataSuratMasuk = [];
   @override
   void initState() {
     super.initState();

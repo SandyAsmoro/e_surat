@@ -11,85 +11,52 @@ String disposisismToJson(Disposisism data) => json.encode(data.toJson());
 
 class Disposisism {
   Disposisism({
-    this.id,
-    this.tahun,
-    this.skpdId,
-    this.noAgenda,
-    this.noSurat,
-    this.tglSurat,
-    this.perihal,
-    this.ttd,
-    required this.dari,
-    this.kategori,
-    this.sifat,
-    required this.penerima,
-    this.tglTerima,
-    this.tglDeadline,
+    required this.id,
+    required this.smId,
+    required this.sUser,
+    this.sSkpd,
+    this.sUserLog,
+    required this.rUser,
+    this.rSkpd,
+    this.rUserLog,
     required this.state,
-    required this.tglDoing,
-    this.tglArsip,
-    required this.keterangan,
-    this.ketAgenda,
-    this.ketNotulen,
-    this.userId,
-    this.logUser,
-    this.logUserKirim,
-    this.skId,
-    this.createdAt,
-    this.updatedAt,
+    required this.tglProses,
+    required this.isbaca,
+    this.tglBaca,
+    required this.catatan,
+    required this.createdAt,
+    required this.updatedAt,
   });
-  String? id;
-  String? tahun;
-  String? skpdId;
-  String? noAgenda;
-  String? noSurat;
-  String? tglSurat;
-  String? perihal;
-  String? ttd;
-  late String dari;
-  String? kategori;
-  String? sifat;
-  late String penerima;
-  String? tglTerima;
-  String? tglDeadline;
-  late String state;
-  late DateTime tglDoing;
-  String? tglArsip;
-  late String keterangan;
-  String? ketAgenda;
-  String? ketNotulen;
-  String? userId;
-  String? logUser;
-  String? logUserKirim;
-  String? skId;
-  String? createdAt;
-  String? updatedAt;
-  
-  Disposisism.fromJson(Map<String, dynamic> json){
+  late final String id;
+  late final String smId;
+  late final String sUser;
+  late final String? sSkpd;
+  late final String? sUserLog;
+  late final String rUser;
+  late final String? rSkpd;
+  late final String? rUserLog;
+  late final String state;
+  late final DateTime tglProses;
+  late final String isbaca;
+  late final String? tglBaca;
+  late final String catatan;
+  late final String createdAt;
+  late final String updatedAt;
+
+  Disposisism.fromJson(Map<String, dynamic> json) {
     id = json['id'];
-    tahun = json['tahun'];
-    skpdId = json['skpd_id'];
-    noAgenda = json['no_agenda'];
-    noSurat = json['no_surat'];
-    tglSurat = json['tgl_surat'];
-    perihal = json['perihal'];
-    ttd = json['ttd'];
-    dari = json['dari'];
-    kategori = json['kategori'];
-    sifat = json['sifat'];
-    penerima = json['penerima']?.join(',');
-    tglTerima = json['tgl_terima'];
-    tglDeadline = null;
+    smId = json['sm_id'];
+    sUser = json['s_user'];
+    sSkpd = json['s_skpd'];
+    sUserLog = json['s_user_log'];
+    rUser = json['r_user']?? 'null';
+    rSkpd = json['r_skpd'];
+    rUserLog = json['r_user_log'];
     state = json['state'];
-    tglDoing = json['tgl_doing'];
-    tglArsip = null;
-    keterangan = json['keterangan'];
-    ketAgenda = null;
-    ketNotulen = null;
-    userId = json['user_id'];
-    logUser = json['log_user'];
-    logUserKirim = json['log_user_kirim'];
-    skId = json['sk_id'];
+    tglProses = DateTime.parse(json["tgl_proses"]);
+    isbaca = json['isbaca'];
+    tglBaca = json['tgl_baca'];
+    catatan = json['catatan'];
     createdAt = json['created_at'];
     updatedAt = json['updated_at'];
   }
@@ -97,29 +64,18 @@ class Disposisism {
   Map<String, dynamic> toJson() {
     final _data = <String, dynamic>{};
     _data['id'] = id;
-    _data['tahun'] = tahun;
-    _data['skpd_id'] = skpdId;
-    _data['no_agenda'] = noAgenda;
-    _data['no_surat'] = noSurat;
-    _data['tgl_surat'] = tglSurat;
-    _data['perihal'] = perihal;
-    _data['ttd'] = ttd;
-    _data['dari'] = dari;
-    _data['kategori'] = kategori;
-    _data['sifat'] = sifat;
-    _data['penerima'] = penerima;
-    _data['tgl_terima'] = tglTerima;
-    _data['tgl_deadline'] = tglDeadline;
+    _data['sm_id'] = smId;
+    _data['s_user'] = sUser;
+    _data['s_skpd'] = sSkpd;
+    _data['s_user_log'] = sUserLog;
+    _data['r_user'] = rUser;
+    _data['r_skpd'] = rSkpd;
+    _data['r_user_log'] = rUserLog;
     _data['state'] = state;
-    _data['tgl_doing'] = tglDoing;
-    _data['tgl_arsip'] = tglArsip;
-    _data['keterangan'] = keterangan;
-    _data['ket_agenda'] = ketAgenda;
-    _data['ket_notulen'] = ketNotulen;
-    _data['user_id'] = userId;
-    _data['log_user'] = logUser;
-    _data['log_user_kirim'] = logUserKirim;
-    _data['sk_id'] = skId;
+    _data['tgl_proses'] = tglProses;
+    _data['isbaca'] = isbaca;
+    _data['tgl_baca'] = tglBaca;
+    _data['catatan'] = catatan;
     _data['created_at'] = createdAt;
     _data['updated_at'] = updatedAt;
     return _data;

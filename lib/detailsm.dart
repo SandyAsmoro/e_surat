@@ -17,7 +17,6 @@ const color4 = Color(0xFFC1F8CF);
 
 class Detailsm extends StatefulWidget {
   final SuratMasuk sm;
-  // final SuratMasuk sm;
   const Detailsm({Key? key, required this.sm}) : super(key: key);
 
   @override
@@ -133,7 +132,7 @@ class _DetailsmState extends State<Detailsm> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Pdfview(
-                                linkPdf: widget.sm.id,
+                                linkPdf: widget.sm.id, //bingung
                               )));
                     },
                     icon: Icon(Icons.attach_file),
@@ -166,7 +165,7 @@ class _DetailsmState extends State<Detailsm> {
                       onPressed: () async {
                         var response = await http.post(
                             Uri.parse(
-                                "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
+                                "https://simponik.kedirikota.go.id/api/inboxdetail?id=${widget.sm.id}"),  //bingung
                             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/konfirmasi"),
                             body: ({
                               "id_smwf": widget.sm.id,
@@ -188,7 +187,7 @@ class _DetailsmState extends State<Detailsm> {
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
                             SnackBar(
-                              content: Text("Server Error"),
+                              content: Text("Server Error01"),
                               margin: EdgeInsets.all(30),
                               behavior: SnackBarBehavior.floating,
                               shape: RoundedRectangleBorder(
@@ -223,7 +222,7 @@ class _DetailsmState extends State<Detailsm> {
                                     onPressed: () async {
                                       var response = await http.post(
                                           Uri.parse(
-                                              "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
+                                              "https://simponik.kedirikota.go.id/api/inbox?id=${widget.sm.id}"),
                                           // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/finish"),
                                           body: ({
                                             "catatan": "Dilaksanakan",
@@ -251,7 +250,7 @@ class _DetailsmState extends State<Detailsm> {
                                         ScaffoldMessenger.of(context)
                                             .showSnackBar(
                                           SnackBar(
-                                            content: Text("Server Error"),
+                                            content: Text("Server Error02"),
                                             margin: EdgeInsets.all(30),
                                             behavior: SnackBarBehavior.floating,
                                             shape: RoundedRectangleBorder(
@@ -304,18 +303,18 @@ class _DetailsmState extends State<Detailsm> {
                   _refreshController.refreshFailed();
                 }
               },
-              onLoading: () async {
-                final result = await getDispo();
-                if (result == true) {
-                  _refreshController.loadComplete();
-                } else {
-                  _refreshController.loadFailed();
-                }
-              },
+              // onLoading: () async {
+              //   final result = await getDispo();
+              //   if (result == true) {
+              //     _refreshController.loadComplete();
+              //   } else {
+              //     _refreshController.loadFailed();
+              //   }
+              // },
               footer: CustomFooter(
                 builder: (context, mode) {
                   Widget body;
-                  if (mode == LoadStatus.loading) {
+                  if (mode == LoadStatus) {
                     body = CircularProgressIndicator();
                   } else if (mode == LoadStatus.failed) {
                     body = Text("Load Failed!Click retry!");
@@ -372,7 +371,7 @@ class _DetailsmState extends State<Detailsm> {
                                 Spacer(),
                                 Text(
                                   DateFormat('kk:mm / yyyy-MM-dd')
-                                      .format(disposisism[index].tglDoing),
+                                      .format(disposisism[index].tglProses),
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 16),
                                 ),
@@ -387,7 +386,7 @@ class _DetailsmState extends State<Detailsm> {
                                   TextStyle(color: Colors.white, fontSize: 12),
                             ),
                             Text(
-                              disposisism[index].dari,
+                              disposisism[index].sUser,
                               style:
                                   TextStyle(color: Colors.white, fontSize: 16),
                             ),
@@ -400,7 +399,7 @@ class _DetailsmState extends State<Detailsm> {
                                   TextStyle(color: Colors.white, fontSize: 12),
                             ),
                             Text(
-                              disposisism[index].keterangan,
+                              disposisism[index].catatan,
                               style:
                                   TextStyle(color: Colors.white, fontSize: 16),
                             ),
@@ -413,7 +412,7 @@ class _DetailsmState extends State<Detailsm> {
                                   TextStyle(color: Colors.white, fontSize: 12),
                             ),
                             Text(
-                              disposisism[index].penerima,
+                              disposisism[index].rUser,
                               style:
                                   TextStyle(color: Colors.white, fontSize: 16),
                             ),
@@ -435,23 +434,23 @@ class _DetailsmState extends State<Detailsm> {
   Future setBaca() async {
     var response = await http.post(
         Uri.parse(
-            "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
+            "https://simponik.kedirikota.go.id/api/inbox?id=${widget.sm.id}"),
         // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/baca"),
         body: ({
           "id_smwf": widget.sm.id,
         }));
     if (response.statusCode == 200) {
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Server Error"),
-          margin: EdgeInsets.all(30),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-          ),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text("Server Error03"),
+      //     margin: EdgeInsets.all(30),
+      //     behavior: SnackBarBehavior.floating,
+      //     shape: RoundedRectangleBorder(
+      //       borderRadius: BorderRadius.circular(50),
+      //     ),
+      //   ),
+      // );
     }
   }
 
@@ -460,7 +459,7 @@ class _DetailsmState extends State<Detailsm> {
       SharedPreferences pref = await SharedPreferences.getInstance();
       setState(() {
         token = pref.getString("token")!;
-        id = pref.getString("id")!;
+        // id = pref.getString("id")!;
       });
       // print(currentPage);
       if (token != '') {
@@ -472,14 +471,16 @@ class _DetailsmState extends State<Detailsm> {
         };
         var response = await http.get(
             Uri.parse(
-                "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
+                "https://simponik.kedirikota.go.id/api/inboxdetail?id=${widget.sm.id}"),
             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/listdisposm?idsrt=${widget.sm.no_surat}&page=${currentPage}"),
             headers: requestHeaders);
 
         // print(response.body);
         if (response.statusCode == 200) {
           final bd = jsonDecode(response.body);
-          List data = bd['inbox'];
+          List data = bd['detailsurat'];
+          print("data :");
+          print(data);
           // List data =
           // (jsonDecode(response.body) as Map<String, dynamic>)["data"];
           data.forEach((element) {

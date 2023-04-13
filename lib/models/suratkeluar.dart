@@ -9,31 +9,6 @@ SuratKeluar suratKeluarFromJson(String str) =>
 
 String suratKeluarToJson(SuratKeluar data) => json.encode(data.toJson());
 
-// class SuratKeluar {
-//   SuratKeluar({
-//     required this.responsCode,
-//     required this.responsDesc,
-//     required this.outbox,
-//   });
-//   late final String responsCode;
-//   late final String responsDesc;
-//   late final List<Outbox> outbox;
-
-//   SuratKeluar.fromJson(Map<String, dynamic> json){
-//     responsCode = json['responsCode'];
-//     responsDesc = json['responsDesc'];
-//     outbox = List.from(json['outbox']).map((e)=>Outbox.fromJson(e)).toList();
-//   }
-
-//   Map<String, dynamic> toJson() {
-//     final _data = <String, dynamic>{};
-//     _data['responsCode'] = responsCode;
-//     _data['responsDesc'] = responsDesc;
-//     _data['outbox'] = outbox.map((e)=>e.toJson()).toList();
-//     return _data;
-//   }
-// }
-
 class SuratKeluar {
   String id;
   String? tahun;

@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:e_surat/models/disposisism.dart';
+import 'package:e_surat/models/filessurat.dart';
 import 'package:e_surat/models/suratmasuk.dart';
 import 'package:e_surat/pdfview.dart';
 import 'package:flutter/material.dart';
@@ -25,13 +26,12 @@ class Detailsm extends StatefulWidget {
 
 class _DetailsmState extends State<Detailsm> {
   String token = "";
-  String id = "";
+  String files = "";
   int currentPage = 0;
   late int totalPages;
   String konf = "";
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
-
   List<Disposisism> disposisism = [];
 
   @override
@@ -132,7 +132,7 @@ class _DetailsmState extends State<Detailsm> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Pdfview(
-                                linkPdf: widget.sm.id, //bingung
+                                linkPdf: files, //bingung
                               )));
                     },
                     icon: Icon(Icons.attach_file),
@@ -165,7 +165,7 @@ class _DetailsmState extends State<Detailsm> {
                       onPressed: () async {
                         var response = await http.post(
                             Uri.parse(
-                                "https://simponik.kedirikota.go.id/api/inboxdetail?id=${widget.sm.id}"),  //bingung
+                                "https://simponik.kedirikota.go.id/api/inboxdetail?id=${widget.sm.id}"), //bingung
                             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/konfirmasi"),
                             body: ({
                               "id_smwf": widget.sm.id,
@@ -433,24 +433,25 @@ class _DetailsmState extends State<Detailsm> {
 
   Future setBaca() async {
     var response = await http.post(
-        Uri.parse(
-            "https://simponik.kedirikota.go.id/api/inbox?id=${widget.sm.id}"),
+        Uri.parse("https://simponik.kedirikota.go.id/api/readinbox"),
         // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/baca"),
         body: ({
           "id_smwf": widget.sm.id,
         }));
-    if (response.statusCode == 200) {
+    if (response.statusCode == 00) {
+      print("response.statusCode :");
+      print(response.statusCode);
     } else {
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text("Server Error03"),
-      //     margin: EdgeInsets.all(30),
-      //     behavior: SnackBarBehavior.floating,
-      //     shape: RoundedRectangleBorder(
-      //       borderRadius: BorderRadius.circular(50),
-      //     ),
-      //   ),
-      // );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Server Error03"),
+          margin: EdgeInsets.all(30),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+        ),
+      );
     }
   }
 
@@ -478,6 +479,9 @@ class _DetailsmState extends State<Detailsm> {
         // print(response.body);
         if (response.statusCode == 200) {
           final bd = jsonDecode(response.body);
+          // List fil = bd['files'];
+          // print("fil :");
+          // print(fil);
           List data = bd['detailsurat'];
           print("data :");
           print(data);
@@ -491,6 +495,7 @@ class _DetailsmState extends State<Detailsm> {
           // totalPages =
           // (jsonDecode(response.body) as Map<String, dynamic>)["totalPage"];
           setState(() {});
+
           return true;
         } else {
           return false;
@@ -503,4 +508,19 @@ class _DetailsmState extends State<Detailsm> {
       return false;
     }
   }
+
+  // Future<bool> getFile() async {
+  //   try {
+  //     SharedPreferences pref = await SharedPreferences.getInstance();
+  //     setState(() {
+  //       files = pref.getString("fullPathFile")!;
+  //       print("files :");
+  //       print(files);
+  //     });
+  //     return true;
+  //   } catch (e) {
+  //     print(e);
+  //     return false;
+  //   }
+  // }
 }

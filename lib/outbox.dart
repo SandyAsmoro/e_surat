@@ -52,18 +52,18 @@ class _OutboxState extends State<Outbox> {
             _refreshController.refreshFailed();
           }
         },
-        onLoading: () async {
-          final result = await getSurat();
-          if (result == true) {
-            _refreshController.loadComplete();
-          } else {
-            _refreshController.loadFailed();
-          }
-        },
+        // onLoading: () async {
+        //   final result = await getSurat();
+        //   if (result == true) {
+        //     _refreshController.loadComplete();
+        //   } else {
+        //     _refreshController.loadFailed();
+        //   }
+        // },
         footer: CustomFooter(
           builder: (context, mode) {
             Widget body;
-            if (mode == LoadStatus.loading) {
+            if (mode == LoadStatus) {
               body = CircularProgressIndicator();
             } else if (mode == LoadStatus.failed) {
               body = Text("Load Failed!Click retry!");

@@ -11,40 +11,73 @@ String userdisposkToJson(Disposisisk data) => json.encode(data.toJson());
 
 class Disposisisk {
   Disposisisk({
-    this.pengirim,
-    this.jabatanPengirim,
-    this.penerima,
-    this.jabatanPenerima,
-    this.catatan,
-    this.nmstatus,
+    required this.id,
+    required this.skId,
+    required this.sUser,
+    required this.sSkpd,
+    required this.sUserLog,
+    this.rUser,
+    this.rSkpd,
+    this.rUserLog,
+    required this.state,
     required this.tglProses,
+    required this.isbaca,
+    this.tglBaca,
+    required this.catatan,
+    required this.createdAt,
+    required this.updatedAt,
   });
+  late final String id;
+  late final String skId;
+  late final String sUser;
+  late final String sSkpd;
+  late final String sUserLog;
+  late final String? rUser;
+  late final String? rSkpd;
+  late final String? rUserLog;
+  late final String state;
+  late final String tglProses;
+  late final String isbaca;
+  late final String? tglBaca;
+  late final String catatan;
+  late final String createdAt;
+  late final String updatedAt;
+  
+  Disposisisk.fromJson(Map<String, dynamic> json){
+    id = json['id'];
+    skId = json['sk_id'];
+    sUser = json['s_user'];
+    sSkpd = json['s_skpd'];
+    sUserLog = json['s_user_log'];
+    rUser = null;
+    rSkpd = null;
+    rUserLog = null;
+    state = json['state'];
+    tglProses = json['tgl_proses'];
+    isbaca = json['isbaca'];
+    tglBaca = null;
+    catatan = json['catatan'];
+    createdAt = json['created_at'];
+    updatedAt = json['updated_at'];
+  }
 
-  String? pengirim;
-  String? jabatanPengirim;
-  String? penerima;
-  String? jabatanPenerima;
-  String? catatan;
-  String? nmstatus;
-  DateTime tglProses;
-
-  factory Disposisisk.fromJson(Map<String, dynamic> json) => Disposisisk(
-    pengirim: json["pengirim"],
-    jabatanPengirim: json["jabatan_pengirim"],
-    penerima: json["penerima"],
-    jabatanPenerima: json["jabatan_penerima"],
-    catatan: json["catatan"],
-    nmstatus: json["nmstatus"],
-    tglProses: DateTime.parse(json["tgl_proses"]),
-  );
-
-  Map<String, dynamic> toJson() => {
-    "pengirim": pengirim,
-    "jabatan_pengirim": jabatanPengirim,
-    "penerima": penerima,
-    "jabatan_penerima": jabatanPenerima,
-    "catatan": catatan,
-    "nmstatus": nmstatus,
-    "tgl_proses": tglProses.toIso8601String(),
-  };
+  Map<String, dynamic> toJson() {
+    final _data = <String, dynamic>{};
+    _data['id'] = id;
+    _data['sk_id'] = skId;
+    _data['s_user'] = sUser;
+    _data['s_skpd'] = sSkpd;
+    _data['s_user_log'] = sUserLog;
+    _data['r_user'] = rUser;
+    _data['r_skpd'] = rSkpd;
+    _data['r_user_log'] = rUserLog;
+    _data['state'] = state;
+    _data['tgl_proses'] = tglProses;
+    _data['isbaca'] = isbaca;
+    _data['tgl_baca'] = tglBaca;
+    _data['catatan'] = catatan;
+    _data['created_at'] = createdAt;
+    _data['updated_at'] = updatedAt;
+    return _data;
+  }
 }

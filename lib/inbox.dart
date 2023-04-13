@@ -7,6 +7,8 @@ import 'package:http/http.dart' as http;
 import 'package:e_surat/models/suratmasuk.dart';
 import 'package:e_surat/detailsm.dart';
 
+// import 'models/filessurat.dart';
+
 const color1 = Color.fromARGB(255, 27, 0, 71);
 const color2 = Color(0xFF488FB1);
 const color3 = Color(0xFF4FD3C4);
@@ -27,6 +29,7 @@ class _InboxState extends State<Inbox> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
   List<SuratMasuk> suratMasuk = [];
+  // List<FilesSurat> filesSurat = [];
 
   @override
   void initState() {

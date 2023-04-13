@@ -79,7 +79,7 @@ class _DetailskState extends State<Detailsk> {
                   onPressed: () async {
                     var response = await http.post(
                         Uri.parse(
-                            "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
+                            "https://simponik.kedirikota.go.id/api/outbox?id=${widget.sk.id}"),
                         // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/konfirmasi"),
                         body: ({
                           "id_skwf": widget.sk.id,
@@ -130,18 +130,18 @@ class _DetailskState extends State<Detailsk> {
                   _refreshController.refreshFailed();
                 }
               },
-              onLoading: () async {
-                final result = await getDispo();
-                if (result == true) {
-                  _refreshController.loadComplete();
-                } else {
-                  _refreshController.loadFailed();
-                }
-              },
+              // onLoading: () async {
+              //   final result = await getDispo();
+              //   if (result == true) {
+              //     _refreshController.loadComplete();
+              //   } else {
+              //     _refreshController.loadFailed();
+              //   }
+              // },
               footer: CustomFooter(
                 builder: (context, mode) {
                   Widget body;
-                  if (mode == LoadStatus.loading) {
+                  if (mode == LoadStatus) {
                     body = CircularProgressIndicator();
                   } else if (mode == LoadStatus.failed) {
                     body = Text("Load Failed!Click retry!");
@@ -161,10 +161,10 @@ class _DetailskState extends State<Detailsk> {
               child: ListView.separated(
                 itemBuilder: (context, index) {
                   return ListTile(
-                    leading: Text("${disposisisk[index].nmstatus}"),
-                    title: Text("Dari ${disposisisk[index].pengirim}"),
+                    leading: Text("${disposisisk[index].state}"),
+                    title: Text("Dari ${disposisisk[index].sUser}"),
                     subtitle: Text("${disposisisk[index].catatan}"),
-                    trailing: Text("Kepada ${disposisisk[index].penerima}"),
+                    trailing: Text("Kepada ${disposisisk[index].rUser}"),
                   );
                 },
                 separatorBuilder: (context, index) => Divider(),
@@ -189,16 +189,16 @@ class _DetailskState extends State<Detailsk> {
       print("response.statusCode");
       print(response.statusCode);
     } else {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text("Server Error"),
-          margin: EdgeInsets.all(30),
-          behavior: SnackBarBehavior.floating,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(50),
-          ),
-        ),
-      );
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     content: Text("Server Error"),
+      //     margin: EdgeInsets.all(30),
+      //     behavior: SnackBarBehavior.floating,
+      //     shape: RoundedRectangleBorder(
+      //       borderRadius: BorderRadius.circular(50),
+      //     ),
+      //   ),
+      // );
     }
   }
 
@@ -218,14 +218,14 @@ class _DetailskState extends State<Detailsk> {
         };
         var response = await http.get(
             Uri.parse(
-                "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
+                "https://simponik.kedirikota.go.id/api/outboxdetail?id=${widget.sk.id}"),
             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/listdisposk?idsrt=${widget.sk.idSrt}&page=${currentPage}"),
             headers: requestHeaders);
 
         // print(response.body);
         if (response.statusCode == 200) {
           final bd = jsonDecode(response.body);
-          List data = bd['outbox'];
+          List data = bd['detailsurat'];
           // List data =
           // (jsonDecode(response.body) as Map<String, dynamic>)["data"];
           data.forEach((element) {

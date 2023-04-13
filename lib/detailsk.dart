@@ -18,6 +18,9 @@ class Detailsk extends StatefulWidget {
 
 class _DetailskState extends State<Detailsk> {
   String token = "";
+  String id_user = "";
+  String isbaca = "";
+  String tglbaca = "";
   int currentPage = 0;
   late int totalPages;
   String konf = "";
@@ -79,10 +82,10 @@ class _DetailskState extends State<Detailsk> {
                   onPressed: () async {
                     var response = await http.post(
                         Uri.parse(
-                            "https://simponik.kedirikota.go.id/api/outbox?id=${widget.sk.id}"),
+                            "https://simponik.kedirikota.go.id/api/readinbox"),
                         // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/konfirmasi"),
                         body: ({
-                          "id_skwf": widget.sk.id,
+                          "id_sk": widget.sk.id,
                         }));
                     if (response.statusCode == 200) {
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -178,27 +181,46 @@ class _DetailskState extends State<Detailsk> {
   }
 
   Future setBaca() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      // token = pref.getString("token")!;
+      id_user = pref.getString("id")!;
+    });
     var response = await http.post(
-        Uri.parse(
-            "https://simponik.kedirikota.go.id/api/outboxdetail?id=${widget.sk.id}"),
+        Uri.parse("https://simponik.kedirikota.go.id/api/readoutbox"),
         // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/baca"),
         body: ({
-          "id_skwf": widget.sk.id,
+          "sk_id": widget.sk.id,
+          "user_id": id_user,
         }));
+    // print(id_user);
+    // print(widget.sk.id);
     if (response.statusCode == 200) {
-      print("response.statusCode");
-      print(response.statusCode);
+      final body = jsonDecode(response.body);
+      print("body :");
+      print(body);
+
+      // SharedPreferences pref = await SharedPreferences.getInstance();
+      // pref.setString("isbaca", body['isbaca']);
+      // pref.setString("tgl_baca", body['tgl_baca']);
+      // setState(() {
+      //   isbaca = pref.getString("isbaca")!;
+      //   tglbaca = pref.getString("tgl_baca")!;
+      //   print("isBaca");
+      //   print(isbaca);
+      // });
+      // return true;
     } else {
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     content: Text("Server Error"),
-      //     margin: EdgeInsets.all(30),
-      //     behavior: SnackBarBehavior.floating,
-      //     shape: RoundedRectangleBorder(
-      //       borderRadius: BorderRadius.circular(50),
-      //     ),
-      //   ),
-      // );
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text("Server Error"),
+          margin: EdgeInsets.all(30),
+          behavior: SnackBarBehavior.floating,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(50),
+          ),
+        ),
+      );
     }
   }
 
@@ -207,6 +229,7 @@ class _DetailskState extends State<Detailsk> {
       SharedPreferences pref = await SharedPreferences.getInstance();
       setState(() {
         token = pref.getString("token")!;
+        id_user = pref.getString("id")!;
       });
       // print(currentPage);
       if (token != '') {

@@ -26,6 +26,7 @@ class Detailsm extends StatefulWidget {
 
 class _DetailsmState extends State<Detailsm> {
   String token = "";
+  String id_user = "";
   String files = "";
   int currentPage = 0;
   late int totalPages;
@@ -132,14 +133,14 @@ class _DetailsmState extends State<Detailsm> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Pdfview(
-                                linkPdf: files, //bingung
+                                linkPdf: 'berkas/2023/101/22c6074a83be766349a6985795a042f3', //bingung
                               )));
                     },
                     icon: Icon(Icons.attach_file),
                     label: Text("File Surat"),
                     style: ElevatedButton.styleFrom(primary: color1)),
               ),
-              (konf == "SELESAI")
+              (konf == "1")
                   ? Center(
                       child: ElevatedButton.icon(
                       onPressed: () {
@@ -168,7 +169,7 @@ class _DetailsmState extends State<Detailsm> {
                                 "https://simponik.kedirikota.go.id/api/inboxdetail?id=${widget.sm.id}"), //bingung
                             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/konfirmasi"),
                             body: ({
-                              "id_smwf": widget.sm.id,
+                              "id_sm": widget.sm.id,
                             }));
                         if (response.statusCode == 200) {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -182,7 +183,7 @@ class _DetailsmState extends State<Detailsm> {
                             ),
                           );
                           setState(() {
-                            konf = "SELESAI";
+                            konf = "1";
                           });
                         } else {
                           ScaffoldMessenger.of(context).showSnackBar(
@@ -201,7 +202,7 @@ class _DetailsmState extends State<Detailsm> {
                       label: Text("Konfirmasi"),
                       style: ElevatedButton.styleFrom(primary: color1),
                     )),
-              (konf == "SELESAI")
+              (konf == "1")
                   ? Center(
                       child: ElevatedButton.icon(
                       onPressed: () {
@@ -432,15 +433,25 @@ class _DetailsmState extends State<Detailsm> {
   }
 
   Future setBaca() async {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      // token = pref.getString("token")!;
+      id_user = pref.getString("id")!;
+    });
     var response = await http.post(
         Uri.parse("https://simponik.kedirikota.go.id/api/readinbox"),
         // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/baca"),
         body: ({
-          "id_smwf": widget.sm.id,
+          "sm_id": widget.sm.id,
+          "user_id": id_user,
         }));
-    if (response.statusCode == 00) {
-      print("response.statusCode :");
-      print(response.statusCode);
+    if (response.statusCode == 200) {
+      final data = json.decode(response.body);
+      print("data :");
+      print(data);
+    //   setState(() {
+    //     // isbaca = data['myValue'];
+    // });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -460,7 +471,7 @@ class _DetailsmState extends State<Detailsm> {
       SharedPreferences pref = await SharedPreferences.getInstance();
       setState(() {
         token = pref.getString("token")!;
-        // id = pref.getString("id")!;
+        id_user = pref.getString("id")!;
       });
       // print(currentPage);
       if (token != '') {
@@ -483,8 +494,8 @@ class _DetailsmState extends State<Detailsm> {
           // print("fil :");
           // print(fil);
           List data = bd['detailsurat'];
-          print("data :");
-          print(data);
+          // print("data :");
+          // print(data);
           // List data =
           // (jsonDecode(response.body) as Map<String, dynamic>)["data"];
           data.forEach((element) {

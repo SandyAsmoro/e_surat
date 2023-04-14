@@ -8,6 +8,7 @@ import 'package:http/http.dart' as http;
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+const color1 = Color.fromARGB(255, 27, 0, 71);
 class Detailsk extends StatefulWidget {
   final SuratKeluar sk;
   const Detailsk({Key? key, required this.sk}) : super(key: key);
@@ -48,18 +49,178 @@ class _DetailskState extends State<Detailsk> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Detail Surat Keluar"),
+        backgroundColor: Color.fromARGB(255, 27, 0, 71),
       ),
       body: Column(
         children: [
-          Text("Nomor Surat ${widget.sk.noSurat}"),
-          Text("Perihal ${widget.sk.perihal}"),
-          Text("Kepada ${widget.sk.rUserName}"),
-          Text("Tanggal Surat ${widget.sk.tglSurat}"),
-          // Text("TTD ${widget.sk.ttd}"),
+          SizedBox(
+            height: 10,
+          ),
+          Card(
+            clipBehavior: Clip.antiAlias,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(16),
+            ),
+            shadowColor: Colors.black,
+            elevation: 10,
+            child: Container(
+              decoration: BoxDecoration(
+                  gradient: LinearGradient(colors: [
+                Color.fromARGB(255, 27, 0, 71),
+                Color.fromARGB(255, 188, 48, 201),
+              ], stops: [
+                0.2,
+                0.9
+              ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
+              padding: EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    "Nomor Surat",
+                    style: TextStyle(color: Colors.white, fontSize: 9),
+                  ),
+                  Text(
+                    "${widget.sk.noSurat}",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  Divider(),
+                  Text(
+                    "Perihal",
+                    style: TextStyle(color: Colors.white, fontSize: 9),
+                  ),
+                  Text(
+                    "${widget.sk.perihal}",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  Divider(),
+                  Text(
+                    "Tanggal Surat",
+                    style: TextStyle(color: Colors.white, fontSize: 9),
+                  ),
+                  Text(
+                    "${widget.sk.tglSurat}",
+                    style: TextStyle(color: Colors.white, fontSize: 16),
+                  ),
+                  Divider(),
+                  // Text(
+                  //   "${widget.sm.ttd}",
+                  //   style: TextStyle(color: Colors.white, fontSize: 16),
+                  // ),
+                  // Text(
+                  //   "Tanda Tangan",
+                  //   style: TextStyle(color: Colors.white, fontSize: 9),
+                  // ),
+                ],
+              ),
+            ),
+          ),
+          // Expanded(
+
+          //   child: Container(
+          //     height: 150,
+          //     width: 350,
+          //     decoration: const BoxDecoration(
+          //         color: Color.fromARGB(255, 27, 0, 71),
+          //         borderRadius: BorderRadius.only(
+          //             topRight: Radius.circular(15),
+          //             topLeft: Radius.circular(15),
+          //             bottomLeft: Radius.circular(15),
+          //             bottomRight: Radius.circular(15))),
+          //     child: ListView(
+          //       padding: const EdgeInsets.all(10),
+          //       children: [
+          //         SizedBox(
+          //           width: 350.0,
+          //           height: 48.0,
+          //           child: Card(
+          //             color: Color.fromARGB(255, 255, 255, 255),
+          //             child: Text(
+          //               textAlign: TextAlign.center,
+          //               "Nomor Surat :\n${widget.sk.noSurat}",
+          //               style: TextStyle(
+          //                 fontWeight: FontWeight.w500,
+          //                 color: Colors.black,
+          //                 fontSize: 16,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //         SizedBox(
+          //           width: 350.0,
+          //           height: 48.0,
+          //           child: Card(
+          //             color: Color.fromARGB(255, 255, 255, 255),
+          //             child: Text(
+          //               textAlign: TextAlign.center,
+          //               "Perihal ${widget.sk.perihal}",
+          //               style: TextStyle(
+          //                 fontWeight: FontWeight.w500,
+          //                 color: Colors.black,
+          //                 fontSize: 16,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //         SizedBox(
+          //           width: 350.0,
+          //           height: 48.0,
+          //           child: Card(
+          //             color: Color.fromARGB(255, 255, 255, 255),
+          //             child: Text(
+          //               textAlign: TextAlign.center,
+          //               "Kepada ${widget.sk.rUserName}",
+          //               style: TextStyle(
+          //                 fontWeight: FontWeight.w500,
+          //                 color: Colors.black,
+          //                 fontSize: 16,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          //         SizedBox(
+          //           width: 350.0,
+          //           height: 48.0,
+          //           child: Card(
+          //             color: Color.fromARGB(255, 255, 255, 255),
+          //             child: Text(
+          //               textAlign: TextAlign.center,
+          //               "Tanggal Surat ${widget.sk.tglSurat}",
+          //               style: TextStyle(
+          //                 fontWeight: FontWeight.w500,
+          //                 color: Colors.black,
+          //                 fontSize: 16,
+          //               ),
+          //             ),
+          //           ),
+          //         ),
+          // SizedBox(
+          //   width: 350.0,
+          //   height: 48.0,
+          //   child: Card(
+          //     color: Color.fromARGB(255, 255, 255, 255),
+          //     child: Text(
+          //       textAlign: TextAlign.center,
+          //      "TTD ${widget.sk.ttd}",
+          //       style: TextStyle(
+          //         fontWeight: FontWeight.w500,
+          //         color: Colors.black,
+          //         fontSize: 16,
+          //       ),
+          //     ),
+          //   ),
+          // ),
+          //       ],
+          //     ),
+          //   ),
+          // ),
           Divider(),
           (konf == "DISETUJUI")
               ? Center(
                   child: ElevatedButton.icon(
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: color1,
+                  ),
                   onPressed: () {
                     print("Disposisi pressed ${widget.sk.id}");
                     Navigator.of(context)
@@ -82,10 +243,10 @@ class _DetailskState extends State<Detailsk> {
                   onPressed: () async {
                     var response = await http.post(
                         Uri.parse(
-                            "https://simponik.kedirikota.go.id/api/readinbox"),
+                            "https://simponik.kedirikota.go.id/api/outbox?id=${widget.sk.id}"),
                         // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/konfirmasi"),
                         body: ({
-                          "id_sk": widget.sk.id,
+                          "id_skwf": widget.sk.id,
                         }));
                     if (response.statusCode == 200) {
                       ScaffoldMessenger.of(context).showSnackBar(

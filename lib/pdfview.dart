@@ -15,7 +15,8 @@ class _PdfviewState extends State<Pdfview> {
     return SafeArea(
         child: Scaffold(
             body: SfPdfViewer.network(
-                "http://asndigital.kedirikota.go.id/${widget.linkPdf}")));
-                // "https://esurat.kedirikota.go.id/files/${widget.linkPdf}")));
+                // "http://asndigital.kedirikota.go.id/berkas/2023/101/22c6074a83be766349a6985795a042f3")));
+                // "http://asndigital.kedirikota.go.id/${widget.linkPdf}")));
+                "https://esurat.kedirikota.go.id/files/${widget.linkPdf}")));
   }
 }

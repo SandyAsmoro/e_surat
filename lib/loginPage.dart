@@ -48,14 +48,14 @@ class _LoginPageState extends State<LoginPage> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 130,
+            height: 110,
           ),
           SizedBox(
             child: Image.asset("assets/icon/icon.png"),
-            height: 100,
+            height: 150,
           ),
           Container(
-            height: 100,
+            height: 85,
             padding: const EdgeInsets.all(0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -187,7 +187,6 @@ class _LoginPageState extends State<LoginPage> {
             });
 
         if (request.statusCode == 200) {
-          
           ScaffoldMessenger.of(context).showSnackBar(SnackBar(
             content: Text("Login Berhasil"),
             margin: EdgeInsets.all(30),
@@ -214,7 +213,11 @@ class _LoginPageState extends State<LoginPage> {
           pref.setString(
               "jenis_kepegawaian", body['user']['jenis_kepegawaian']);
           pref.setString("status", body['user']['status']);
-          // pref.setString("foto", body['user']['foto']);
+          if (body['user']['foto'] != null) {
+            pref.setString("foto", body['user']['foto']);
+          } else {
+            pref.setString("foto", 'assets/images/default.jpg'); // Isi dengan nilai default yang diinginkan
+          }
           pref.setBool('isLogged', true);
 
           pageRoute();

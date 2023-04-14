@@ -11,9 +11,9 @@ import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
 
-const color1 = Color(0xFF533E85);
-const color2 = Color(0xFF488FB1);
-const color3 = Color(0xFF4FD3C4);
+const color1 = Color.fromARGB(255, 27, 0, 71);
+const color2 = Color.fromARGB(255, 27, 0, 71);
+const color3 = Color.fromARGB(255, 188, 48, 201);
 const color4 = Color(0xFFC1F8CF);
 
 class Detailsm extends StatefulWidget {
@@ -67,11 +67,13 @@ class _DetailsmState extends State<Detailsm> {
             elevation: 10,
             child: Container(
               decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                      colors: [Colors.grey.shade800, Colors.deepPurple],
-                      stops: [0.2, 0.9],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight)),
+                  gradient: LinearGradient(colors: [
+                Color.fromARGB(255, 27, 0, 71),
+                Color.fromARGB(255, 188, 48, 201),
+              ], stops: [
+                0.2,
+                0.9
+              ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
               padding: EdgeInsets.all(12),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -133,7 +135,8 @@ class _DetailsmState extends State<Detailsm> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Pdfview(
-                                linkPdf: 'berkas/2023/101/22c6074a83be766349a6985795a042f3', //bingung
+                                linkPdf:
+                                    'berkas/2023/101/22c6074a83be766349a6985795a042f3', //bingung
                               )));
                     },
                     icon: Icon(Icons.attach_file),
@@ -449,9 +452,9 @@ class _DetailsmState extends State<Detailsm> {
       final data = json.decode(response.body);
       print("data :");
       print(data);
-    //   setState(() {
-    //     // isbaca = data['myValue'];
-    // });
+      //   setState(() {
+      //     // isbaca = data['myValue'];
+      // });
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -501,6 +504,7 @@ class _DetailsmState extends State<Detailsm> {
           data.forEach((element) {
             disposisism.add(Disposisism.fromJson(element));
           });
+
           currentPage++;
           totalPages = data.length;
           // totalPages =

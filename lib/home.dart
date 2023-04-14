@@ -55,14 +55,14 @@ class _HomeState extends State<Home> {
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
-            height: 120,
+            height: 110,
           ),
           SizedBox(
             child: Image.asset("assets/icon/icon.png"),
-            height: 100,
+            height: 150,
           ),
           Container(
-            height: 75,
+            height: 65,
             padding: const EdgeInsets.all(0),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,

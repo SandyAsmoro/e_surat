@@ -39,6 +39,7 @@ class _DetailsmState extends State<Detailsm> {
   void initState() {
     super.initState();
     setBaca();
+    // getFIle();
     konf = widget.sm.state;
   }
 
@@ -135,8 +136,7 @@ class _DetailsmState extends State<Detailsm> {
                     onPressed: () {
                       Navigator.of(context).push(MaterialPageRoute(
                           builder: (context) => Pdfview(
-                                linkPdf:
-                                    'berkas/2023/101/22c6074a83be766349a6985795a042f3', //bingung
+                                linkPdf: files,
                               )));
                     },
                     icon: Icon(Icons.attach_file),
@@ -493,24 +493,20 @@ class _DetailsmState extends State<Detailsm> {
         // print(response.body);
         if (response.statusCode == 200) {
           final bd = jsonDecode(response.body);
-          // List fil = bd['files'];
-          // print("fil :");
-          // print(fil);
           List data = bd['detailsurat'];
-          // print("data :");
-          // print(data);
-          // List data =
-          // (jsonDecode(response.body) as Map<String, dynamic>)["data"];
           data.forEach((element) {
             disposisism.add(Disposisism.fromJson(element));
           });
 
+          List data2 = bd['files'];
+          data2.forEach((element) {
+            files = element['full_path_file'];
+            print(files);
+          });
+
           currentPage++;
           totalPages = data.length;
-          // totalPages =
-          // (jsonDecode(response.body) as Map<String, dynamic>)["totalPage"];
           setState(() {});
-
           return true;
         } else {
           return false;
@@ -523,19 +519,4 @@ class _DetailsmState extends State<Detailsm> {
       return false;
     }
   }
-
-  // Future<bool> getFile() async {
-  //   try {
-  //     SharedPreferences pref = await SharedPreferences.getInstance();
-  //     setState(() {
-  //       files = pref.getString("fullPathFile")!;
-  //       print("files :");
-  //       print(files);
-  //     });
-  //     return true;
-  //   } catch (e) {
-  //     print(e);
-  //     return false;
-  //   }
-  // }
 }

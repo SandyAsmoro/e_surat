@@ -35,7 +35,7 @@ class _DisposkState extends State<Disposk> {
         var response = await http.get(
             Uri.parse(
                 "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
-                // "https://sigap.kedirikota.go.id/apiesuratpkl/public/userdisposk"),
+            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/userdisposk"),
             headers: requestHeaders);
         print(response.body);
         if (response.statusCode == 200) {
@@ -78,9 +78,13 @@ class _DisposkState extends State<Disposk> {
     return Scaffold(
       appBar: AppBar(
         title: Text("Disposisi Surat Keluar"),
+        backgroundColor: Color.fromARGB(255, 27, 0, 71),
       ),
       body: Column(
         children: [
+          SizedBox(
+            height: 15,
+          ),
           Text("Perihal ${widget.dispo.perihal}"),
           SizedBox(
             height: 15,
@@ -121,63 +125,65 @@ class _DisposkState extends State<Disposk> {
           ),
           Center(
               child: ElevatedButton.icon(
-                onPressed: () async {
-                  if (catatanController.text.isNotEmpty) {
-                    var response = await http.post(
-                        Uri.parse(
-                            "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
-                            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/disposisi"),
-                        body: ({
-                          "catatan": catatanController.text,
-                          "penerima": jsonEncode(seletedBawahan),
-                          "token": token,
-                          "id_srt": widget.dispo.id
-                        }));
-                    // print(response.body);
-                    if (response.statusCode == 200) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Disposisi Berhasil"),
-                          margin: EdgeInsets.all(30),
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      );
-                      Navigator.pop(context);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Server Error"),
-                          margin: EdgeInsets.all(30),
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      );
-                    }
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Isi disposisi tidak boleh kosong!!"),
-                        margin: EdgeInsets.all(30),
-                        behavior: SnackBarBehavior.floating,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
+            onPressed: () async {
+              if (catatanController.text.isNotEmpty) {
+                var response = await http.post(
+                    Uri.parse(
+                        "https://simponik.kedirikota.go.id/api/outbox?id=496&param=all"),
+                    // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/disposisi"),
+                    body: ({
+                      "catatan": catatanController.text,
+                      "penerima": jsonEncode(seletedBawahan),
+                      "token": token,
+                      "id_srt": widget.dispo.id
+                    }));
+                // print(response.body);
+                if (response.statusCode == 200) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Disposisi Berhasil"),
+                      margin: EdgeInsets.all(30),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
                       ),
-                    );
-                  }
-                  // Navigator.of(context).push(MaterialPageRoute(
-                  //     builder: (context) => Disposm(
-                  //           dispo: widget.sm,
-                  //         )));
-                },
-                icon: Icon(Icons.send_to_mobile_outlined),
-                label: Text("Disposisi"),
-              ))
+                    ),
+                  );
+                  Navigator.pop(context);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Server Error"),
+                      margin: EdgeInsets.all(30),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  );
+                }
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Isi disposisi tidak boleh kosong!!"),
+                    margin: EdgeInsets.all(30),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                  ),
+                );
+              }
+              // Navigator.of(context).push(MaterialPageRoute(
+              //     builder: (context) => Disposm(
+              //           dispo: widget.sm,
+              //         )));
+            },
+            icon: Icon(Icons.send_to_mobile_outlined),
+            label: Text("Disposisi"),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 27, 0, 71)),
+          ))
           // Text("data : ${bawahan[1].nama}")
         ],
       ),

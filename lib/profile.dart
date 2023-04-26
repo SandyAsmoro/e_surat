@@ -63,10 +63,10 @@ class _ProfileState extends State<Profile> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // appBar: AppBar(
-      //   title: Text("Profile"),
-      //   backgroundColor: color1,
-      // ),
+      appBar: AppBar(
+        title: Text("Profile"),
+        backgroundColor: color1,
+      ),
       backgroundColor: Color.fromARGB(255, 27, 0, 71),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -77,22 +77,22 @@ class _ProfileState extends State<Profile> {
               color: Color.fromARGB(255, 27, 0, 71),
             ),
           ),
-          SizedBox(
-            height: 47,
-            width: 500,
-            child: Container(
-              color: Color.fromARGB(255, 27, 0, 71),
-              child: Text(
-                textAlign: TextAlign.center,
-                "Profile",
-                style: TextStyle(
-                  fontWeight: FontWeight.w500,
-                  color: Color.fromARGB(255, 255, 255, 255),
-                  fontSize: 30,
-                ),
-              ),
-            ),
-          ),
+          // SizedBox(
+          //   height: 47,
+          //   width: 500,
+          //   child: Container(
+          //     color: Color.fromARGB(255, 27, 0, 71),
+          //     child: Text(
+          //       textAlign: TextAlign.center,
+          //       "Profile",
+          //       style: TextStyle(
+          //         fontWeight: FontWeight.w500,
+          //         color: Color.fromARGB(255, 255, 255, 255),
+          //         fontSize: 30,
+          //       ),
+          //     ),
+          //   ),
+          // ),
           // SizedBox(
           //   height: 10,
           // ),
@@ -111,7 +111,7 @@ class _ProfileState extends State<Profile> {
             ),
           ),
           Padding(
-            padding: EdgeInsets.only(bottom: 0.5, left: 350),
+            padding: EdgeInsets.only(bottom: 0.5, left: 310),
             child: CircleAvatar(
               backgroundColor: Color.fromARGB(255, 255, 255, 255),
               child: IconButton(

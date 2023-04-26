@@ -1,14 +1,16 @@
 import 'dart:convert';
-
 import 'package:e_surat/models/disposisism.dart';
 import 'package:e_surat/models/suratmasuk.dart';
 import 'package:e_surat/pdfview.dart';
+import 'package:e_surat/php_unserialize.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:e_surat/disposm.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:intl/intl.dart';
+import 'models/ruserlog.dart';
+import 'models/suserlog.dart';
 
 const color1 = Color.fromARGB(255, 27, 0, 71);
 const color2 = Color.fromARGB(255, 27, 0, 71);
@@ -27,12 +29,15 @@ class _DetailsmState extends State<Detailsm> {
   String token = "";
   String id_user = "";
   String files = "";
+  late String _response1 = "";
   int currentPage = 0;
   late int totalPages;
   String konf = "";
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
   List<Disposisism> disposisism = [];
+  List<SUserLog> slog = [];
+  List<RUserLog> rlog = [];
 
   @override
   void initState() {
@@ -389,7 +394,7 @@ class _DetailsmState extends State<Detailsm> {
                                   TextStyle(color: Colors.white, fontSize: 12),
                             ),
                             Text(
-                              disposisism[index].sUser,
+                              slog[index].name,
                               style:
                                   TextStyle(color: Colors.white, fontSize: 16),
                             ),
@@ -415,7 +420,7 @@ class _DetailsmState extends State<Detailsm> {
                                   TextStyle(color: Colors.white, fontSize: 12),
                             ),
                             Text(
-                              disposisism[index].rUser,
+                              rlog[index].name,
                               style:
                                   TextStyle(color: Colors.white, fontSize: 16),
                             ),
@@ -486,21 +491,36 @@ class _DetailsmState extends State<Detailsm> {
         var response = await http.get(
             Uri.parse(
                 "https://simponik.kedirikota.go.id/api/inboxdetail?id=${widget.sm.id}"),
-            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/listdisposm?idsrt=${widget.sm.no_surat}&page=${currentPage}"),
             headers: requestHeaders);
 
-        // print(response.body);
         if (response.statusCode == 200) {
           final bd = jsonDecode(response.body);
           List data = bd['detailsurat'];
+          print("data :");
+          print(data);
+
           data.forEach((element) {
             disposisism.add(Disposisism.fromJson(element));
+            var object = Php.unserialize(element['s_user_log']);
+            slog.add(SUserLog.fromJson(object));
+            var ob = element['r_user_log'];
+            if (ob == "") {
+              ob = "a:33:{s:2:\"id\";s:4:\"4824\";s:3:\"nip\";s:4:\"0000\";s:3:\"nik\";s:4:\"0000\";s:4:\"name\";s:4:\"null\";s:8:\"username\";s:6:\"kadin1\";s:8:\"password\";s:64:\"8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918\";s:12:\"tempat_lahir\";N;s:13:\"tanggal_lahir\";N;s:2:\"jk\";N;s:6:\"alamat\";N;s:5:\"no_hp\";s:12:\"081249991377\";s:5:\"email\";N;s:4:\"foto\";N;s:15:\"kedudukan_hukum\";s:5:\"Aktif\";s:17:\"jenis_kepegawaian\";N;s:9:\"gol_ruang\";N;s:11:\"gol_pangkat\";N;s:13:\"jenis_jabatan\";s:18:\"Jabatan Struktural\";s:12:\"nama_jabatan\";s:12:\"KEPALA DINAS\";s:6:\"eselon\";s:4:\"II.a\";s:11:\"nama_eselon\";s:23:\"PIMPINAN TINGGI PRATAMA\";s:11:\"plt_jabatan\";N;s:9:\"plt_jenis\";N;s:8:\"plt_skpd\";N;s:11:\"plt_skpd_id\";N;s:7:\"skpd_id\";s:3:\"998\";s:10:\"created_at\";s:19:\"2023-02-01 22:29:20\";s:10:\"updated_at\";s:19:\"2023-02-13 10:02:53\";s:7:\"nm_skpd\";s:14:\"OPD UJI COBA 1\";s:6:\"bidang\";N;s:10:\"unit_kerja\";s:14:\"OPD UJI COBA 1\";s:5:\"roles\";s:1:\"9\";s:10:\"roles_name\";s:10:\"Kepala OPD\";}";
+              print("ob :");
+              print(ob);
+            }
+            var object2 = Php.unserialize(ob);
+            rlog.add(RUserLog.fromJson(object2));
+            print("object2 :");
+            print(object2);
           });
 
+          // data.forEach((element) {
+          //   disposisism.add(Disposisism.fromJson(element));
+          // });
           List data2 = bd['files'];
           data2.forEach((element) {
             files = element['full_path_file'];
-            print(files);
           });
 
           currentPage++;

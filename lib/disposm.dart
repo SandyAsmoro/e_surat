@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 import 'package:multi_select_flutter/multi_select_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-const color1 = Color(0xFF533E85);
+const color1 = Color.fromARGB(255, 27, 0, 71);
 const color2 = Color(0xFF488FB1);
 const color3 = Color(0xFF4FD3C4);
 const color4 = Color(0xFFC1F8CF);
@@ -42,11 +42,11 @@ class _DisposmState extends State<Disposm> {
         var response = await http.get(
             Uri.parse(
                 "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
-                // "https://sigap.kedirikota.go.id/apiesuratpkl/public/userdisposm"),
+            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/userdisposm"),
             headers: requestHeaders);
         if (response.statusCode == 200) {
           List data =
-          (jsonDecode(response.body) as Map<String, dynamic>)["data"];
+              (jsonDecode(response.body) as Map<String, dynamic>)["data"];
           data.forEach((element) {
             bawahan.add(Userdisposm.fromJson(element));
           });
@@ -127,60 +127,61 @@ class _DisposmState extends State<Disposm> {
           ),
           Center(
               child: ElevatedButton.icon(
-                onPressed: () async {
-                  if (catatanController.text.isNotEmpty) {
-                    var response = await http.post(
-                        Uri.parse(
-                            "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
-                            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/disposisi"),
-                        body: ({
-                          "catatan": catatanController.text,
-                          "penerima": jsonEncode(seletedBawahan),
-                          "token": token,
-                          "no_surat": widget.dispo.noSurat
-                        }));
-                    // print(response.body);
-                    if (response.statusCode == 200) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Disposisi Berhasil"),
-                          margin: EdgeInsets.all(30),
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      );
-                      Navigator.pop(context);
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Server Error"),
-                          margin: EdgeInsets.all(30),
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      );
-                    }
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(
-                        content: Text("Isi disposisi tidak boleh kosong!!"),
-                        margin: EdgeInsets.all(30),
-                        behavior: SnackBarBehavior.floating,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(50),
-                        ),
+            onPressed: () async {
+              if (catatanController.text.isNotEmpty) {
+                var response = await http.post(
+                    Uri.parse(
+                        "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
+                    // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/disposisi"),
+                    body: ({
+                      "catatan": catatanController.text,
+                      "penerima": jsonEncode(seletedBawahan),
+                      "token": token,
+                      "no_surat": widget.dispo.noSurat
+                    }));
+                // print(response.body);
+                if (response.statusCode == 200) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Disposisi Berhasil"),
+                      margin: EdgeInsets.all(30),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
                       ),
-                    );
-                  }
-                },
-                icon: Icon(Icons.send_to_mobile_outlined),
-                label: Text("Disposisi"),
-                style: ElevatedButton.styleFrom(primary: Colors.deepPurple),
-              ))
+                    ),
+                  );
+                  Navigator.pop(context);
+                } else {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text("Server Error"),
+                      margin: EdgeInsets.all(30),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ),
+                  );
+                }
+              } else {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text("Isi disposisi tidak boleh kosong!!"),
+                    margin: EdgeInsets.all(30),
+                    behavior: SnackBarBehavior.floating,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(50),
+                    ),
+                  ),
+                );
+              }
+            },
+            icon: Icon(Icons.send_to_mobile_outlined),
+            label: Text("Disposisi"),
+            style: ElevatedButton.styleFrom(
+                backgroundColor: Color.fromARGB(255, 27, 0, 71)),
+          ))
         ],
       ),
     );

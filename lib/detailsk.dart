@@ -214,7 +214,7 @@ class _DetailskState extends State<Detailsk> {
           //     ),
           //   ),
           // ),
-          Divider(),
+          // Divider(),
           (konf == "DISETUJUI")
               ? Center(
                   child: ElevatedButton.icon(

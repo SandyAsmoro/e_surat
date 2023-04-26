@@ -11,12 +11,15 @@ class Pdfview extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('PDF Viewer'),
+        backgroundColor: Color.fromARGB(255, 27, 0, 71),
       ),
-      body: SfPdfViewer.network(
+      body: Container(
+        child: SfPdfViewer.network(
         'https://asndigital.kedirikota.go.id/${linkPdf}',
         // 'https://www.kindacode.com/wp-content/uploads/2021/07/test.pdf',
         // pdfUrl,
         enableDocumentLinkAnnotation: true,
+      ),
       ),
     );
   }

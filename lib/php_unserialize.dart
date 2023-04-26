@@ -125,6 +125,9 @@ class Php {
         case 'n':
           readdata = null;
           break;
+        case '':
+          readdata = null;
+          break;
         case 's':
           ccount = readUntil(data, dataoffset, ':');
           chrs = ccount[0];

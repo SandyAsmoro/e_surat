@@ -3,10 +3,14 @@ import 'dart:convert';
 import 'package:e_surat/disposk.dart';
 import 'package:e_surat/models/disposisisk.dart';
 import 'package:e_surat/models/suratkeluar.dart';
+import 'package:e_surat/php_unserialize.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+
+import 'models/ruserlogout.dart';
+import 'models/suserlogout.dart';
 
 const color1 = Color.fromARGB(255, 27, 0, 71);
 class Detailsk extends StatefulWidget {
@@ -29,6 +33,8 @@ class _DetailskState extends State<Detailsk> {
       RefreshController(initialRefresh: true);
 
   List<Disposisisk> disposisisk = [];
+  List<SUserLogOut> slogout = [];
+  List<RUserLogOut> rlogout = [];
 
   @override
   void initState() {
@@ -326,9 +332,9 @@ class _DetailskState extends State<Detailsk> {
                 itemBuilder: (context, index) {
                   return ListTile(
                     leading: Text("${disposisisk[index].state}"),
-                    title: Text("Dari ${disposisisk[index].sUser}"),
+                    title: Text("Dari ${slogout[index].name}"),
                     subtitle: Text("${disposisisk[index].catatan}"),
-                    trailing: Text("Kepada ${disposisisk[index].rUser}"),
+                    trailing: Text("Kepada ${rlogout[index].name}"),
                   );
                 },
                 separatorBuilder: (context, index) => Divider(),
@@ -414,6 +420,16 @@ class _DetailskState extends State<Detailsk> {
           // (jsonDecode(response.body) as Map<String, dynamic>)["data"];
           data.forEach((element) {
             disposisisk.add(Disposisisk.fromJson(element));
+            var object = Php.unserialize(element['s_user_log']);
+            slogout.add(SUserLogOut.fromJson(object));
+            var ob = element['r_user_log'];
+              print("ob :");
+              print(ob);
+            if (ob == "" || ob == null) {
+              ob = "a:1:{s:4:\"name\";s:4:\"null\";}";
+            }
+            var objec = Php.unserialize(ob);
+            rlogout.add(RUserLogOut.fromJson(objec));
           });
           currentPage++;
           totalPages = data.length;

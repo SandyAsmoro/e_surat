@@ -85,7 +85,13 @@ class _DisposkState extends State<Disposk> {
           SizedBox(
             height: 15,
           ),
-          Text("Perihal ${widget.dispo.perihal}"),
+          Align(
+            alignment: Alignment.center,
+            child: Text(
+              "Perihal \n${widget.dispo.perihal}",
+            ),
+          ),
+
           SizedBox(
             height: 15,
           ),

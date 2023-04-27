@@ -1,18 +1,21 @@
 import 'dart:convert';
-
 import 'package:e_surat/disposk.dart';
 import 'package:e_surat/models/disposisisk.dart';
 import 'package:e_surat/models/suratkeluar.dart';
 import 'package:e_surat/php_unserialize.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
 import 'package:pull_to_refresh/pull_to_refresh.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 import 'models/ruserlogout.dart';
 import 'models/suserlogout.dart';
 
 const color1 = Color.fromARGB(255, 27, 0, 71);
+const color2 = Color.fromARGB(255, 27, 0, 71);
+const color3 = Color.fromARGB(255, 188, 48, 201);
+const color4 = Color(0xFFC1F8CF);
+
 class Detailsk extends StatefulWidget {
   final SuratKeluar sk;
   const Detailsk({Key? key, required this.sk}) : super(key: key);
@@ -24,14 +27,15 @@ class Detailsk extends StatefulWidget {
 class _DetailskState extends State<Detailsk> {
   String token = "";
   String id_user = "";
-  String isbaca = "";
-  String tglbaca = "";
+  String files = "";
+  // String isbaca = "";
+  // String tglbaca = "";
+  // String tglProses = "";
   int currentPage = 0;
   late int totalPages;
   String konf = "";
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
-
   List<Disposisisk> disposisisk = [];
   List<SUserLogOut> slogout = [];
   List<RUserLogOut> rlogout = [];
@@ -330,11 +334,75 @@ class _DetailskState extends State<Detailsk> {
               ),
               child: ListView.separated(
                 itemBuilder: (context, index) {
-                  return ListTile(
-                    leading: Text("${disposisisk[index].state}"),
-                    title: Text("Dari ${slogout[index].name}"),
-                    subtitle: Text("${disposisisk[index].catatan}"),
-                    trailing: Text("Kepada ${rlogout[index].name}"),
+                  return Card(
+                    clipBehavior: Clip.antiAlias,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    shadowColor: Colors.black,
+                    elevation: 10,
+                    child: Container(
+                      decoration: BoxDecoration(
+                          gradient: LinearGradient(
+                        colors: [color2, color3],
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomRight,
+                        stops: [0.1, 1],
+                      )),
+                      padding: EdgeInsets.all(12),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "${disposisisk[index].tglProses}",
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 16),
+                              )
+                            ],
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Dari",
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                          ),
+                          Text(
+                            slogout[index].name,
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Catatan",
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                          ),
+                          Text(
+                            disposisisk[index].catatan,
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Text(
+                            "Kepada",
+                            style: TextStyle(color: Colors.white, fontSize: 12),
+                          ),
+                          Text(
+                            rlogout[index].name,
+                            style: TextStyle(color: Colors.white, fontSize: 16),
+                          ),
+                        ],
+                      ),
+                    ),
+                    // leading: Text("${disposisisk[index].state}"),
+                    // title: Text("Dari ${slogout[index].name}"),
+                    // subtitle: Text("${disposisisk[index].catatan}"),
+                    // trailing: Text("Kepada ${rlogout[index].name}"),
                   );
                 },
                 separatorBuilder: (context, index) => Divider(),
@@ -423,8 +491,8 @@ class _DetailskState extends State<Detailsk> {
             var object = Php.unserialize(element['s_user_log']);
             slogout.add(SUserLogOut.fromJson(object));
             var ob = element['r_user_log'];
-              print("ob :");
-              print(ob);
+            print("ob :");
+            print(ob);
             if (ob == "" || ob == null) {
               ob = "a:1:{s:4:\"name\";s:4:\"null\";}";
             }

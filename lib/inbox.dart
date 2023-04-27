@@ -96,11 +96,11 @@ class _InboxState extends State<Inbox> {
               return ListTile(
                 leading: (suratMasuk[index].isbaca == "1")
                     ? Icon(
-                        Icons.mark_email_read_outlined,
+                        Icons.mark_email_read,
                         color: Colors.green,
                       )
                     : Icon(
-                        Icons.mark_email_unread_outlined,
+                        Icons.mark_email_unread,
                         color: Colors.red,
                       ),
                 title: Text("${suratMasuk[index].perihal}"),

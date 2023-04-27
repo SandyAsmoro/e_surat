@@ -129,27 +129,31 @@ class _LoginPageState extends State<LoginPage> {
                       login();
                     },
                     child: Container(
-                      child: Text(
-                        'Login',
-                        textAlign: TextAlign.center,
-                        style: TextStyle(
-                            height: 1.7,
-                            color: Colors.white,
-                            fontSize: 16,
-                            fontFamily: "Brand Bold",
-                            fontWeight: FontWeight.w500),
-                      ),
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Color.fromARGB(255, 27, 0, 71),
-                        borderRadius: BorderRadius.circular(10),
-                        boxShadow: [
-                          BoxShadow(
-                              offset: const Offset(0, 5),
-                              color: Colors.green.withOpacity(.2),
-                              spreadRadius: 5,
-                              blurRadius: 10)
-                        ],
+                      padding: EdgeInsets.fromLTRB(60, 0, 60, 0),
+                      child: Container(
+                        padding: EdgeInsets.all(3),
+                        child: Text(
+                          'LOGIN',
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                              height: 1.7,
+                              color: Colors.white,
+                              fontSize: 18,
+                              fontFamily: "Brand Bold",
+                              fontWeight: FontWeight.w500),
+                        ),
+                        height: 40,
+                        decoration: BoxDecoration(
+                          color: Color.fromARGB(255, 27, 0, 71),
+                          borderRadius: BorderRadius.circular(10),
+                          boxShadow: [
+                            BoxShadow(
+                                offset: const Offset(0, 5),
+                                color: Colors.green.withOpacity(.2),
+                                spreadRadius: 5,
+                                blurRadius: 10)
+                          ],
+                        ),
                       ),
                     ),
                   ),
@@ -216,7 +220,9 @@ class _LoginPageState extends State<LoginPage> {
           if (body['user']['foto'] != null) {
             pref.setString("foto", body['user']['foto']);
           } else {
-            pref.setString("foto", 'assets/images/default.jpg'); // Isi dengan nilai default yang diinginkan
+            pref.setString("foto",
+              'https://i.pinimg.com/originals/fd/14/a4/fd14a484f8e558209f0c2a94bc36b855.png'); // Isi dengan nilai default yang diinginkan
+              // 'assets/images/default.jpg'); // Isi dengan nilai default yang diinginkan
           }
           pref.setBool('isLogged', true);
 

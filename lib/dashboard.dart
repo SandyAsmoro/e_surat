@@ -43,8 +43,8 @@ class _DashboardState extends State<Dashboard> {
         backgroundColor: color1,
         items: [
           TabItem(icon: Icons.home, title: 'Home'),
-          TabItem(icon: Icons.inbox_outlined, title: 'Inbox'),
-          TabItem(icon: Icons.outbox_outlined, title: 'Outbox'),
+          TabItem(icon: Icons.archive, title: 'Inbox'),
+          TabItem(icon: Icons.unarchive, title: 'Outbox'),
           TabItem(icon: Icons.people, title: 'Profile'),
         ],
         initialActiveIndex: selectedPage,

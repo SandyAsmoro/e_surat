@@ -47,6 +47,7 @@ class _ProfileState extends State<Profile> {
   String jenis_kepegawaian = "";
   String status = "";
   String foto = "";
+  String pp = '';
 
   @override
   void initState() {
@@ -71,30 +72,11 @@ class _ProfileState extends State<Profile> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(
-            height: 35,
-            child: Container(
-              color: Color.fromARGB(255, 27, 0, 71),
-            ),
-          ),
           // SizedBox(
-          //   height: 47,
-          //   width: 500,
+          //   height: 5,
           //   child: Container(
           //     color: Color.fromARGB(255, 27, 0, 71),
-          //     child: Text(
-          //       textAlign: TextAlign.center,
-          //       "Profile",
-          //       style: TextStyle(
-          //         fontWeight: FontWeight.w500,
-          //         color: Color.fromARGB(255, 255, 255, 255),
-          //         fontSize: 30,
-          //       ),
-          //     ),
           //   ),
-          // ),
-          // SizedBox(
-          //   height: 10,
           // ),
           Container(
             padding: EdgeInsets.all(0),
@@ -106,9 +88,32 @@ class _ProfileState extends State<Profile> {
               shape: BoxShape.circle,
               image: DecorationImage(
                 fit: BoxFit.cover,
-                image: AssetImage(foto),
+                image: NetworkImage(foto),
+                // image: AssetImage(foto),
               ),
             ),
+          ),
+          SizedBox(
+            height: 5,
+          ),
+          SizedBox(
+            height: 26,
+            width: 500,
+            child: Container(
+              color: Color.fromARGB(255, 27, 0, 71),
+              child: Text(
+                textAlign: TextAlign.center,
+                "${nama}",
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: Color.fromARGB(255, 255, 255, 255),
+                  fontSize: 25,
+                ),
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 10,
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 0.5, left: 310),
@@ -134,24 +139,24 @@ class _ProfileState extends State<Profile> {
                       topRight: Radius.circular(30),
                       topLeft: Radius.circular(30))),
               child: ListView(
-                padding: const EdgeInsets.all(30),
+                padding: const EdgeInsets.all(20),
                 children: [
-                  SizedBox(
-                    width: 350.0,
-                    height: 48.0,
-                    child: Card(
-                      color: color3,
-                      child: Text(
-                        textAlign: TextAlign.center,
-                        "Nama :\n${nama}",
-                        style: TextStyle(
-                          fontWeight: FontWeight.w500,
-                          color: Colors.black,
-                          fontSize: 16,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // SizedBox(
+                  //   width: 350.0,
+                  //   height: 48.0,
+                  //   child: Card(
+                  //     color: color3,
+                  //     child: Text(
+                  //       textAlign: TextAlign.center,
+                  //       "Nama :\n${nama}",
+                  //       style: TextStyle(
+                  //         fontWeight: FontWeight.w500,
+                  //         color: Colors.black,
+                  //         fontSize: 16,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                   SizedBox(
                     width: 350.0,
                     height: 48.0,
@@ -366,6 +371,8 @@ class _ProfileState extends State<Profile> {
         jenis_kepegawaian = pref.getString("jenis_kepegawaian")!;
         status = pref.getString("status")!;
         foto = pref.getString("foto")!;
+        print("foto :");
+        print(foto);
       });
       return true;
     } catch (e) {

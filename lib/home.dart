@@ -3,6 +3,7 @@ import 'dart:convert';
 // import 'package:e_surat/models/dbsuratmasuk.dart';
 import 'package:e_surat/models/suratkeluar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -30,12 +31,42 @@ class _HomeState extends State<Home> {
   int totalUnkonf = 0;
   List<SuratMasuk> suratMasuk = [];
   List<SuratKeluar> suratKeluar = [];
-  // List<Dbsuratmasuk> dataSuratMasuk = [];
+  // late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
+
   @override
   void initState() {
     super.initState();
+    // var initializationSettingsAndroid = AndroidInitializationSettings('app_icon');
+    // // var initializationSettingsIOS = IOSInitializationSettings();
+    // var initializationSettings = InitializationSettings(
+    //   android: initializationSettingsAndroid, 
+    //   // iOS: initializationSettingsIOS,
+    // );
+    // flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+    // flutterLocalNotificationsPlugin.initialize(initializationSettings);
     getDbSurat();
   }
+
+  // Future<void> _showNotification() async {
+  //   var androidPlatformChannelSpecifics = AndroidNotificationDetails(
+  //     'your channel id', 
+  //     'your channel name', 
+  //     // 'your channel description',
+  //     importance: Importance.max,
+  //     priority: Priority.high,
+  //   );
+  //   // var iOSPlatformChannelSpecifics = IOSNotificationDetails();
+  //   var platformChannelSpecifics = NotificationDetails(
+  //     android: androidPlatformChannelSpecifics, 
+  //     // iOS: iOSPlatformChannelSpecifics,
+  //   );
+  //   await flutterLocalNotificationsPlugin.show(
+  //     0, 
+  //     'New message', 
+  //     'You have received a new message.', 
+  //     platformChannelSpecifics,
+  //   );
+  // }
 
   @override
   void dispose() {
@@ -68,7 +99,7 @@ class _HomeState extends State<Home> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('E-Surat'.toUpperCase(),
+                Text('ASN Digital'.toUpperCase(),
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold)),
               ],
@@ -169,40 +200,44 @@ class _HomeState extends State<Home> {
             suratMasuk.add(SuratMasuk.fromJson(element));
           });
 
-        var response2 = await http.get(
-            Uri.parse(
-                "https://simponik.kedirikota.go.id/api/outbox?id=$id&param=all"),
-            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/dashboard"),
-            headers: requestHeaders);
+          var response2 = await http.get(
+              Uri.parse(
+                  "https://simponik.kedirikota.go.id/api/outbox?id=$id&param=all"),
+              // "https://sigap.kedirikota.go.id/apiesuratpkl/public/dashboard"),
+              headers: requestHeaders);
 
-        if (response2.statusCode == 200) {
-          final bd2 = jsonDecode(response2.body);
-          List data2 = bd2['outbox'];
-          data2.forEach((element) {
-            suratKeluar.add(SuratKeluar.fromJson(element));
-          });
+          if (response2.statusCode == 200) {
+            final bd2 = jsonDecode(response2.body);
+            List data2 = bd2['outbox'];
+            data2.forEach((element) {
+              suratKeluar.add(SuratKeluar.fromJson(element));
+            });
 
-          totalSurat = data.length;
-          totalProses = data.where((item) => item['state'] != "SELESAI").length;
-          totalSelesai = data.where((item) => item['state'] == "SELESAI").length;
-          totalUnread = data.where((item) => item['isbaca'] != "1").length;
-          totalUnkonf = data2.where((item) => item['state'] != "DISETUJUI").length;;
-          // totalSurat =
-          //     (jsonDecode(response.body) as Map<String, dynamic>)["totalSurat"];
-          // totalProses = (jsonDecode(response.body)
-          //     as Map<String, dynamic>)["totalProses"];
-          // totalSelesai = (jsonDecode(response.body)
-          //     as Map<String, dynamic>)["totalSelesai"];
-          // totalUnread = (jsonDecode(response.body)
-          //     as Map<String, dynamic>)["totalUnread"];
-          // totalUnkonf = (jsonDecode(response.body)
-          //     as Map<String, dynamic>)["totalUnkonf"];
+            totalSurat = data.length;
+            totalProses =
+                data.where((item) => item['state'] != "SELESAI").length;
+            totalSelesai =
+                data.where((item) => item['state'] == "SELESAI").length;
+            totalUnread = data.where((item) => item['isbaca'] != "1").length;
+            totalUnkonf =
+                data2.where((item) => item['state'] != "DISETUJUI").length;
+            ;
+            // totalSurat =
+            //     (jsonDecode(response.body) as Map<String, dynamic>)["totalSurat"];
+            // totalProses = (jsonDecode(response.body)
+            //     as Map<String, dynamic>)["totalProses"];
+            // totalSelesai = (jsonDecode(response.body)
+            //     as Map<String, dynamic>)["totalSelesai"];
+            // totalUnread = (jsonDecode(response.body)
+            //     as Map<String, dynamic>)["totalUnread"];
+            // totalUnkonf = (jsonDecode(response.body)
+            //     as Map<String, dynamic>)["totalUnkonf"];
 
-          setState(() {});
-          return true;
-        } else {
-          return false;
-        }
+            setState(() {});
+            return true;
+          } else {
+            return false;
+          }
         } else {
           return false;
         }

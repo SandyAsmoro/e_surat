@@ -29,7 +29,7 @@ class _DetailsmState extends State<Detailsm> {
   String token = "";
   String id_user = "";
   String files = "";
-  late String _response1 = "";
+  // late String _response1 = "";
   int currentPage = 0;
   late int totalPages;
   String konf = "";
@@ -147,152 +147,155 @@ class _DetailsmState extends State<Detailsm> {
                     label: Text("File Surat"),
                     style: ElevatedButton.styleFrom(primary: color1)),
               ),
-              (konf == "1")
-                  ? Center(
-                      child: ElevatedButton.icon(
-                      onPressed: () {
-                        // print("Disposisi pressed");
-                        Navigator.of(context)
-                            .push(MaterialPageRoute(
-                                builder: (context) => Disposm(
-                                      dispo: widget.sm,
-                                    )))
-                            .then((value) {
-                          setState(() {
-                            disposisism.clear();
-                            getDispo(isRefreshed: true);
-                          });
-                        });
-                      },
-                      icon: Icon(Icons.send_to_mobile_outlined),
-                      label: Text("Disposisi"),
-                      style: ElevatedButton.styleFrom(primary: color1),
-                    ))
-                  : Center(
-                      child: ElevatedButton.icon(
-                      onPressed: () async {
-                        var response = await http.post(
-                            Uri.parse(
-                                "https://simponik.kedirikota.go.id/api/inboxdetail?id=${widget.sm.id}"), //bingung
-                            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/konfirmasi"),
-                            body: ({
-                              "id_sm": widget.sm.id,
-                            }));
-                        if (response.statusCode == 200) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Konfirmasi Berhasil"),
-                              margin: EdgeInsets.all(30),
-                              behavior: SnackBarBehavior.floating,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                            ),
-                          );
-                          setState(() {
-                            konf = "1";
-                          });
-                        } else {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            SnackBar(
-                              content: Text("Server Error01"),
-                              margin: EdgeInsets.all(30),
-                              behavior: SnackBarBehavior.floating,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(50),
-                              ),
-                            ),
-                          );
-                        }
-                      },
-                      icon: Icon(Icons.check),
-                      label: Text("Konfirmasi"),
-                      style: ElevatedButton.styleFrom(primary: color1),
-                    )),
-              (konf == "1")
-                  ? Center(
-                      child: ElevatedButton.icon(
-                      onPressed: () {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: Text("PERHATIAN!!"),
-                              content: Text(
-                                  "Apakah anda yakin menyelesaikan disposisi?"),
-                              actions: [
-                                TextButton(
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                    child: Text("No")),
-                                TextButton(
-                                    onPressed: () async {
-                                      var response = await http.post(
-                                          Uri.parse(
-                                              "https://simponik.kedirikota.go.id/api/inbox?id=${widget.sm.id}"),
-                                          // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/finish"),
-                                          body: ({
-                                            "catatan": "Dilaksanakan",
-                                            // "penerima": jsonEncode(seletedBawahan),
-                                            "token": token,
-                                            "id_srt": widget.sm.id
-                                          }));
-                                      // print(response.body);
-                                      if (response.statusCode == 200) {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text(
-                                                "Penyelesaian Surat Berhasil"),
-                                            margin: EdgeInsets.all(30),
-                                            behavior: SnackBarBehavior.floating,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                            ),
-                                          ),
-                                        );
-                                        Navigator.pop(context);
-                                      } else {
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          SnackBar(
-                                            content: Text("Server Error02"),
-                                            margin: EdgeInsets.all(30),
-                                            behavior: SnackBarBehavior.floating,
-                                            shape: RoundedRectangleBorder(
-                                              borderRadius:
-                                                  BorderRadius.circular(50),
-                                            ),
-                                          ),
-                                        );
-                                      }
-                                    },
-                                    child: Text("Yes"))
-                              ],
-                            );
-                          },
-                        ).then((value) {
-                          setState(() {
-                            disposisism.clear();
-                            getDispo(isRefreshed: true);
-                          });
-                        });
-                      },
-                      icon: Icon(Icons.check_circle_outline_rounded),
-                      label: Text("Selesai"),
-                      style: ElevatedButton.styleFrom(primary: color1),
-                    ))
-                  : Center(
-                      child: ElevatedButton.icon(
-                      onPressed: () {
-                        // print("Disposisi pressed");
-                      },
-                      icon: Icon(Icons.check_circle_outline_rounded),
-                      label: Text("Selesai"),
-                      style: ElevatedButton.styleFrom(primary: Colors.grey),
-                    )),
+              // (konf == "1")
+              //     ? Center(
+              //         child: ElevatedButton.icon(
+              //         onPressed: () {
+              //           // print("Disposisi pressed");
+              //           Navigator.of(context)
+              //               .push(MaterialPageRoute(
+              //                   builder: (context) => Disposm(
+              //                         dispo: widget.sm,
+              //                       )))
+              //               .then((value) {
+              //             setState(() {
+              //               disposisism.clear();
+              //               getDispo(isRefreshed: true);
+              //             });
+              //           });
+              //         },
+              //         icon: Icon(Icons.send_to_mobile_outlined),
+              //         label: Text("Disposisi"),
+              //         style: ElevatedButton.styleFrom(primary: color1),
+              //       ))
+              //     :
+                  // : Center(
+                  //     child: ElevatedButton.icon(
+                  //     onPressed: () async {
+                  //       var response = await http.post(
+                  //           Uri.parse(
+                  //               "https://simponik.kedirikota.go.id/api/inboxdetail?id=${widget.sm.id}"), //bingung
+                  //           // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/konfirmasi"),
+                  //           body: ({
+                  //             "id_sm": widget.sm.id,
+                  //           }));
+                  //       if (response.statusCode == 200) {
+                  //         ScaffoldMessenger.of(context).showSnackBar(
+                  //           SnackBar(
+                  //             content: Text("Konfirmasi Berhasil"),
+                  //             margin: EdgeInsets.all(30),
+                  //             behavior: SnackBarBehavior.floating,
+                  //             shape: RoundedRectangleBorder(
+                  //               borderRadius: BorderRadius.circular(50),
+                  //             ),
+                  //           ),
+                  //         );
+                  //         setState(() {
+                  //           konf = "1";
+                  //         });
+                  //       } else {
+                  //         ScaffoldMessenger.of(context).showSnackBar(
+                  //           SnackBar(
+                  //             content: Text("Server Error01"),
+                  //             margin: EdgeInsets.all(30),
+                  //             behavior: SnackBarBehavior.floating,
+                  //             shape: RoundedRectangleBorder(
+                  //               borderRadius: BorderRadius.circular(50),
+                  //             ),
+                  //           ),
+                  //         );
+                  //       }
+                  //     },
+                  //     icon: Icon(Icons.check),
+                  //     label: Text("Konfirmasi"),
+                  //     style: ElevatedButton.styleFrom(primary: color1),
+                  //   )),
+                  // (konf == "1")
+                  //     ? Center(
+                  //         child: ElevatedButton.icon(
+                  //         onPressed: () {
+                  //           showDialog(
+                  //             context: context,
+                  //             builder: (context) {
+                  //               return AlertDialog(
+                  //                 title: Text("PERHATIAN!!"),
+                  //                 content: Text(
+                  //                     "Apakah anda yakin menyelesaikan disposisi?"),
+                  //                 actions: [
+                  //                   TextButton(
+                  //                       onPressed: () {
+                  //                         Navigator.of(context).pop();
+                  //                       },
+                  //                       child: Text("No")),
+                  //                   TextButton(
+                  //                       onPressed: () async {
+                  //                         var response = await http.post(
+                  //                             Uri.parse(
+                  //                                 "https://simponik.kedirikota.go.id/api/inbox?id=${widget.sm.id}"),
+                  //                             // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_masuk/finish"),
+                  //                             body: ({
+                  //                               "catatan": "Dilaksanakan",
+                  //                               // "penerima": jsonEncode(seletedBawahan),
+                  //                               "token": token,
+                  //                               "id_srt": widget.sm.id
+                  //                             }));
+                  //                         // print(response.body);
+                  //                         if (response.statusCode == 200) {
+                  //                           ScaffoldMessenger.of(context)
+                  //                               .showSnackBar(
+                  //                             SnackBar(
+                  //                               content: Text(
+                  //                                   "Penyelesaian Surat Berhasil"),
+                  //                               margin: EdgeInsets.all(30),
+                  //                               behavior:
+                  //                                   SnackBarBehavior.floating,
+                  //                               shape: RoundedRectangleBorder(
+                  //                                 borderRadius:
+                  //                                     BorderRadius.circular(50),
+                  //                               ),
+                  //                             ),
+                  //                           );
+                  //                           Navigator.pop(context);
+                  //                         } else {
+                  //                           ScaffoldMessenger.of(context)
+                  //                               .showSnackBar(
+                  //                             SnackBar(
+                  //                               content: Text("Server Error02"),
+                  //                               margin: EdgeInsets.all(30),
+                  //                               behavior:
+                  //                                   SnackBarBehavior.floating,
+                  //                               shape: RoundedRectangleBorder(
+                  //                                 borderRadius:
+                  //                                     BorderRadius.circular(50),
+                  //                               ),
+                  //                             ),
+                  //                           );
+                  //                         }
+                  //                       },
+                  //                       child: Text("Yes"))
+                  //                 ],
+                  //               );
+                  //             },
+                  //           ).then((value) {
+                  //             setState(() {
+                  //               disposisism.clear();
+                  //               getDispo(isRefreshed: true);
+                  //             });
+                  //           });
+                  //         },
+                  //         icon: Icon(Icons.check_circle_outline_rounded),
+                  //         label: Text("Selesai"),
+                  //         style: ElevatedButton.styleFrom(primary: color1),
+                  //       ))
+                  // Center(
+                  //     child: ElevatedButton.icon(
+                  //     onPressed: () {
+                  //       // print("Disposisi pressed");
+                  //     },
+                  //     icon: Icon(Icons.check_circle_outline_rounded),
+                  //     label: Text("Selesai"),
+                  //     style: ElevatedButton.styleFrom(primary: Colors.grey),
+                  //   )),
             ],
           ),
           Divider(),
@@ -505,8 +508,9 @@ class _DetailsmState extends State<Detailsm> {
             slog.add(SUserLog.fromJson(object));
             var ob = element['r_user_log'];
             if (ob == "" || ob == null) {
-              ob = "a:1:{s:4:\"name\";s:4:\"null\";}";
-              // ob = "a:33:{s:2:\"id\";s:4:\"4824\";s:3:\"nip\";s:4:\"0000\";s:3:\"nik\";s:4:\"0000\";s:4:\"name\";s:4:\"null\";s:8:\"username\";s:6:\"kadin1\";s:8:\"password\";s:64:\"8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918\";s:12:\"tempat_lahir\";N;s:13:\"tanggal_lahir\";N;s:2:\"jk\";N;s:6:\"alamat\";N;s:5:\"no_hp\";s:12:\"081249991377\";s:5:\"email\";N;s:4:\"foto\";N;s:15:\"kedudukan_hukum\";s:5:\"Aktif\";s:17:\"jenis_kepegawaian\";N;s:9:\"gol_ruang\";N;s:11:\"gol_pangkat\";N;s:13:\"jenis_jabatan\";s:18:\"Jabatan Struktural\";s:12:\"nama_jabatan\";s:12:\"KEPALA DINAS\";s:6:\"eselon\";s:4:\"II.a\";s:11:\"nama_eselon\";s:23:\"PIMPINAN TINGGI PRATAMA\";s:11:\"plt_jabatan\";N;s:9:\"plt_jenis\";N;s:8:\"plt_skpd\";N;s:11:\"plt_skpd_id\";N;s:7:\"skpd_id\";s:3:\"998\";s:10:\"created_at\";s:19:\"2023-02-01 22:29:20\";s:10:\"updated_at\";s:19:\"2023-02-13 10:02:53\";s:7:\"nm_skpd\";s:14:\"OPD UJI COBA 1\";s:6:\"bidang\";N;s:10:\"unit_kerja\";s:14:\"OPD UJI COBA 1\";s:5:\"roles\";s:1:\"9\";s:10:\"roles_name\";s:10:\"Kepala OPD\";}";
+              // ob = "a:1:{s:4:\"name\";s:4:\"null\";}";
+              ob =
+                  "a:33:{s:2:\"id\";s:4:\"4824\";s:3:\"nip\";s:4:\"0000\";s:3:\"nik\";s:4:\"0000\";s:4:\"name\";s:1:\"-\";s:8:\"username\";s:6:\"kadin1\";s:8:\"password\";s:64:\"8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918\";s:12:\"tempat_lahir\";N;s:13:\"tanggal_lahir\";N;s:2:\"jk\";N;s:6:\"alamat\";N;s:5:\"no_hp\";s:12:\"081249991377\";s:5:\"email\";N;s:4:\"foto\";N;s:15:\"kedudukan_hukum\";s:5:\"Aktif\";s:17:\"jenis_kepegawaian\";N;s:9:\"gol_ruang\";N;s:11:\"gol_pangkat\";N;s:13:\"jenis_jabatan\";s:18:\"Jabatan Struktural\";s:12:\"nama_jabatan\";s:12:\"KEPALA DINAS\";s:6:\"eselon\";s:4:\"II.a\";s:11:\"nama_eselon\";s:23:\"PIMPINAN TINGGI PRATAMA\";s:11:\"plt_jabatan\";N;s:9:\"plt_jenis\";N;s:8:\"plt_skpd\";N;s:11:\"plt_skpd_id\";N;s:7:\"skpd_id\";s:3:\"998\";s:10:\"created_at\";s:19:\"2023-02-01 22:29:20\";s:10:\"updated_at\";s:19:\"2023-02-13 10:02:53\";s:7:\"nm_skpd\";s:14:\"OPD UJI COBA 1\";s:6:\"bidang\";N;s:10:\"unit_kerja\";s:14:\"OPD UJI COBA 1\";s:5:\"roles\";s:1:\"9\";s:10:\"roles_name\";s:10:\"Kepala OPD\";}";
               print("ob :");
               print(ob);
             }

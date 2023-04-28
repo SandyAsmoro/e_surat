@@ -23,8 +23,6 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     FirebaseMessaging.instance.getToken().then((value) {
       FBToken = value.toString();
-      // print('FBT : ');
-      // print(FBToken);
     });
   }
 
@@ -32,12 +30,10 @@ class _LoginPageState extends State<LoginPage> {
     final SharedPreferences pref = await SharedPreferences.getInstance();
     String? val = pref.getString("token");
     if (val != null) {
-      // pref.setBool('isLogged', false);
       Navigator.of(context).pushAndRemoveUntil(
           MaterialPageRoute(builder: (context) => Dashboard()),
           (route) => false);
     }
-    // pref.setBool('isLogged', true);
   }
 
   @override
@@ -61,7 +57,7 @@ class _LoginPageState extends State<LoginPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                Text('E-Surat'.toUpperCase(),
+                Text('ASN DIGITAL'.toUpperCase(),
                     style: Theme.of(context).textTheme.headlineMedium?.copyWith(
                         color: Colors.white, fontWeight: FontWeight.bold)),
                 Text('Login to continue',
@@ -149,7 +145,8 @@ class _LoginPageState extends State<LoginPage> {
                           boxShadow: [
                             BoxShadow(
                                 offset: const Offset(0, 5),
-                                color: Colors.green.withOpacity(.2),
+                                color: Color.fromARGB(255, 27, 0, 71)
+                                    .withOpacity(.2),
                                 spreadRadius: 5,
                                 blurRadius: 10)
                           ],
@@ -166,6 +163,105 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
+  // void login() async {
+  //   if (passwordController.text.isNotEmpty &&
+  //       usernameController.text.isNotEmpty) {
+  //     var response = await http.post(
+  //         Uri.parse("https://simponik.kedirikota.go.id/api/login"),
+  //         body: ({
+  //           "usernm": usernameController.text,
+  //           "passwd": passwordController.text
+  //         }));
+  //       final body = jsonDecode(response.body);
+  //       var token = body['user']['token'];
+          
+  //     if (response.statusCode == 200 && token != null) {
+  //       var request = await http.put(
+  //           Uri.parse("https://simponik.kedirikota.go.id/api/login"),
+  //           // "https://sigap.kedirikota.go.id/apiesuratpkl/public/em_user/${body['id']}"),
+  //           body: jsonEncode({
+  //             "token": FBToken,
+  //             "id": body['user']['id'],
+  //           }),
+  //           headers: {
+  //             HttpHeaders.contentTypeHeader: "application/json",
+  //             HttpHeaders.authorizationHeader: "Bearer $token",
+  //           });
+
+  //       if (request.statusCode == 200 && token != null) {
+  //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //           content: Text("Login Berhasil"),
+  //           margin: EdgeInsets.all(30),
+  //           behavior: SnackBarBehavior.floating,
+  //           shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(50),
+  //           ),
+  //         ));
+
+  //         SharedPreferences pref = await SharedPreferences.getInstance();
+  //         pref.setString("token", body['user']['token']);
+  //         pref.setString("id", body['user']['id']);
+  //         pref.setString("nama", body['user']['name']);
+  //         pref.setString("jabatan", body['user']['jabatan']);
+  //         pref.setString("nip", body['user']['nip']);
+  //         pref.setString("golongan", body['user']['golongan']);
+  //         pref.setString("pangkat", body['user']['pangkat']);
+  //         pref.setString("skpd", body['user']['skpd']);
+  //         pref.setString("satker", body['user']['satker']);
+  //         pref.setString("nama_jabatan", body['user']['nama_jabatan']);
+  //         pref.setString("jenis_jabatan", body['user']['jenis_jabatan']);
+  //         pref.setString("eselon", body['user']['eselon']);
+  //         pref.setString("nama_eselon", body['user']['nama_eselon']);
+  //         pref.setString(
+  //             "jenis_kepegawaian", body['user']['jenis_kepegawaian']);
+  //         pref.setString("status", body['user']['status']);
+  //         if (body['user']['foto'] != null) {
+  //           pref.setString("foto", body['user']['foto']);
+  //         } else {
+  //           pref.setString("foto",
+  //               "https://i.pinimg.com/originals/fd/14/a4/fd14a484f8e558209f0c2a94bc36b855.png"); // Isi dengan nilai default yang diinginkan
+  //         }
+  //         ;
+  //         pref.setBool('isLogged', true);
+
+  //         pageRoute();
+  //       } else {
+  //         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+  //           content: Text("Login Gagal"),
+  //           margin: EdgeInsets.all(30),
+  //           behavior: SnackBarBehavior.floating,
+  //           shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(50),
+  //           ),
+  //         ));
+  //       }
+  //     } else {
+  //       ScaffoldMessenger.of(context).showSnackBar(
+  //         SnackBar(
+  //           content: Text("Invalid Credentials"),
+  //           margin: EdgeInsets.all(30),
+  //           behavior: SnackBarBehavior.floating,
+  //           shape: RoundedRectangleBorder(
+  //             borderRadius: BorderRadius.circular(50),
+  //           ),
+  //         ),
+  //       );
+  //     }
+  //   } else {
+  //     ScaffoldMessenger.of(context).showSnackBar(
+  //       SnackBar(
+  //         content: Text("Username / Password tidak boleh kosong!!"),
+  //         margin: EdgeInsets.all(30),
+  //         behavior: SnackBarBehavior.floating,
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(50),
+  //         ),
+  //       ),
+  //     );
+  //   }
+  // }
+
+
   void login() async {
     if (passwordController.text.isNotEmpty &&
         usernameController.text.isNotEmpty) {
@@ -175,62 +271,71 @@ class _LoginPageState extends State<LoginPage> {
             "usernm": usernameController.text,
             "passwd": passwordController.text
           }));
-      if (response.statusCode == 200) {
         final body = jsonDecode(response.body);
-        var token = body['user']['token'];
-        var request = await http.put(
-            Uri.parse("https://simponik.kedirikota.go.id/api/login"),
-            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/em_user/${body['id']}"),
-            body: jsonEncode({
-              "token": FBToken,
-              "id": body['user']['id'],
-            }),
-            headers: {
-              HttpHeaders.contentTypeHeader: "application/json",
-              HttpHeaders.authorizationHeader: "Bearer $token",
-            });
+        if (response.statusCode == 200 && body['user'] != null) {
+          var token = body['user']['token'];
+          var request = await http.put(
+              Uri.parse("https://simponik.kedirikota.go.id/api/login"),
+              body: jsonEncode({
+                "token": FBToken,
+                "id": body['user']['id'],
+              }),
+              headers: {
+                HttpHeaders.contentTypeHeader: "application/json",
+                HttpHeaders.authorizationHeader: "Bearer $token",
+              });
 
-        if (request.statusCode == 200) {
-          ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-            content: Text("Login Berhasil"),
-            margin: EdgeInsets.all(30),
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50),
-            ),
-          ));
+          if (request.statusCode == 200 && token != null) {
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("Login Berhasil"),
+              margin: EdgeInsets.all(30),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+              ),
+            ));
 
-          SharedPreferences pref = await SharedPreferences.getInstance();
-          pref.setString("token", body['user']['token']);
-          pref.setString("id", body['user']['id']);
-          pref.setString("nama", body['user']['name']);
-          pref.setString("jabatan", body['user']['jabatan']);
-          pref.setString("nip", body['user']['nip']);
-          pref.setString("golongan", body['user']['golongan']);
-          pref.setString("pangkat", body['user']['pangkat']);
-          pref.setString("skpd", body['user']['skpd']);
-          pref.setString("satker", body['user']['satker']);
-          pref.setString("nama_jabatan", body['user']['nama_jabatan']);
-          pref.setString("jenis_jabatan", body['user']['jenis_jabatan']);
-          pref.setString("eselon", body['user']['eselon']);
-          pref.setString("nama_eselon", body['user']['nama_eselon']);
-          pref.setString(
-              "jenis_kepegawaian", body['user']['jenis_kepegawaian']);
-          pref.setString("status", body['user']['status']);
-          if (body['user']['foto'] != null) {
-            pref.setString("foto", body['user']['foto']);
+            SharedPreferences pref = await SharedPreferences.getInstance();
+            pref.setString("token", body['user']['token']);
+            pref.setString("id", body['user']['id']);
+            pref.setString("nama", body['user']['name']);
+            pref.setString("jabatan", body['user']['jabatan']);
+            pref.setString("nip", body['user']['nip']);
+            pref.setString("golongan", body['user']['golongan']);
+            pref.setString("pangkat", body['user']['pangkat']);
+            pref.setString("skpd", body['user']['skpd']);
+            pref.setString("satker", body['user']['satker']);
+            pref.setString("nama_jabatan", body['user']['nama_jabatan']);
+            pref.setString("jenis_jabatan", body['user']['jenis_jabatan']);
+            pref.setString("eselon", body['user']['eselon']);
+            pref.setString("nama_eselon", body['user']['nama_eselon']);
+            pref.setString(
+                "jenis_kepegawaian", body['user']['jenis_kepegawaian']);
+            pref.setString("status", body['user']['status']);
+            if (body['user']['foto'] != null) {
+              pref.setString("foto", body['user']['foto']);
+            } else {
+              pref.setString("foto",
+                  "https://i.pinimg.com/originals/fd/14/a4/fd14a484f8e558209f0c2a94bc36b855.png"); // Isi dengan nilai default yang diinginkan
+            }
+            ;
+            pref.setBool('isLogged', true);
+
+            pageRoute();
           } else {
-            pref.setString("foto",
-              'https://i.pinimg.com/originals/fd/14/a4/fd14a484f8e558209f0c2a94bc36b855.png'); // Isi dengan nilai default yang diinginkan
-              // 'assets/images/default.jpg'); // Isi dengan nilai default yang diinginkan
+            ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+              content: Text("Login Gagal"),
+              margin: EdgeInsets.all(30),
+              behavior: SnackBarBehavior.floating,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+              ),
+            ));
           }
-          pref.setBool('isLogged', true);
-
-          pageRoute();
         } else {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text("Update Token Firebase Gagal"),
+              content: Text("Username / Password Salah"),
               margin: EdgeInsets.all(30),
               behavior: SnackBarBehavior.floating,
               shape: RoundedRectangleBorder(
@@ -239,22 +344,10 @@ class _LoginPageState extends State<LoginPage> {
             ),
           );
         }
-      } else {
-        ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text("Invalid Credentials"),
-            margin: EdgeInsets.all(30),
-            behavior: SnackBarBehavior.floating,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50),
-            ),
-          ),
-        );
-      }
     } else {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
-          content: Text("Username / Password tidak boleh kosong!!"),
+          content: Text("Username / Password Tidak Boleh Kosong!"),
           margin: EdgeInsets.all(30),
           behavior: SnackBarBehavior.floating,
           shape: RoundedRectangleBorder(
@@ -264,6 +357,7 @@ class _LoginPageState extends State<LoginPage> {
       );
     }
   }
+
 
   void pageRoute() async {
     Navigator.of(context).pushAndRemoveUntil(

@@ -29,7 +29,6 @@ class _InboxState extends State<Inbox> {
   final RefreshController _refreshController =
       RefreshController(initialRefresh: true);
   List<SuratMasuk> suratMasuk = [];
-  // List<FilesSurat> filesSurat = [];
 
   @override
   void initState() {
@@ -46,22 +45,24 @@ class _InboxState extends State<Inbox> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Inbox"),
+        title: Text("Surat Masuk"),
         backgroundColor: color1,
       ),
       body: SmartRefresher(
         controller: _refreshController,
         enablePullUp: true,
         onRefresh: () async {
-          // suratMasuk.clear();
-          final result = await getSurat();
+          suratMasuk.clear();
+          final result = await getSurat(isRefreshed: true);
           if (result == true) {
-            _refreshController.refreshFailed();
-          } else {
+            setState(() {});
             _refreshController.refreshCompleted();
+          } else {
+            _refreshController.refreshFailed();
           }
         },
         // onLoading: () async {
+        //   suratMasuk.clear();
         //   final result = await getSurat();
         //   if (result == true) {
         //     _refreshController.loadComplete();
@@ -110,7 +111,9 @@ class _InboxState extends State<Inbox> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => Detailsm(
                             sm: suratMasuk[index],
-                          )));
+                          ))).then((value) {
+                  _refreshController.requestRefresh();
+                });
                   //     .then((value) {
                   //   setState(() {
                   //     suratMasuk.clear();
@@ -193,6 +196,10 @@ class _InboxState extends State<Inbox> {
   //   }
   // }
 
+  void sortDataDesc() {
+    suratMasuk.sort((a, b) => DateTime.parse(b.tglSurat).compareTo(DateTime.parse(a.tglSurat)));
+  }
+
   Future<bool> getSurat({bool isRefreshed = true}) async {
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
@@ -221,6 +228,7 @@ class _InboxState extends State<Inbox> {
           List data = bd['inbox'];
           data.forEach((element) {
             suratMasuk.add(SuratMasuk.fromJson(element));
+            sortDataDesc();
           });
           // currentPage++;
           // currentPage= 1;

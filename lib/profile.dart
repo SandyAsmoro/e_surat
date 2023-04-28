@@ -1,6 +1,9 @@
 import 'package:e_surat/loginPage.dart';
 import 'package:flutter/material.dart';
+import 'package:http/io_client.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
+import 'dart:io';
 
 const color1 = Color.fromARGB(255, 27, 0, 71);
 const color2 = Color.fromARGB(255, 27, 0, 71);
@@ -46,8 +49,8 @@ class _ProfileState extends State<Profile> {
   String nama_eselon = "";
   String jenis_kepegawaian = "";
   String status = "";
-  String foto = "";
-  String pp = '';
+  String foto = '';
+  // String pp = '';
 
   @override
   void initState() {
@@ -67,34 +70,94 @@ class _ProfileState extends State<Profile> {
       appBar: AppBar(
         title: Text("Profile"),
         backgroundColor: color1,
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(left: 30, right: 10),
+            child: CircleAvatar(
+              backgroundColor: Color.fromARGB(255, 255, 255, 255),
+              child: IconButton(
+                icon: Icon(
+                  Icons.logout,
+                  color: color1,
+                ),
+                onPressed: () {
+                  logout();
+                },
+              ),
+            ),
+          ),
+        ],
       ),
       backgroundColor: Color.fromARGB(255, 27, 0, 71),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          // SizedBox(
-          //   height: 5,
-          //   child: Container(
-          //     color: Color.fromARGB(255, 27, 0, 71),
-          //   ),
-          // ),
+          SizedBox(
+            height: 20,
+          ),
           Container(
-            padding: EdgeInsets.all(0),
-            width: MediaQuery.of(context).size.width / 2.1,
-            height: MediaQuery.of(context).size.width / 2.1,
+            child: FutureBuilder<http.Response>(
+              future: _fetchImage(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  // return CircleAvatar(
+                  //   radius: 85,
+                  //   backgroundImage: MemoryImage(snapshot.data!.bodyBytes),
+                  // );
+                  return Container(
+                    width: 200,
+                    height: 200,
+                    decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        image: DecorationImage(
+                          alignment: Alignment.topCenter,
+                          image: MemoryImage(snapshot.data!.bodyBytes),
+                          fit: BoxFit.cover,
+                        )),
+                    // child: Align(
+                    //   alignment: Alignment.bottomRight,
+                    //   child: IconButton(
+                    //     icon: Icon(Icons.edit),
+                    //     onPressed: () {},
+                    //   ),
+                    // ),
+                  );
+                } else if (snapshot.hasError) {
+                  return Text("${snapshot.error}");
+                }
+
+                return CircularProgressIndicator();
+              },
+            ),
             decoration: BoxDecoration(
               border: Border.all(
                   color: Color.fromARGB(255, 255, 255, 255), width: 4),
               shape: BoxShape.circle,
-              image: DecorationImage(
-                fit: BoxFit.cover,
-                image: NetworkImage(foto),
-                // image: AssetImage(foto),
-              ),
             ),
           ),
           SizedBox(
-            height: 5,
+            height: 0,
+            child: Container(
+              color: Color.fromARGB(255, 27, 0, 71),
+            ),
+          ),
+          // Container(
+          //   padding: EdgeInsets.all(0),
+          //   width: MediaQuery.of(context).size.width / 2.1,
+          //   height: MediaQuery.of(context).size.width / 2.1,
+          //   decoration: BoxDecoration(
+          //     border: Border.all(
+          //         color: Color.fromARGB(255, 255, 255, 255), width: 4),
+          //     shape: BoxShape.circle,
+          //     image: DecorationImage(
+          //       fit: BoxFit.cover,
+          //       image: NetworkImage(foto),
+          //       // image: AssetImage(foto),
+          //     ),
+          //   ),
+          // ),
+          SizedBox(
+            height: 10,
           ),
           SizedBox(
             height: 26,
@@ -117,18 +180,18 @@ class _ProfileState extends State<Profile> {
           ),
           Padding(
             padding: EdgeInsets.only(bottom: 0.5, left: 310),
-            child: CircleAvatar(
-              backgroundColor: Color.fromARGB(255, 255, 255, 255),
-              child: IconButton(
-                icon: Icon(
-                  Icons.logout,
-                  color: color1,
-                ),
-                onPressed: () {
-                  logout();
-                },
-              ),
-            ),
+            // child: CircleAvatar(
+            //   backgroundColor: Color.fromARGB(255, 255, 255, 255),
+            //   child: IconButton(
+            //     icon: Icon(
+            //       Icons.logout,
+            //       color: color1,
+            //     ),
+            //     onPressed: () {
+            //       logout();
+            //     },
+            //   ),
+            // ),
           ),
           Expanded(
             child: Container(
@@ -139,7 +202,7 @@ class _ProfileState extends State<Profile> {
                       topRight: Radius.circular(30),
                       topLeft: Radius.circular(30))),
               child: ListView(
-                padding: const EdgeInsets.all(20),
+                padding: EdgeInsets.fromLTRB(20, 5, 20, 0),
                 children: [
                   // SizedBox(
                   //   width: 350.0,
@@ -162,6 +225,8 @@ class _ProfileState extends State<Profile> {
                     height: 48.0,
                     child: Card(
                       color: color3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Text(
                         "Jabatan :\n${jabatan}",
                         textAlign: TextAlign.center,
@@ -177,6 +242,8 @@ class _ProfileState extends State<Profile> {
                     height: 48.0,
                     child: Card(
                       color: color3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Text(
                         "NIP :\n${nip}",
                         textAlign: TextAlign.center,
@@ -192,6 +259,8 @@ class _ProfileState extends State<Profile> {
                     height: 48.0,
                     child: Card(
                       color: color3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Text(
                         "Golongan :\n${golongan}",
                         textAlign: TextAlign.center,
@@ -207,6 +276,8 @@ class _ProfileState extends State<Profile> {
                     height: 48.0,
                     child: Card(
                       color: color3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Text(
                         "Pangkat :\n${pangkat}",
                         textAlign: TextAlign.center,
@@ -222,6 +293,8 @@ class _ProfileState extends State<Profile> {
                     height: 48.0,
                     child: Card(
                       color: color3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Text(
                         "SKPD :\n${skpd}",
                         textAlign: TextAlign.center,
@@ -237,6 +310,8 @@ class _ProfileState extends State<Profile> {
                     height: 48.0,
                     child: Card(
                       color: color3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Text(
                         "Satker :\n${satker}",
                         textAlign: TextAlign.center,
@@ -252,6 +327,8 @@ class _ProfileState extends State<Profile> {
                     height: 48.0,
                     child: Card(
                       color: color3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Text(
                         "Nama Jabatan :\n${nama_jabatan}",
                         textAlign: TextAlign.center,
@@ -267,6 +344,8 @@ class _ProfileState extends State<Profile> {
                     height: 48.0,
                     child: Card(
                       color: color3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Text(
                         "Jenis Jabatan :\n${jenis_jabatan}",
                         textAlign: TextAlign.center,
@@ -282,6 +361,8 @@ class _ProfileState extends State<Profile> {
                     height: 48.0,
                     child: Card(
                       color: color3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Text(
                         "Eselon :\n${eselon}",
                         textAlign: TextAlign.center,
@@ -297,6 +378,8 @@ class _ProfileState extends State<Profile> {
                     height: 48.0,
                     child: Card(
                       color: color3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Text(
                         "Nama Eselon :\n${nama_eselon}",
                         textAlign: TextAlign.center,
@@ -312,6 +395,8 @@ class _ProfileState extends State<Profile> {
                     height: 48.0,
                     child: Card(
                       color: color3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Text(
                         "Jenis Kepegawaian :\n${jenis_kepegawaian}",
                         textAlign: TextAlign.center,
@@ -326,6 +411,8 @@ class _ProfileState extends State<Profile> {
                     height: 48.0,
                     child: Card(
                       color: color3,
+                      shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.all(Radius.circular(15))),
                       child: Text(
                         "Status :\n${status}",
                         textAlign: TextAlign.center,
@@ -339,7 +426,7 @@ class _ProfileState extends State<Profile> {
                 ],
               ),
             ),
-          )
+          ),
         ],
       ),
     );
@@ -379,5 +466,15 @@ class _ProfileState extends State<Profile> {
       print(e);
       return false;
     }
+  }
+
+  Future<http.Response> _fetchImage() async {
+    // Disable certificate verification
+    HttpClient httpClient = new HttpClient()
+      ..badCertificateCallback =
+          ((X509Certificate cert, String host, int port) => true);
+    IOClient ioClient = new IOClient(httpClient);
+
+    return await ioClient.get(Uri.parse(foto));
   }
 }

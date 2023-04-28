@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:e_surat/disposk.dart';
 import 'package:e_surat/models/disposisisk.dart';
 import 'package:e_surat/models/suratkeluar.dart';
+import 'package:e_surat/pdfview.dart';
 import 'package:e_surat/php_unserialize.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -225,70 +226,89 @@ class _DetailskState extends State<Detailsk> {
           //   ),
           // ),
           // Divider(),
-          (konf == "DISETUJUI")
-              ? Center(
-                  child: ElevatedButton.icon(
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: color1,
-                  ),
-                  onPressed: () {
-                    print("Disposisi pressed ${widget.sk.id}");
-                    Navigator.of(context)
-                        .push(MaterialPageRoute(
-                            builder: (context) => Disposk(
-                                  dispo: widget.sk,
-                                )))
-                        .then((value) {
-                      setState(() {
-                        disposisisk.clear();
-                        getDispo(isRefreshed: true);
-                      });
-                    });
-                  },
-                  icon: Icon(Icons.send_to_mobile_outlined),
-                  label: Text("Disposisi"),
-                ))
-              : Center(
-                  child: ElevatedButton.icon(
-                  onPressed: () async {
-                    var response = await http.post(
-                        Uri.parse(
-                            "https://simponik.kedirikota.go.id/api/outbox?id=${widget.sk.id}"),
-                        // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/konfirmasi"),
-                        body: ({
-                          "id_skwf": widget.sk.id,
-                        }));
-                    if (response.statusCode == 200) {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Konfirmasi Berhasil"),
-                          margin: EdgeInsets.all(30),
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      );
-                      setState(() {
-                        konf = "1";
-                      });
-                    } else {
-                      ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(
-                          content: Text("Server Error"),
-                          margin: EdgeInsets.all(30),
-                          behavior: SnackBarBehavior.floating,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(50),
-                          ),
-                        ),
-                      );
-                    }
-                  },
-                  icon: Icon(Icons.check),
-                  label: Text("Konfirmasi"),
-                )),
+          // (konf == "DISETUJUI")
+              // ? Center(
+                
+                  //   child: ElevatedButton.icon(
+                  //   style: ElevatedButton.styleFrom(
+                  //     backgroundColor: color1,
+                  //   ),
+                  //   onPressed: () {
+                  //     print("Disposisi pressed ${widget.sk.id}");
+                  //     Navigator.of(context)
+                  //         .push(MaterialPageRoute(
+                  //             builder: (context) => Disposk(
+                  //                   dispo: widget.sk,
+                  //                 )))
+                  //         .then((value) {
+                  //       setState(() {
+                  //         disposisisk.clear();
+                  //         getDispo(isRefreshed: true);
+                  //       });
+                  //     });
+                  //   },
+                  //   icon: Icon(Icons.send_to_mobile_outlined),
+                  //   label: Text("Disposisi"),
+                  // ))
+                  // )
+              // : Center(
+                  // child: ElevatedButton.icon(
+          //         onPressed: () async {
+          //           var response = await http.post(
+          //               Uri.parse(
+          //                   "https://simponik.kedirikota.go.id/api/outbox?id=${widget.sk.id}"),
+          //               // "https://sigap.kedirikota.go.id/apiesuratpkl/public/surat_keluar/konfirmasi"),
+          //               body: ({
+          //                 "id_skwf": widget.sk.id,
+          //               }));
+          //           if (response.statusCode == 200) {
+          //             ScaffoldMessenger.of(context).showSnackBar(
+          //               SnackBar(
+          //                 content: Text("Konfirmasi Berhasil"),
+          //                 margin: EdgeInsets.all(30),
+          //                 behavior: SnackBarBehavior.floating,
+          //                 shape: RoundedRectangleBorder(
+          //                   borderRadius: BorderRadius.circular(50),
+          //                 ),
+          //               ),
+          //             );
+          //             setState(() {
+          //               konf = "1";
+          //             });
+          //           } else {
+          //             ScaffoldMessenger.of(context).showSnackBar(
+          //               SnackBar(
+          //                 content: Text("Server Error"),
+          //                 margin: EdgeInsets.all(30),
+          //                 behavior: SnackBarBehavior.floating,
+          //                 shape: RoundedRectangleBorder(
+          //                   borderRadius: BorderRadius.circular(50),
+          //                 ),
+          //               ),
+          //             );
+          //           }
+          //         },
+          //         icon: Icon(Icons.check),
+          //         label: Text("Konfirmasi"),
+          //       )),
           Divider(),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Center(
+                child: ElevatedButton.icon(
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => Pdfview(
+                                linkPdf: files,
+                              )));
+                    },
+                    icon: Icon(Icons.attach_file),
+                    label: Text("File Surat"),
+                    style: ElevatedButton.styleFrom(primary: color1)),
+              ),
+            ]
+          ),
           Text("Riwayat Disposisi Surat"),
           Divider(),
           Expanded(
@@ -494,11 +514,17 @@ class _DetailskState extends State<Detailsk> {
             print("ob :");
             print(ob);
             if (ob == "" || ob == null) {
-              ob = "a:1:{s:4:\"name\";s:4:\"null\";}";
+              ob = "a:1:{s:4:\"name\";s:1:\"-\";}";
             }
             var objec = Php.unserialize(ob);
             rlogout.add(RUserLogOut.fromJson(objec));
           });
+
+          List data2 = bd['files'];
+          data2.forEach((element) {
+            files = element['full_path_file'];
+          });
+
           currentPage++;
           totalPages = data.length;
           // totalPages =

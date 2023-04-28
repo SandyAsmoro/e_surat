@@ -13,7 +13,7 @@ class SuratKeluar {
   String id;
   String? tahun;
   String? skpdId;
-  String? tglSurat;
+  String tglSurat;
   String? noSurat;
   String? perihal;
   String state;
@@ -35,7 +35,7 @@ class SuratKeluar {
     required this.id,
     this.tahun,
     this.skpdId,
-    this.tglSurat,
+    required this.tglSurat,
     this.noSurat,
     this.perihal,
     required this.state,

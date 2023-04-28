@@ -37,7 +37,7 @@ class _OutboxState extends State<Outbox> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Outbox"),
+        title: Text("Surat Keluar"),
         backgroundColor: color1,
       ),
       body: SmartRefresher(
@@ -47,6 +47,7 @@ class _OutboxState extends State<Outbox> {
           suratKeluar.clear();
           final result = await getSurat(isRefreshed: true);
           if (result == true) {
+            setState(() {});
             _refreshController.refreshCompleted();
           } else {
             _refreshController.refreshFailed();
@@ -99,7 +100,9 @@ class _OutboxState extends State<Outbox> {
                   Navigator.of(context).push(MaterialPageRoute(
                       builder: (context) => Detailsk(
                             sk: suratKeluar[index],
-                          )));
+                          ))).then((value) {
+                  _refreshController.requestRefresh();
+                });
                 },
               );
             },
@@ -108,6 +111,11 @@ class _OutboxState extends State<Outbox> {
       ),
     );
   }
+
+  void sortDataDesc() {
+    suratKeluar.sort((a, b) => DateTime.parse(b.tglSurat).compareTo(DateTime.parse(a.tglSurat)));
+  }
+
 
   Future<bool> getSurat({bool isRefreshed = false}) async {
     try {
@@ -135,6 +143,7 @@ class _OutboxState extends State<Outbox> {
           //     (jsonDecode(response.body) as Map<String, dynamic>)["data"];
           data.forEach((element) {
             suratKeluar.add(SuratKeluar.fromJson(element));
+            sortDataDesc();
           });
           currentPage++;
           totalPages = data.length;

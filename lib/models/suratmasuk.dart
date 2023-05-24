@@ -15,7 +15,7 @@ class SuratMasuk {
   String? skpdId;
   String tglSurat;
   String? noSurat;
-  String? perihal;
+  String perihal;
   String state;
   String? kategori;
   String? sifat;
@@ -38,7 +38,7 @@ class SuratMasuk {
       this.skpdId,
       required this.tglSurat,
       this.noSurat,
-      this.perihal,
+      required this.perihal,
       required this.state,
       this.kategori,
       this.sifat,

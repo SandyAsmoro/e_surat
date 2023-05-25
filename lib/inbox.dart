@@ -12,6 +12,8 @@ const color2 = Color(0xFF488FB1);
 const color3 = Color(0xFF4FD3C4);
 const color4 = Color(0xFFC1F8CF);
 
+// Batas Atas
+
 class Inbox extends StatefulWidget {
   const Inbox({Key? key}) : super(key: key);
 
@@ -177,7 +179,7 @@ class _InboxState extends State<Inbox> {
             data.add(SuratMasuk.fromJson(item));
           }
 
-          totalPages = (suratMasukList.length / 7).ceil();
+          totalPages = int.parse(response.headers['x-wp-total'] ?? '0');
 
           if (isRefreshed) {
             setState(() {
@@ -208,6 +210,8 @@ class _InboxState extends State<Inbox> {
     });
   }
 }
+
+// Batas Bawah
 
 // class Inbox extends StatefulWidget {
 //   const Inbox({Key? key}) : super(key: key);

@@ -7,6 +7,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dd.dart';
 import 'forgroundLocalNotification.dart';
 
 // Done
@@ -60,7 +61,7 @@ class MyApp extends StatelessWidget {
         splash: Image.asset("assets/icon/icon.png"),
         splashTransition: SplashTransition.rotationTransition,
         nextScreen: isLogged ? Dashboard() : LoginPage()),
-        // nextScreen: LoginPage(),),
+        // nextScreen: HomePage(),),
     );
   }
 }

@@ -434,6 +434,7 @@ class _ProfileState extends State<Profile> {
 
   void logout() async {
     SharedPreferences pref = await SharedPreferences.getInstance();
+    pref.setString("token", "");
     await pref.clear();
     Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);

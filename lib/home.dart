@@ -3,7 +3,7 @@ import 'dart:convert';
 // import 'package:e_surat/models/dbsuratmasuk.dart';
 import 'package:e_surat/models/suratkeluar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+// import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
@@ -28,6 +28,7 @@ class _HomeState extends State<Home> {
   int totalProses = 0;
   int totalSelesai = 0;
   int totalUnread = 0;
+  int totalUnread2 = 0;
   int totalUnkonf = 0;
   List<SuratMasuk> suratMasuk = [];
   List<SuratKeluar> suratKeluar = [];
@@ -142,8 +143,14 @@ class _HomeState extends State<Home> {
                         ),
                         DataRow(
                           cells: <DataCell>[
-                            DataCell(Text("Total Belum Dibaca")),
+                            DataCell(Text("Surat Masuk Belum Dibaca")),
                             DataCell(Text("${totalUnread}")),
+                          ],
+                        ),
+                        DataRow(
+                          cells: <DataCell>[
+                            DataCell(Text("Surat Keluar Belum Dibaca")),
+                            DataCell(Text("${totalUnread2}")),
                           ],
                         ),
                         DataRow(
@@ -213,12 +220,13 @@ class _HomeState extends State<Home> {
               suratKeluar.add(SuratKeluar.fromJson(element));
             });
 
-            totalSurat = data.length;
+            totalSurat = bd['total'];
             totalProses =
                 data.where((item) => item['state'] != "SELESAI").length;
             totalSelesai =
                 data.where((item) => item['state'] == "SELESAI").length;
             totalUnread = data.where((item) => item['isbaca'] != "1").length;
+            totalUnread2 = data2.where((item) => item['isbaca'] != "1").length;
             totalUnkonf =
                 data2.where((item) => item['state'] != "DISETUJUI").length;
             ;

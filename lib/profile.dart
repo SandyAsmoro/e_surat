@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:e_surat/loginPage.dart';
 import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
@@ -35,6 +37,7 @@ class HeaderCurvedContainer extends CustomPainter {
 }
 
 class _ProfileState extends State<Profile> {
+  String id = "";
   String token = "";
   String nama = "";
   String jabatan = "";
@@ -95,10 +98,27 @@ class _ProfileState extends State<Profile> {
                   SharedPreferences pref =
                       await SharedPreferences.getInstance();
                   await pref.clear();
+                  var request = await http.put(
+                      Uri.parse("https://simponik.kedirikota.go.id/api/login"),
+                      body: jsonEncode({
+                        "token": '',
+                        "id": id,
+                      }),
+                      headers: {
+                        HttpHeaders.contentTypeHeader: "application/json",
+                        HttpHeaders.authorizationHeader: "Bearer $token",
+                      });
 
-                  setState(() {
-                    token = ''; // Mengatur token ke nilai kosong
-                  });
+                  if (request.statusCode == 200 && token != null) {
+                    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                      content: Text("Logout Berhasil"),
+                      margin: EdgeInsets.all(30),
+                      behavior: SnackBarBehavior.floating,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(50),
+                      ),
+                    ));
+                  }
 
                   print('token:');
                   print(token);
@@ -472,6 +492,7 @@ class _ProfileState extends State<Profile> {
         token = pref.getString("token")!;
         print('token :');
         print(token);
+        id = pref.getString("id")!;
         nama = pref.getString("nama")!;
         jabatan = pref.getString("jabatan")!;
         nip = pref.getString("nip")!;

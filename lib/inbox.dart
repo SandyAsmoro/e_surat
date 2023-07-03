@@ -144,7 +144,6 @@ class _InboxState extends State<Inbox> {
       ),
     );
   }
-  
 
   void sortDataDesc() {
     suratMasuk.sort((a, b) =>
@@ -168,9 +167,11 @@ class _InboxState extends State<Inbox> {
           'Authorization': token,
         };
         var response = await http.get(
-            Uri.parse(
-                "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
-            headers: requestHeaders);
+          Uri.parse(
+            "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all&page=$currentPage",
+          ),
+          headers: requestHeaders,
+        );
         if (response.statusCode == 200) {
           final Map<String, dynamic> bd = jsonDecode(response.body);
           final List<dynamic> suratMasukList = bd['inbox'];
@@ -179,7 +180,7 @@ class _InboxState extends State<Inbox> {
             data.add(SuratMasuk.fromJson(item));
           }
 
-          totalPages = int.parse(response.headers['x-wp-total'] ?? '0');
+          totalPages = int.parse(response.headers['x-wp-totalpages'] ?? '0');
 
           if (isRefreshed) {
             setState(() {
@@ -200,7 +201,7 @@ class _InboxState extends State<Inbox> {
     }
   }
 
-    void searchSuratMasuk(String query) {
+  void searchSuratMasuk(String query) {
     setState(() {
       displayedSuratMasuk = suratMasuk.where((surat) {
         final perihalLower = surat.perihal.toLowerCase();
@@ -209,30 +210,4 @@ class _InboxState extends State<Inbox> {
       }).toList();
     });
   }
-  //       // if (response.statusCode == 200) {
-  //         // final bd = jsonDecode(response.body);
-  //         // List data = bd['outbox'];
-  //         // // List data =
-  //         // //     (jsonDecode(response.body) as Map<String, dynamic>)["data"];
-  //         // data.forEach((element) {
-  //         //   suratKeluar.add(SuratKeluar.fromJson(element));
-  //         //   sortDataDesc();
-  //         // });
-  //         // currentPage++;
-  //         totalPages = data.length;
-  //         // totalPages =
-  //         //     (jsonDecode(response.body) as Map<String, dynamic>)["totalPage"];
-  //         setState(() {});
-  //         return true;
-  //       } else {
-  //         return false;
-  //       }
-  //     } else {
-  //       return false;
-  //     }
-  //   } catch (e) {
-  //     print(e);
-  //     return false;
-  //   }
-  // }
 }

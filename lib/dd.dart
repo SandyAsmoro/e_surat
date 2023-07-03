@@ -192,3 +192,157 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
+// var response = await http.get(
+//   Uri.parse("https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
+//   headers: requestHeaders,
+// );
+
+// if (response.statusCode == 200) {
+//   final bd = jsonDecode(response.body);
+//   List data = bd['inbox'];
+//   suratMasuk.addAll(data.map((element) => SuratMasuk.fromJson(element)));
+
+//   // Cek jika masih ada halaman selanjutnya
+//   while (bd['next_page_url'] != null) {
+//     var nextPageUrl = bd['next_page_url'];
+//     var nextPageResponse = await http.get(Uri.parse(nextPageUrl), headers: requestHeaders);
+
+//     if (nextPageResponse.statusCode == 200) {
+//       final nextPageData = jsonDecode(nextPageResponse.body);
+//       List nextPageDataList = nextPageData['inbox'];
+//       suratMasuk.addAll(nextPageDataList.map((element) => SuratMasuk.fromJson(element)));
+//       bd = nextPageData;
+//     } else {
+//       // Handle jika gagal mendapatkan halaman selanjutnya
+//       break;
+//     }
+//   }
+
+//   // Lakukan hal yang sama untuk data surat keluar
+//   var response2 = await http.get(
+//     Uri.parse("https://simponik.kedirikota.go.id/api/outbox?id=$id&param=all"),
+//     headers: requestHeaders,
+//   );
+
+//   if (response2.statusCode == 200) {
+//     final bd2 = jsonDecode(response2.body);
+//     List data2 = bd2['outbox'];
+//     suratKeluar.addAll(data2.map((element) => SuratKeluar.fromJson(element)));
+
+//     // Cek jika masih ada halaman selanjutnya
+//     while (bd2['next_page_url'] != null) {
+//       var nextPageUrl2 = bd2['next_page_url'];
+//       var nextPageResponse2 = await http.get(Uri.parse(nextPageUrl2), headers: requestHeaders);
+
+//       if (nextPageResponse2.statusCode == 200) {
+//         final nextPageData2 = jsonDecode(nextPageResponse2.body);
+//         List nextPageDataList2 = nextPageData2['outbox'];
+//         suratKeluar.addAll(nextPageDataList2.map((element) => SuratKeluar.fromJson(element)));
+//         bd2 = nextPageData2;
+//       } else {
+//         // Handle jika gagal mendapatkan halaman selanjutnya
+//         break;
+//       }
+//     }
+
+//     totalSurat = bd['total'];
+//     totalSuratKeluar = bd2['total'];
+//     totalProses = suratMasuk.where((item) => item.state != "SELESAI").length;
+//     totalSelesai = suratMasuk.where((item) => item.state == "SELESAI").length;
+//     totalUnread = suratMasuk.where((item) => item.isBaca != "1").length;
+//     totalUnread2 = suratKeluar.where((item) => item.isBaca != "1").length;
+//     totalUnkonf = suratKeluar.where((item) => item.state != "DISETUJUI").length;
+//   }
+// }
+
+// Future<bool> getDbSurat() async {
+//   try {
+//     SharedPreferences pref = await SharedPreferences.getInstance();
+//     setState(() {
+//       token = pref.getString("token")!;
+//       id = pref.getString("id")!;
+//     });
+    
+//     if (token != '') {
+//       Map<String, String> requestHeaders = {
+//         'Authorization': token,
+//       };
+      
+//       List<SuratMasuk> allSuratMasuk = [];
+//       List<SuratKeluar> allSuratKeluar = [];
+      
+//       int currentPage = 1;
+//       bool isNextPageAvailable = true;
+      
+//       while (isNextPageAvailable) {
+//         var response = await http.get(
+//           Uri.parse("https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all&page=$currentPage"),
+//           headers: requestHeaders,
+//         );
+        
+//         if (response.statusCode == 200) {
+//           final bd = jsonDecode(response.body);
+//           List data = bd['inbox'];
+//           if (data.isEmpty) {
+//             isNextPageAvailable = false;
+//           } else {
+//             data.forEach((element) {
+//               allSuratMasuk.add(SuratMasuk.fromJson(element));
+//             });
+//             currentPage++;
+//           }
+
+//         } else {
+//           return false;
+//         }
+//       }
+      
+//       int currentPage2 = 1;
+//       isNextPageAvailable = true;
+      
+//       while (isNextPageAvailable) {
+//         var response2 = await http.get(
+//           Uri.parse("https://simponik.kedirikota.go.id/api/outbox?id=$id&param=all&page=$currentPage2"),
+//           headers: requestHeaders,
+//         );
+        
+//         if (response2.statusCode == 200) {
+//           final bd2 = jsonDecode(response2.body);
+//           List data2 = bd2['outbox'];
+//           if (data2.isEmpty) {
+//             isNextPageAvailable = false;
+//           } else {
+//             data2.forEach((element) {
+//               allSuratKeluar.add(SuratKeluar.fromJson(element));
+//             });
+//             currentPage2++;
+//           }
+//         } else {
+//           return false;
+//         }
+//       }
+      
+//       // Setelah mendapatkan semua data, Anda dapat melakukan proses sesuai kebutuhan
+//       suratMasuk.addAll(allSuratMasuk);
+//       suratKeluar.addAll(allSuratKeluar);
+      
+//       totalSurat = bd['total'];
+//       totalSuratKeluar = bd2['total'];
+//       totalProses = suratMasuk.where((item) => item.state != "SELESAI").length;
+//       totalSelesai = suratMasuk.where((item) => item.state == "SELESAI").length;
+//       totalUnread = suratMasuk.where((item) => item.isbaca != "1").length;
+//       totalUnread2 = suratKeluar.where((item) => item.isbaca != "1").length;
+//       totalUnkonf = suratKeluar.where((item) => item.state != "DISETUJUI").length;
+
+//       setState(() {});
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   } catch (e) {
+//     print(e);
+//     return false;
+//   }
+// }
+

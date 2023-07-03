@@ -191,82 +191,92 @@ class _HomeState extends State<Home> {
   }
 
   Future<bool> getDbSurat() async {
-    try {
-      SharedPreferences pref = await SharedPreferences.getInstance();
-      setState(() {
-        token = pref.getString("token")!;
-        id = pref.getString("id")!;
-      });
-      if (token != '') {
-        Map<String, String> requestHeaders = {
-          'Authorization': token,
-        };
+  try {
+    SharedPreferences pref = await SharedPreferences.getInstance();
+    setState(() {
+      token = pref.getString("token")!;
+      id = pref.getString("id")!;
+    });
+    
+    if (token != '') {
+      Map<String, String> requestHeaders = {
+        'Authorization': token,
+      };
+      
+      List<SuratMasuk> allSuratMasuk = [];
+      List<SuratKeluar> allSuratKeluar = [];
+      
+      int currentPage = 1;
+      bool isNextPageAvailable = true;
+      
+      while (isNextPageAvailable) {
         var response = await http.get(
-            Uri.parse(
-                "https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all"),
-            // "https://sigap.kedirikota.go.id/apiesuratpkl/public/dashboard"),
-            headers: requestHeaders);
-
+          Uri.parse("https://simponik.kedirikota.go.id/api/inbox?id=$id&param=all&page=$currentPage"),
+          headers: requestHeaders,
+        );
+        
         if (response.statusCode == 200) {
           final bd = jsonDecode(response.body);
           List data = bd['inbox'];
-          data.forEach((element) {
-            // suratMasuk.add(SuratMasuk.fromJson(element));
-            suratMasuk.addAll(data.map((element) => SuratMasuk.fromJson(element)));
-          });
-
-          
-
-          var response2 = await http.get(
-              Uri.parse(
-                  "https://simponik.kedirikota.go.id/api/outbox?id=$id&param=all"),
-              // "https://sigap.kedirikota.go.id/apiesuratpkl/public/dashboard"),
-              headers: requestHeaders);
-
-          if (response2.statusCode == 200) {
-            final bd2 = jsonDecode(response2.body);
-            List data2 = bd2['outbox'];
-            data2.forEach((element) {
-              // suratKeluar.add(SuratKeluar.fromJson(element));
-              suratKeluar.addAll(data2.map((element) => SuratKeluar.fromJson(element)));
-            });
-
-            totalSurat = bd['total'];
-            totalSuratKeluar = bd2['total'];
-            totalProses =
-                data.where((item) => item['state'] != "SELESAI").length;
-            totalSelesai =
-                data.where((item) => item['state'] == "SELESAI").length;
-            totalUnread = data.where((item) => item['isbaca'] != "1").length;
-            totalUnread2 = data2.where((item) => item['isbaca'] != "1").length;
-            totalUnkonf =
-                data2.where((item) => item['state'] != "DISETUJUI").length;
-            ;
-            // totalSurat =
-            //     (jsonDecode(response.body) as Map<String, dynamic>)["totalSurat"];
-            // totalProses = (jsonDecode(response.body)
-            //     as Map<String, dynamic>)["totalProses"];
-            // totalSelesai = (jsonDecode(response.body)
-            //     as Map<String, dynamic>)["totalSelesai"];
-            // totalUnread = (jsonDecode(response.body)
-            //     as Map<String, dynamic>)["totalUnread"];
-            // totalUnkonf = (jsonDecode(response.body)
-            //     as Map<String, dynamic>)["totalUnkonf"];
-
-            setState(() {});
-            return true;
+          if (data.isEmpty) {
+            isNextPageAvailable = false;
           } else {
-            return false;
+            data.forEach((element) {
+              allSuratMasuk.add(SuratMasuk.fromJson(element));
+            });
+            currentPage++;
           }
+      totalSurat = bd['total'];
         } else {
           return false;
         }
-      } else {
-        return false;
       }
-    } catch (e) {
-      print(e);
+      
+      int currentPage2 = 1;
+      isNextPageAvailable = true;
+      
+      while (isNextPageAvailable) {
+        var response2 = await http.get(
+          Uri.parse("https://simponik.kedirikota.go.id/api/outbox?id=$id&param=all&page=$currentPage2"),
+          headers: requestHeaders,
+        );
+        
+        if (response2.statusCode == 200) {
+          final bd2 = jsonDecode(response2.body);
+          List data2 = bd2['outbox'];
+          if (data2.isEmpty) {
+            isNextPageAvailable = false;
+          } else {
+            data2.forEach((element) {
+              allSuratKeluar.add(SuratKeluar.fromJson(element));
+            });
+            currentPage2++;
+          }
+      totalSuratKeluar = bd2['total'];
+        } else {
+          return false;
+        }
+      }
+      
+      // Setelah mendapatkan semua data, Anda dapat melakukan proses sesuai kebutuhan
+      suratMasuk.addAll(allSuratMasuk);
+      suratKeluar.addAll(allSuratKeluar);
+      
+      totalProses = suratMasuk.where((item) => item.state != "SELESAI").length;
+      totalSelesai = suratMasuk.where((item) => item.state == "SELESAI").length;
+      totalUnread = suratMasuk.where((item) => item.isbaca != "1").length;
+      totalUnread2 = suratKeluar.where((item) => item.isbaca != "1").length;
+      totalUnkonf = suratKeluar.where((item) => item.state != "DISETUJUI").length;
+
+      setState(() {});
+      return true;
+    } else {
       return false;
     }
+  } catch (e) {
+    print(e);
+    return false;
   }
+}
+
 }

@@ -25,6 +25,7 @@ class _HomeState extends State<Home> {
   String token = "";
   String id = "";
   int totalSurat = 0;
+  int totalSuratKeluar = 0;
   int totalProses = 0;
   int totalSelesai = 0;
   int totalUnread = 0;
@@ -131,6 +132,12 @@ class _HomeState extends State<Home> {
                         ),
                         DataRow(
                           cells: <DataCell>[
+                            DataCell(Text("Total Surat Keluar")),
+                            DataCell(Text("${totalSuratKeluar}")),
+                          ],
+                        ),
+                        DataRow(
+                          cells: <DataCell>[
                             DataCell(Text("Total Dalam Proses")),
                             DataCell(Text("${totalProses}")),
                           ],
@@ -204,8 +211,11 @@ class _HomeState extends State<Home> {
           final bd = jsonDecode(response.body);
           List data = bd['inbox'];
           data.forEach((element) {
-            suratMasuk.add(SuratMasuk.fromJson(element));
+            // suratMasuk.add(SuratMasuk.fromJson(element));
+            suratMasuk.addAll(data.map((element) => SuratMasuk.fromJson(element)));
           });
+
+          
 
           var response2 = await http.get(
               Uri.parse(
@@ -217,10 +227,12 @@ class _HomeState extends State<Home> {
             final bd2 = jsonDecode(response2.body);
             List data2 = bd2['outbox'];
             data2.forEach((element) {
-              suratKeluar.add(SuratKeluar.fromJson(element));
+              // suratKeluar.add(SuratKeluar.fromJson(element));
+              suratKeluar.addAll(data2.map((element) => SuratKeluar.fromJson(element)));
             });
 
             totalSurat = bd['total'];
+            totalSuratKeluar = bd2['total'];
             totalProses =
                 data.where((item) => item['state'] != "SELESAI").length;
             totalSelesai =

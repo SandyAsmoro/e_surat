@@ -80,8 +80,16 @@ class _ProfileState extends State<Profile> {
                   Icons.logout,
                   color: color1,
                 ),
-                onPressed: () {
-                  logout();
+                onPressed: () async {
+                  SharedPreferences pref =
+                      await SharedPreferences.getInstance();
+                  await pref.clear();
+                  print('token2 :');
+                  print(token);
+                  Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(builder: (context) => LoginPage()),
+                      (route) => false);
+                  // logout();
                 },
               ),
             ),
@@ -432,19 +440,22 @@ class _ProfileState extends State<Profile> {
     );
   }
 
-  void logout() async {
-    SharedPreferences pref = await SharedPreferences.getInstance();
-    pref.setString("token", "");
-    await pref.clear();
-    Navigator.of(context).pushAndRemoveUntil(
-        MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
-  }
+  // void logout() async {
+  //   SharedPreferences pref = await SharedPreferences.getInstance();
+  //   await pref.clear();
+  //   Navigator.of(context).pushAndRemoveUntil(
+  //       MaterialPageRoute(builder: (context) => LoginPage()), (route) => false);
+  //   print('token :');
+  //   print(token);
+  // }
 
   Future<bool> getProfile() async {
     try {
       SharedPreferences pref = await SharedPreferences.getInstance();
       setState(() {
         token = pref.getString("token")!;
+        print('token :');
+        print(token);
         nama = pref.getString("nama")!;
         jabatan = pref.getString("jabatan")!;
         nip = pref.getString("nip")!;

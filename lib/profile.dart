@@ -80,16 +80,32 @@ class _ProfileState extends State<Profile> {
                   Icons.logout,
                   color: color1,
                 ),
+                // onPressed: () async {
+                //   SharedPreferences pref =
+                //       await SharedPreferences.getInstance();
+                //   await pref.clear();
+                //   print('token2 :');
+                //   print(token);
+                //   Navigator.of(context).pushAndRemoveUntil(
+                //       MaterialPageRoute(builder: (context) => LoginPage()),
+                //       (route) => false);
+                //   // logout();
+                // },
                 onPressed: () async {
                   SharedPreferences pref =
                       await SharedPreferences.getInstance();
                   await pref.clear();
-                  print('token2 :');
+
+                  setState(() {
+                    token = ''; // Mengatur token ke nilai kosong
+                  });
+
+                  print('token:');
                   print(token);
                   Navigator.of(context).pushAndRemoveUntil(
-                      MaterialPageRoute(builder: (context) => LoginPage()),
-                      (route) => false);
-                  // logout();
+                    MaterialPageRoute(builder: (context) => LoginPage()),
+                    (route) => false,
+                  );
                 },
               ),
             ),
